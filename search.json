@@ -1,0 +1,62 @@
+[
+  {
+    "objectID": "week1.html",
+    "href": "week1.html",
+    "title": "Week 1 — Setup",
+    "section": "",
+    "text": "Welcome to Agentic AI. There is no ICA this week. Your job before next week is small: install one editor, and work through the Python primer if your Python is rusty or new. Everything else, including Python itself, will be installed next week in one step.",
+    "crumbs": [
+      "Week 1 · Setup"
+    ]
+  },
+  {
+    "objectID": "week1.html#install-vs-code",
+    "href": "week1.html#install-vs-code",
+    "title": "Week 1 — Setup",
+    "section": "1. Install VS Code",
+    "text": "1. Install VS Code\nVS Code is the editor we will use all semester for notebooks and code.\n\nDownload it from code.visualstudio.com and install it. On a Mac, drag the app into your Applications folder. On Windows, run the installer with the default options.\nOpen VS Code, click the Extensions icon in the left bar (four squares), and install two extensions, both published by Microsoft: Python and Jupyter.\n\nThat is the whole task. You do not need to configure anything else yet.",
+    "crumbs": [
+      "Week 1 · Setup"
+    ]
+  },
+  {
+    "objectID": "week1.html#python-primer",
+    "href": "week1.html#python-primer",
+    "title": "Week 1 — Setup",
+    "section": "2. Python primer",
+    "text": "2. Python primer\nIf you have not written much Python, or you have never seen things like TypedDict, list comprehensions, or decorators, work through the primer before Week 2. It assumes no prior Python and everything in it comes back later in the course.\nThe easiest way to run it is Google Colab, which runs the notebook in your browser with nothing to install. You will need a Google account.\nOpen the Python Primer in Colab\nIn Colab, run cells with Shift+Enter, top to bottom. Change things and rerun them. The primer ends with eight exercises. If those feel fine, you are ready for Week 2.\nIf you want to go deeper than the primer, the official Python tutorial is the best next stop. It is free, well written, and goes well beyond what we need. Chapters 3 through 5 line up with the primer if you want a second pass at the same ideas.",
+    "crumbs": [
+      "Week 1 · Setup"
+    ]
+  },
+  {
+    "objectID": "week1.html#do-i-need-to-install-python",
+    "href": "week1.html#do-i-need-to-install-python",
+    "title": "Week 1 — Setup",
+    "section": "Do I need to install Python?",
+    "text": "Do I need to install Python?\nNot yet. Next week we will set up the full course environment with a tool called uv, and it installs the right version of Python for you as part of one command. If you install Python on your own this week, you will not break anything, but you also will not need it, and having several Pythons on one machine is a common source of confusion. Wait for the Week 2 setup guide.",
+    "crumbs": [
+      "Week 1 · Setup"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Agentic AI — Course Materials",
+    "section": "",
+    "text": "Welcome to Agentic AI. This site is where I post everything you need for each class session: setup instructions, the code we build together, links I’ll reference on screen, and anything you’ll want to copy and paste during lecture.\nProf. Yildirim",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#schedule",
+    "href": "index.html#schedule",
+    "title": "Agentic AI — Course Materials",
+    "section": "Schedule",
+    "text": "Schedule\nThe schedule below provides links to readings and documentation for each day. The core reading for each session is shown in bold.\n\n\n\n\nWk\nDate\nTopic\nPapers\nFramework docs\n\n\n\n\n1\nF 9/11\nIntroduction to Agentic AI\nBuilding Effective AgentsRise and Potential of LLM Agents\nWorkflows and agents · Philosophy\n\n\n2\nT 9/15\nLLM Foundations\nAttention Is All You NeedKarpathy, Let’s build GPTImproving Language Understanding\n—\n\n\n2\nF 9/18\nLLM Foundations\nInstructGPTChain-of-Thought\nModels · Messages · Structured output\n\n\n3\nT 9/22\nSimple Agent Architecture\nToolformerMRKL\nTools\n\n\n3\nF 9/25\nTool-Calling\nReActWhat Are Tools Anyway?\nThinking in LangGraph · Graph API · Agents",
+    "crumbs": [
+      "Home"
+    ]
+  }
+]
