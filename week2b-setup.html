@@ -246,9 +246,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>agentic-ai-course/
 ├── .venv/            your Python environment (created in step 3)
 ├── .env              your API keys (step 5)
-├── course-files/     the course repo you clone in step 4 (read-only)
-│   └── lecture-files/
-│       └── W02b/     files from class, one folder per day
+├── lecture-files/    files from class, one folder per day (step 4, read-only)
+│   └── W02b/
 └── W02b/             your working copy of the day's files</code></pre>
 <section id="install-uv" class="level2">
 <h2 class="anchored" data-anchor-id="install-uv">1. Install uv</h2>
@@ -293,22 +292,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="get-the-lecture-files-and-install-the-dependencies" class="level2">
 <h2 class="anchored" data-anchor-id="get-the-lecture-files-and-install-the-dependencies">4. Get the lecture files and install the dependencies</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/agenticllms/agenticllms.github.io.git course-files</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> pip install <span class="at">-r</span> course-files/lecture-files/requirements.txt</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> course-files/lecture-files/W02b W02b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The first command brings in the course repository — the class files live in its <code>lecture-files/</code> folder (the rest is the course website; you can ignore it). The second installs every library the course uses into your <code>.venv</code>. Note there is no <code>pip</code> on its own anywhere in this course: it is always <code>uv pip</code>, which cannot install into the wrong Python. The third makes your working copy of today’s files.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/agenticllms/lecture-files.git</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> pip install <span class="at">-r</span> lecture-files/requirements.txt</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> lecture-files/W02b W02b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The first command brings in the class files; the second installs every library the course uses into your <code>.venv</code>. Note there is no <code>pip</code> on its own anywhere in this course: it is always <code>uv pip</code>, which cannot install into the wrong Python. The third makes your working copy of today’s files.</p>
 <p><strong>Each class day</strong>, the process will involve the following: pull, then copy the day’s folder out and work in the copy.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> course-files</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> lecture-files</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> course-files/lecture-files/W03a W03a</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>(Windows PowerShell: <code>Copy-Item -Recurse course-files/lecture-files/W03a W03a</code>.)</p>
-<p>Pulling is additive: it brings the new day’s folder and leaves previous days untouched. But here is the rule that keeps it that way: <strong>treat <code>course-files</code> as read-only and do your work in the copies.</strong> Running a notebook saves outputs into the file, which counts as a local edit, and local edits are what make a future <code>git pull</code> refuse. If <code>course-files</code> ever does get messy, reset it with <code>git restore .</code> from inside that folder — safe, because nothing of yours lives there.</p>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> lecture-files/W03a W03a</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>(Windows PowerShell: <code>Copy-Item -Recurse lecture-files/W03a W03a</code>.)</p>
+<p>Pulling is additive: it brings the new day’s folder and leaves previous days untouched. But here is the rule that keeps it that way: <strong>treat <code>lecture-files</code> as read-only and do your work in the copies.</strong> Running a notebook saves outputs into the file, which counts as a local edit, and local edits are what make a future <code>git pull</code> refuse. If <code>lecture-files</code> ever does get messy, reset it with <code>git restore .</code> from inside that folder — safe, because nothing of yours lives there.</p>
 </section>
 <section id="add-your-api-keys" class="level2">
 <h2 class="anchored" data-anchor-id="add-your-api-keys">5. Add your API keys</h2>
 <p>Copy the template to your project root and rename it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> course-files/lecture-files/example.env .env</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> lecture-files/example.env .env</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Open <code>.env</code> in VS Code and paste in your keys — <code>GOOGLE_API_KEY</code> and <code>TAVILY_API_KEY</code> will be required later; the others are optional. Never commit or share this file, and never paste a key into a notebook cell.</p>
 </section>
 <section id="point-vs-code-at-your-environment" class="level2">
@@ -368,8 +367,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td><code>git pull</code> refuses: local changes would be overwritten</td>
-<td>You ran or edited notebooks inside <code>course-files</code></td>
-<td><code>cd course-files</code>, then <code>git restore .</code>, then pull again. Work in copies from now on</td>
+<td>You ran or edited notebooks inside <code>lecture-files</code></td>
+<td><code>cd lecture-files</code>, then <code>git restore .</code>, then pull again. Work in copies from now on</td>
 </tr>
 </tbody>
 </table>
