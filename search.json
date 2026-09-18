@@ -1,42 +1,77 @@
 [
   {
-    "objectID": "week1.html",
-    "href": "week1.html",
-    "title": "Week 1 — Setup",
+    "objectID": "week2a.html",
+    "href": "week2a.html",
+    "title": "Week 2a — LLM Foundations",
     "section": "",
-    "text": "Welcome to Agentic AI. There is no ICA this week. Your job before next week is small: install one editor, and work through the Python primer if your Python is rusty or new. Everything else, including Python itself, will be installed next week in one step.",
+    "text": "Today we are going to run an LLM locally: a real open-weight model, on your laptop, no API key, no cloud.",
     "crumbs": [
-      "Week 1 · Setup"
+      "Week 2 — LLM Foundations",
+      "Week 2a · Run a local LLM"
     ]
   },
   {
-    "objectID": "week1.html#install-vs-code",
-    "href": "week1.html#install-vs-code",
-    "title": "Week 1 — Setup",
-    "section": "1. Install VS Code",
-    "text": "1. Install VS Code\nVS Code is the editor we will use all semester for notebooks and code.\n\nDownload it from code.visualstudio.com and install it. On a Mac, drag the app into your Applications folder. On Windows, run the installer with the default options.\nOpen VS Code, click the Extensions icon in the left bar (four squares), and install two extensions, both published by Microsoft: Python and Jupyter.\n\nThat is the whole task. You do not need to configure anything else yet.",
+    "objectID": "week2a.html#install-ollama",
+    "href": "week2a.html#install-ollama",
+    "title": "Week 2a — LLM Foundations",
+    "section": "1. Install Ollama",
+    "text": "1. Install Ollama\nOllama is the tool we’ll use to download and run open-weight models.\n\nmacOSWindowsLinux\n\n\nDownload the app from ollama.com/download, drag it into Applications, and open it once. Then verify in Terminal:\nollama --version\nIf you use Homebrew, brew install ollama works too.\n\n\nDownload and run the installer from ollama.com/download. Then open PowerShell and verify:\nollama --version\n\n\nOne command:\ncurl -fsSL https://ollama.com/install.sh | sh\nThen verify:\nollama --version",
     "crumbs": [
-      "Week 1 · Setup"
+      "Week 2 — LLM Foundations",
+      "Week 2a · Run a local LLM"
     ]
   },
   {
-    "objectID": "week1.html#python-primer",
-    "href": "week1.html#python-primer",
-    "title": "Week 1 — Setup",
-    "section": "2. Python primer",
-    "text": "2. Python primer\nIf you have not written much Python, or you have never seen things like TypedDict, list comprehensions, or decorators, work through the primer before Week 2. It assumes no prior Python and everything in it comes back later in the course.\nThe easiest way to run it is Google Colab, which runs the notebook in your browser with nothing to install. You will need a Google account.\nOpen the Python Primer in Colab\nIn Colab, run cells with Shift+Enter, top to bottom. Change things and rerun them. The primer ends with eight exercises. If those feel fine, you are ready for Week 2.\nIf you want to go deeper than the primer, the official Python tutorial is the best next stop. It is free, well written, and goes well beyond what we need. Chapters 3 through 5 line up with the primer if you want a second pass at the same ideas.",
+    "objectID": "week2a.html#download-and-run-a-model",
+    "href": "week2a.html#download-and-run-a-model",
+    "title": "Week 2a — LLM Foundations",
+    "section": "2. Download and run a model",
+    "text": "2. Download and run a model\nWe’ll use Qwen 3.5, an open-weight model family that comes in sizes from 0.8B to 122B parameters. One command downloads the default size (about 6.6 GB) and drops you into a chat:\nollama run qwen3.5\nType a message and watch it answer, token by token — that streaming is the autoregressive loop from lecture, live. Type /bye to exit the chat.\nPick a size that fits your machine. The default is a good middle ground, but if your laptop has 8 GB of RAM or you want a faster download, grab a smaller one; if you have a big machine, try a bigger one:\nollama run qwen3.5:2b     # small and quick — any laptop\nollama run qwen3.5:4b     # 8 GB RAM\nollama run qwen3.5:9b     # 16 GB RAM (the default)\nollama run qwen3.5:27b    # 32 GB+ RAM\nThe full list of sizes is on the model page. Rule of thumb: the download size is roughly the RAM the model needs while running.\nAlso grab these two for class. They are tiny (a few hundred megabytes each, seconds to download, run on anything) and we will use them together in a demonstration:\nollama pull qwen2.5:0.5b        # instruction-tuned\nollama pull qwen2.5:0.5b-base   # raw pretrained — no post-training\nSame architecture, same size, same training data — the only difference is what happened after pretraining. Ask them both a question in class and you will see exactly what that difference buys. (ollama pull downloads without starting a chat; ollama run does both.)",
     "crumbs": [
-      "Week 1 · Setup"
+      "Week 2 — LLM Foundations",
+      "Week 2a · Run a local LLM"
     ]
   },
   {
-    "objectID": "week1.html#do-i-need-to-install-python",
-    "href": "week1.html#do-i-need-to-install-python",
-    "title": "Week 1 — Setup",
-    "section": "Do I need to install Python?",
-    "text": "Do I need to install Python?\nNot yet. Next week we will set up the full course environment with a tool called uv, and it installs the right version of Python for you as part of one command. If you install Python on your own this week, you will not break anything, but you also will not need it, and having several Pythons on one machine is a common source of confusion. Wait for the Week 2 setup guide.",
+    "objectID": "week2a.html#commands-youll-actually-use",
+    "href": "week2a.html#commands-youll-actually-use",
+    "title": "Week 2a — LLM Foundations",
+    "section": "3. Commands you’ll actually use",
+    "text": "3. Commands you’ll actually use\nollama list        # models you have downloaded\nollama ps          # models currently loaded in memory\nollama rm qwen3.5  # delete a model and free the disk space\nAnd inside a chat, /bye exits.",
     "crumbs": [
-      "Week 1 · Setup"
+      "Week 2 — LLM Foundations",
+      "Week 2a · Run a local LLM"
+    ]
+  },
+  {
+    "objectID": "week2a.html#why-were-doing-this",
+    "href": "week2a.html#why-were-doing-this",
+    "title": "Week 2a — LLM Foundations",
+    "section": "Why we’re doing this",
+    "text": "Why we’re doing this\nOllama also runs a local API server (at localhost:11434), which means later in the course your agents can call a model that is entirely yours. We will use that for local inference.",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2a · Run a local LLM"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Agentic AI — Course Materials",
+    "section": "",
+    "text": "Welcome to Agentic AI. This site is where I post everything you need for each class session: setup instructions, the code we build together, links I’ll reference on screen, and anything you’ll want to copy and paste during lecture.\nProf. Yildirim",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#schedule",
+    "href": "index.html#schedule",
+    "title": "Agentic AI — Course Materials",
+    "section": "Schedule",
+    "text": "Schedule\nThe schedule below provides links to readings and documentation for each day. The core reading for each session is shown in bold.\n\n\n\n\n\n\n\n\n\n\n\nWk\nDate\nTopic\nPapers\nFramework docs\n\n\n\n\n1\nF 9/11\nIntroduction to Agentic AI\nBuilding Effective AgentsRise and Potential of LLM Agents\nWorkflows and agents · Philosophy\n\n\n2\nT 9/15\nLLM Foundations\nAttention Is All You NeedImproving Language Understanding\n3Blue1Brown: LLMs visualized (recommended watch) · Karpathy: Let’s build GPT\n\n\n2\nF 9/18\nLLM Foundations\nInstructGPTChain-of-Thought\nModels · Messages · Structured output\n\n\n3\nT 9/22\nSimple Agent Architecture\nToolformerMRKL\nTools\n\n\n3\nF 9/25\nTool-Calling\nReActWhat Are Tools Anyway?\nThinking in LangGraph · Graph API · Agents",
+    "crumbs": [
+      "Home"
     ]
   },
   {
@@ -95,78 +130,142 @@
     ]
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Agentic AI — Course Materials",
+    "objectID": "week1.html",
+    "href": "week1.html",
+    "title": "Week 1 — Setup",
     "section": "",
-    "text": "Welcome to Agentic AI. This site is where I post everything you need for each class session: setup instructions, the code we build together, links I’ll reference on screen, and anything you’ll want to copy and paste during lecture.\nProf. Yildirim",
+    "text": "Welcome to Agentic AI. There is no ICA this week. Your job before next week is small: install one editor, and work through the Python primer if your Python is rusty or new. Everything else, including Python itself, will be installed next week in one step.",
     "crumbs": [
-      "Home"
+      "Week 1 · Setup"
     ]
   },
   {
-    "objectID": "index.html#schedule",
-    "href": "index.html#schedule",
-    "title": "Agentic AI — Course Materials",
-    "section": "Schedule",
-    "text": "Schedule\nThe schedule below provides links to readings and documentation for each day. The core reading for each session is shown in bold.\n\n\n\n\n\n\n\n\n\n\n\nWk\nDate\nTopic\nPapers\nFramework docs\n\n\n\n\n1\nF 9/11\nIntroduction to Agentic AI\nBuilding Effective AgentsRise and Potential of LLM Agents\nWorkflows and agents · Philosophy\n\n\n2\nT 9/15\nLLM Foundations\nAttention Is All You NeedImproving Language Understanding\n3Blue1Brown: LLMs visualized (recommended watch) · Karpathy: Let’s build GPT\n\n\n2\nF 9/18\nLLM Foundations\nInstructGPTChain-of-Thought\nModels · Messages · Structured output\n\n\n3\nT 9/22\nSimple Agent Architecture\nToolformerMRKL\nTools\n\n\n3\nF 9/25\nTool-Calling\nReActWhat Are Tools Anyway?\nThinking in LangGraph · Graph API · Agents",
+    "objectID": "week1.html#install-vs-code",
+    "href": "week1.html#install-vs-code",
+    "title": "Week 1 — Setup",
+    "section": "1. Install VS Code",
+    "text": "1. Install VS Code\nVS Code is the editor we will use all semester for notebooks and code.\n\nDownload it from code.visualstudio.com and install it. On a Mac, drag the app into your Applications folder. On Windows, run the installer with the default options.\nOpen VS Code, click the Extensions icon in the left bar (four squares), and install two extensions, both published by Microsoft: Python and Jupyter.\n\nThat is the whole task. You do not need to configure anything else yet.",
     "crumbs": [
-      "Home"
+      "Week 1 · Setup"
     ]
   },
   {
-    "objectID": "week2a.html",
-    "href": "week2a.html",
-    "title": "Week 2a — LLM Foundations",
+    "objectID": "week1.html#python-primer",
+    "href": "week1.html#python-primer",
+    "title": "Week 1 — Setup",
+    "section": "2. Python primer",
+    "text": "2. Python primer\nIf you have not written much Python, or you have never seen things like TypedDict, list comprehensions, or decorators, work through the primer before Week 2. It assumes no prior Python and everything in it comes back later in the course.\nThe easiest way to run it is Google Colab, which runs the notebook in your browser with nothing to install. You will need a Google account.\nOpen the Python Primer in Colab\nIn Colab, run cells with Shift+Enter, top to bottom. Change things and rerun them. The primer ends with eight exercises. If those feel fine, you are ready for Week 2.\nIf you want to go deeper than the primer, the official Python tutorial is the best next stop. It is free, well written, and goes well beyond what we need. Chapters 3 through 5 line up with the primer if you want a second pass at the same ideas.",
+    "crumbs": [
+      "Week 1 · Setup"
+    ]
+  },
+  {
+    "objectID": "week1.html#do-i-need-to-install-python",
+    "href": "week1.html#do-i-need-to-install-python",
+    "title": "Week 1 — Setup",
+    "section": "Do I need to install Python?",
+    "text": "Do I need to install Python?\nNot yet. Next week we will set up the full course environment with a tool called uv, and it installs the right version of Python for you as part of one command. If you install Python on your own this week, you will not break anything, but you also will not need it, and having several Pythons on one machine is a common source of confusion. Wait for the Week 2 setup guide.",
+    "crumbs": [
+      "Week 1 · Setup"
+    ]
+  },
+  {
+    "objectID": "week2b-setup.html",
+    "href": "week2b-setup.html",
+    "title": "Week 2b — Course Environment Setup",
     "section": "",
-    "text": "Today we are going to run an LLM locally: a real open-weight model, on your laptop, no API key, no cloud.",
+    "text": "Please follow these instructions carefully.\nBy the end you will have one folder that looks like this:",
     "crumbs": [
       "Week 2 — LLM Foundations",
-      "Week 2a · Run a local LLM"
+      "Week 2b · Environment Setup"
     ]
   },
   {
-    "objectID": "week2a.html#install-ollama",
-    "href": "week2a.html#install-ollama",
-    "title": "Week 2a — LLM Foundations",
-    "section": "1. Install Ollama",
-    "text": "1. Install Ollama\nOllama is the tool we’ll use to download and run open-weight models.\n\nmacOSWindowsLinux\n\n\nDownload the app from ollama.com/download, drag it into Applications, and open it once. Then verify in Terminal:\nollama --version\nIf you use Homebrew, brew install ollama works too.\n\n\nDownload and run the installer from ollama.com/download. Then open PowerShell and verify:\nollama --version\n\n\nOne command:\ncurl -fsSL https://ollama.com/install.sh | sh\nThen verify:\nollama --version",
+    "objectID": "week2b-setup.html#install-uv",
+    "href": "week2b-setup.html#install-uv",
+    "title": "Week 2b — Course Environment Setup",
+    "section": "1. Install uv",
+    "text": "1. Install uv\nuv is a fast Python environment manager. It also installs Python itself, so you do not need to install Python separately — whatever Python you do or do not have on your machine, the result is the same.\n\nmacOSWindowsLinux\n\n\nIn Terminal:\ncurl -LsSf https://astral.sh/uv/install.sh | sh\nThen close and reopen the terminal, and verify:\nuv --version\n\n\nIn PowerShell:\npowershell -ExecutionPolicy ByPass -c \"irm https://astral.sh/uv/install.ps1 | iex\"\nThen close and reopen PowerShell, and verify:\nuv --version\n\n\ncurl -LsSf https://astral.sh/uv/install.sh | sh\nThen close and reopen the terminal, and verify:\nuv --version",
     "crumbs": [
       "Week 2 — LLM Foundations",
-      "Week 2a · Run a local LLM"
+      "Week 2b · Environment Setup"
     ]
   },
   {
-    "objectID": "week2a.html#download-and-run-a-model",
-    "href": "week2a.html#download-and-run-a-model",
-    "title": "Week 2a — LLM Foundations",
-    "section": "2. Download and run a model",
-    "text": "2. Download and run a model\nWe’ll use Qwen 3.5, an open-weight model family that comes in sizes from 0.8B to 122B parameters. One command downloads the default size (about 6.6 GB) and drops you into a chat:\nollama run qwen3.5\nType a message and watch it answer, token by token — that streaming is the autoregressive loop from lecture, live. Type /bye to exit the chat.\nPick a size that fits your machine. The default is a good middle ground, but if your laptop has 8 GB of RAM or you want a faster download, grab a smaller one; if you have a big machine, try a bigger one:\nollama run qwen3.5:2b     # small and quick — any laptop\nollama run qwen3.5:4b     # 8 GB RAM\nollama run qwen3.5:9b     # 16 GB RAM (the default)\nollama run qwen3.5:27b    # 32 GB+ RAM\nThe full list of sizes is on the model page. Rule of thumb: the download size is roughly the RAM the model needs while running.\nAlso grab these two for class. They are tiny (a few hundred megabytes each, seconds to download, run on anything) and we will use them together in a demonstration:\nollama pull qwen2.5:0.5b        # instruction-tuned\nollama pull qwen2.5:0.5b-base   # raw pretrained — no post-training\nSame architecture, same size, same training data — the only difference is what happened after pretraining. Ask them both a question in class and you will see exactly what that difference buys. (ollama pull downloads without starting a chat; ollama run does both.)",
+    "objectID": "week2b-setup.html#create-your-course-project",
+    "href": "week2b-setup.html#create-your-course-project",
+    "title": "Week 2b — Course Environment Setup",
+    "section": "2. Create your course project",
+    "text": "2. Create your course project\nMake one folder for the whole course and open it in VS Code:\nmkdir agentic-ai-course\ncd agentic-ai-course\ncode .\nIf code is not recognized, open VS Code manually, then File, Open Folder.\nFrom here on, run commands in VS Code’s integrated terminal (Terminal &gt; New Terminal)  so you are always in the right place.",
     "crumbs": [
       "Week 2 — LLM Foundations",
-      "Week 2a · Run a local LLM"
+      "Week 2b · Environment Setup"
     ]
   },
   {
-    "objectID": "week2a.html#commands-youll-actually-use",
-    "href": "week2a.html#commands-youll-actually-use",
-    "title": "Week 2a — LLM Foundations",
-    "section": "3. Commands you’ll actually use",
-    "text": "3. Commands you’ll actually use\nollama list        # models you have downloaded\nollama ps          # models currently loaded in memory\nollama rm qwen3.5  # delete a model and free the disk space\nAnd inside a chat, /bye exits.",
+    "objectID": "week2b-setup.html#create-the-environment",
+    "href": "week2b-setup.html#create-the-environment",
+    "title": "Week 2b — Course Environment Setup",
+    "section": "3. Create the environment",
+    "text": "3. Create the environment\nFrom inside agentic-ai-course:\nuv venv --python 3.13\nThis creates .venv, a self-contained Python 3.13 environment that lives in your project folder. Everything we install goes in here and nowhere else.",
     "crumbs": [
       "Week 2 — LLM Foundations",
-      "Week 2a · Run a local LLM"
+      "Week 2b · Environment Setup"
     ]
   },
   {
-    "objectID": "week2a.html#why-were-doing-this",
-    "href": "week2a.html#why-were-doing-this",
-    "title": "Week 2a — LLM Foundations",
-    "section": "Why we’re doing this",
-    "text": "Why we’re doing this\nOllama also runs a local API server (at localhost:11434), which means later in the course your agents can call a model that is entirely yours. We will use that for local inference.",
+    "objectID": "week2b-setup.html#get-the-lecture-files-and-install-the-dependencies",
+    "href": "week2b-setup.html#get-the-lecture-files-and-install-the-dependencies",
+    "title": "Week 2b — Course Environment Setup",
+    "section": "4. Get the lecture files and install the dependencies",
+    "text": "4. Get the lecture files and install the dependencies\ngit clone https://github.com/agenticllms/agenticllms.github.io.git course-files\nuv pip install -r course-files/lecture-files/requirements.txt\ncp -r course-files/lecture-files/W02b W02b\nThe first command brings in the course repository — the class files live in its lecture-files/ folder (the rest is the course website; you can ignore it). The second installs every library the course uses into your .venv. Note there is no pip on its own anywhere in this course: it is always uv pip, which cannot install into the wrong Python. The third makes your working copy of today’s files.\nEach class day, the process will involve the following: pull, then copy the day’s folder out and work in the copy.\ncd course-files\ngit pull\ncd ..\ncp -r course-files/lecture-files/W03a W03a\n(Windows PowerShell: Copy-Item -Recurse course-files/lecture-files/W03a W03a.)\nPulling is additive: it brings the new day’s folder and leaves previous days untouched. But here is the rule that keeps it that way: treat course-files as read-only and do your work in the copies. Running a notebook saves outputs into the file, which counts as a local edit, and local edits are what make a future git pull refuse. If course-files ever does get messy, reset it with git restore . from inside that folder — safe, because nothing of yours lives there.",
     "crumbs": [
       "Week 2 — LLM Foundations",
-      "Week 2a · Run a local LLM"
+      "Week 2b · Environment Setup"
+    ]
+  },
+  {
+    "objectID": "week2b-setup.html#add-your-api-keys",
+    "href": "week2b-setup.html#add-your-api-keys",
+    "title": "Week 2b — Course Environment Setup",
+    "section": "5. Add your API keys",
+    "text": "5. Add your API keys\nCopy the template to your project root and rename it:\ncp course-files/lecture-files/example.env .env\nOpen .env in VS Code and paste in your keys — GOOGLE_API_KEY and TAVILY_API_KEY will be required later; the others are optional. Never commit or share this file, and never paste a key into a notebook cell.",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2b · Environment Setup"
+    ]
+  },
+  {
+    "objectID": "week2b-setup.html#point-vs-code-at-your-environment",
+    "href": "week2b-setup.html#point-vs-code-at-your-environment",
+    "title": "Week 2b — Course Environment Setup",
+    "section": "6. Point VS Code at your environment",
+    "text": "6. Point VS Code at your environment\nThis is a crucial step:\n\nOpen any notebook from your W02b/ copy.\nClick the kernel picker in the top-right corner of the notebook.\nChoose the interpreter at agentic-ai-course/.venv (it may be listed as .venv (Python 3.13)).\n\nVS Code remembers this per notebook. If a notebook ever complains that a module is missing, check the kernel picker before anything else — nine times out of ten the notebook is quietly running some other Python.",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2b · Environment Setup"
+    ]
+  },
+  {
+    "objectID": "week2b-setup.html#verify",
+    "href": "week2b-setup.html#verify",
+    "title": "Week 2b — Course Environment Setup",
+    "section": "7. Verify",
+    "text": "7. Verify\nOpen W02b/W02b.1_LLM_API_Basics.ipynb and run the first cell. If it prints that the API key is loaded, you are done. If not, see below.",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2b · Environment Setup"
+    ]
+  },
+  {
+    "objectID": "week2b-setup.html#some-common-errors",
+    "href": "week2b-setup.html#some-common-errors",
+    "title": "Week 2b — Course Environment Setup",
+    "section": "Some Common Errors",
+    "text": "Some Common Errors\n\n\n\n\n\n\n\n\nSymptom\nCause\nFix\n\n\n\n\nModuleNotFoundError\nNotebook is on the wrong kernel\nKernel picker → choose .venv → restart kernel\n\n\npip: command not found\nBare pip is not on your PATH\nUse uv pip install ... instead\n\n\nNo API key found\n.env missing, misplaced, or kernel started before you created it\n.env goes in the project root, next to .venv; then restart the kernel\n\n\nWorks in one notebook, not another\nThe two notebooks are on different kernels\nSet both to .venv\n\n\nuv: command not found right after install\nTerminal opened before the install finished\nClose and reopen the terminal\n\n\ngit pull refuses: local changes would be overwritten\nYou ran or edited notebooks inside course-files\ncd course-files, then git restore ., then pull again. Work in copies from now on\n\n\n\nLast, please keep in mind that environment problems are not a test of your ability; everyone hits them, including me.",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2b · Environment Setup"
     ]
   }
 ]
