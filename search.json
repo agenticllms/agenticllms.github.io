@@ -1,172 +1,35 @@
 [
   {
-    "objectID": "week2a.html",
-    "href": "week2a.html",
-    "title": "Week 2a — LLM Foundations",
+    "objectID": "week3a.html",
+    "href": "week3a.html",
+    "title": "Week 3a — Memory and Structured Output",
     "section": "",
-    "text": "Today we are going to run an LLM locally: a real open-weight model, on your laptop, no API key, no cloud.",
+    "text": "Today’s files are in the W03a folder: two notebooks, plus agentui.py, a small chat interface we will use at the end of class.",
     "crumbs": [
-      "Week 2 — LLM Foundations",
-      "Week 2a · Run a local LLM"
+      "Week 3 — Building Agents",
+      "Week 3a · Memory & Structured Output"
     ]
   },
   {
-    "objectID": "week2a.html#install-ollama",
-    "href": "week2a.html#install-ollama",
-    "title": "Week 2a — LLM Foundations",
-    "section": "1. Install Ollama",
-    "text": "1. Install Ollama\nOllama is the tool we’ll use to download and run open-weight models.\n\nmacOSWindowsLinux\n\n\nDownload the app from ollama.com/download, drag it into Applications, and open it once. Then verify in Terminal:\nollama --version\nIf you use Homebrew, brew install ollama works too.\n\n\nDownload and run the installer from ollama.com/download. Then open PowerShell and verify:\nollama --version\n\n\nOne command:\ncurl -fsSL https://ollama.com/install.sh | sh\nThen verify:\nollama --version",
+    "objectID": "week3a.html#get-todays-files",
+    "href": "week3a.html#get-todays-files",
+    "title": "Week 3a — Memory and Structured Output",
+    "section": "Get today’s files",
+    "text": "Get today’s files\nFrom your course project folder (agentic-ai-course), in the VS Code terminal:\n\nmacOSWindowsLinux\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W03a W03a\n\n\ncd lecture-files\ngit pull\ncd ..\nCopy-Item -Recurse lecture-files/W03a W03a\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W03a W03a\n\n\n\nThen open the notebooks from your W03a copy, not from lecture-files, and select the .venv kernel.",
     "crumbs": [
-      "Week 2 — LLM Foundations",
-      "Week 2a · Run a local LLM"
+      "Week 3 — Building Agents",
+      "Week 3a · Memory & Structured Output"
     ]
   },
   {
-    "objectID": "week2a.html#download-and-run-a-model",
-    "href": "week2a.html#download-and-run-a-model",
-    "title": "Week 2a — LLM Foundations",
-    "section": "2. Download and run a model",
-    "text": "2. Download and run a model\nWe’ll use Qwen 3.5, an open-weight model family that comes in sizes from 0.8B to 122B parameters. One command downloads the default size (about 6.6 GB) and drops you into a chat:\nollama run qwen3.5\nType a message and watch it answer, token by token — that streaming is the autoregressive loop from lecture, live. Type /bye to exit the chat.\nPick a size that fits your machine. The default is a good middle ground, but if your laptop has 8 GB of RAM or you want a faster download, grab a smaller one; if you have a big machine, try a bigger one:\nollama run qwen3.5:2b     # small and quick — any laptop\nollama run qwen3.5:4b     # 8 GB RAM\nollama run qwen3.5:9b     # 16 GB RAM (the default)\nollama run qwen3.5:27b    # 32 GB+ RAM\nThe full list of sizes is on the model page. Rule of thumb: the download size is roughly the RAM the model needs while running.\nAlso grab these two for class. They are tiny (a few hundred megabytes each, seconds to download, run on anything) and we will use them together in a demonstration:\nollama pull qwen2.5:0.5b        # instruction-tuned\nollama pull qwen2.5:0.5b-base   # raw pretrained — no post-training\nSame architecture, same size, same training data — the only difference is what happened after pretraining. Ask them both a question in class and you will see exactly what that difference buys. (ollama pull downloads without starting a chat; ollama run does both.)",
+    "objectID": "week3a.html#if-your-project-has-a-course-files-folder",
+    "href": "week3a.html#if-your-project-has-a-course-files-folder",
+    "title": "Week 3a — Memory and Structured Output",
+    "section": "If your project has a course-files folder",
+    "text": "If your project has a course-files folder\nThe first version of the setup instructions had you clone the course repository under the name course-files. We have since moved the lecture files to their own repository, so if that is what you have, run these two commands once, from your project folder:\n\nmacOSWindowsLinux\n\n\ngit clone https://github.com/agenticllms/lecture-files.git\nrm -rf course-files\n\n\ngit clone https://github.com/agenticllms/lecture-files.git\nRemove-Item -Recurse -Force course-files\n\n\ngit clone https://github.com/agenticllms/lecture-files.git\nrm -rf course-files\n\n\n\nNothing of yours is lost: your working copies and your .env and .venv all live outside course-files. After this, the pull steps above are all you ever need.",
     "crumbs": [
-      "Week 2 — LLM Foundations",
-      "Week 2a · Run a local LLM"
-    ]
-  },
-  {
-    "objectID": "week2a.html#commands-youll-actually-use",
-    "href": "week2a.html#commands-youll-actually-use",
-    "title": "Week 2a — LLM Foundations",
-    "section": "3. Commands you’ll actually use",
-    "text": "3. Commands you’ll actually use\nollama list        # models you have downloaded\nollama ps          # models currently loaded in memory\nollama rm qwen3.5  # delete a model and free the disk space\nAnd inside a chat, /bye exits.",
-    "crumbs": [
-      "Week 2 — LLM Foundations",
-      "Week 2a · Run a local LLM"
-    ]
-  },
-  {
-    "objectID": "week2a.html#why-were-doing-this",
-    "href": "week2a.html#why-were-doing-this",
-    "title": "Week 2a — LLM Foundations",
-    "section": "Why we’re doing this",
-    "text": "Why we’re doing this\nOllama also runs a local API server (at localhost:11434), which means later in the course your agents can call a model that is entirely yours. We will use that for local inference.",
-    "crumbs": [
-      "Week 2 — LLM Foundations",
-      "Week 2a · Run a local LLM"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Agentic AI — Course Materials",
-    "section": "",
-    "text": "Welcome to Agentic AI. This site is where I post everything you need for each class session: setup instructions, the code we build together, links I’ll reference on screen, and anything you’ll want to copy and paste during lecture.\nProf. Yildirim",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#schedule",
-    "href": "index.html#schedule",
-    "title": "Agentic AI — Course Materials",
-    "section": "Schedule",
-    "text": "Schedule\nThe schedule below provides links to readings and documentation for each day. The core reading for each session is shown in bold.\n\n\n\n\n\n\n\n\n\n\n\nWk\nDate\nTopic\nPapers\nFramework docs\n\n\n\n\n1\nF 9/11\nIntroduction to Agentic AI\nBuilding Effective AgentsRise and Potential of LLM Agents\nWorkflows and agents · Philosophy\n\n\n2\nT 9/15\nLLM Foundations\nAttention Is All You NeedImproving Language Understanding\n3Blue1Brown: LLMs visualized (recommended watch) · Karpathy: Let’s build GPT\n\n\n2\nF 9/18\nLLM Foundations\nInstructGPTChain-of-Thought\nModels · Messages\n\n\n3\nT 9/22\nSimple Agent Architecture\nToolformerMRKL\nTools · Agents\n\n\n3\nF 9/25\nTool-Calling\nReActWhat Are Tools Anyway?\nMemory · Structured output\n\n\n4\nT 9/29\nShort-term & Long-term Memory\nGenerative AgentsMemGPT\nThinking in LangGraph · Graph API · Persistence\n\n\n4\nF 10/2\nContext Management\nLost in the MiddleEffective Context Engineering\nContext engineering · Middleware\n\n\n5\nT 10/6\nRetrieval-Augmented Generation\nRAGRAG Survey (§2–3)\nRetrieval · Semantic search\n\n\n5\nF 10/9\nReflection & Self-critique\nReflexionSelf-RAG · Self-Refine\nGraph API loops · Unit testing\n\n\n6\nT 10/13\nPlanning & Task Decomposition\nVoyagerTree of Thoughts · HuggingGPT (skim)\nSubgraphs · Skills\n\n\n6\nF 10/16\nAgentic RAG\nCorrective RAGAdaptive-RAG\nCustom RAG agent · Multi-source routing",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "research.html",
-    "href": "research.html",
-    "title": "Final Project — Research Resources",
-    "section": "",
-    "text": "This page is a starting point for finding your final project idea. The areas and papers below are initial directions; the strongest projects usually come from a question you find yourself while reading. What follows first is the one rule that is not optional.",
-    "crumbs": [
-      "Final Project",
-      "Research Resources"
-    ]
-  },
-  {
-    "objectID": "research.html#the-rule",
-    "href": "research.html#the-rule",
-    "title": "Final Project — Research Resources",
-    "section": "The rule",
-    "text": "The rule\nAn application domain alone is not a research contribution. “We will build a travel-planning agent” is not a project. “We investigate whether explicit constraint tracking improves long-horizon planning agents under changing constraints” is. The domain is the testbed; the mechanism is the contribution. Every strong project fits this template:\n\nagentic mechanism → experimental manipulation → measured agent behavior\n\nFor example: memory policy → preference updates → stale-action rate. Or: tool descriptions → distractor similarity → tool-selection accuracy.",
-    "crumbs": [
-      "Final Project",
-      "Research Resources"
-    ]
-  },
-  {
-    "objectID": "research.html#what-fits-in-a-semester",
-    "href": "research.html#what-fits-in-a-semester",
-    "title": "Final Project — Research Resources",
-    "section": "What fits in a semester",
-    "text": "What fits in a semester\nFeasible: controlled experiments on existing or synthetic benchmarks · fine-tuning small open-weight models (LoRA on a 4–9B model is a weekend on some GPU) · trajectory analyses over logged runs · architectural comparisons under a fixed token budget.\nNot feasible: pretraining a model · large-scale RL training · months of human data collection",
-    "crumbs": [
-      "Final Project",
-      "Research Resources"
-    ]
-  },
-  {
-    "objectID": "research.html#where-to-look",
-    "href": "research.html#where-to-look",
-    "title": "Final Project — Research Resources",
-    "section": "Where to look",
-    "text": "Where to look\n\nNeurIPS proceedings — including the Datasets & Benchmarks track, where most agent benchmarks are published\nICLR on OpenReview — reviews are public; reading them teaches you how the field argues\nICML proceedings\nACL Anthology — ACL, EMNLP, NAACL; most tool-use and agent-NLP work lands here\nCOLM — the LLM-focused venue; young, high signal\nWorkshops are the goldmine for project-scale ideas. Each year NeurIPS, ICLR, and ICML host workshops on language agents, open-world agents, safe and trustworthy agents, and multi-agent systems. Workshop papers are shorter, newer, and closer to what a semester project can extend. Check the current workshop lists at neurips.cc, iclr.cc, and icml.cc, and search OpenReview for “agents” workshops.\nFor staying current: arXiv cs.CL and cs.AI, navigated with Semantic Scholar.",
-    "crumbs": [
-      "Final Project",
-      "Research Resources"
-    ]
-  },
-  {
-    "objectID": "research.html#starting-directions",
-    "href": "research.html#starting-directions",
-    "title": "Final Project — Research Resources",
-    "section": "Starting directions",
-    "text": "Starting directions\nIn what follows, we provide a few anchor papers per area. Read the anchors, then follow their citations forward on Semantic Scholar or Google Scholar to explore who cited this, and what they found wrong with it.\n\n1. Benchmarking and evaluation\nTask success alone poorly characterizes agents. Open questions: which trajectory features predict failure before a task ends, how many runs characterize reliability, how cost should enter benchmarks, and how reliable LLM-as-judge scoring really is.\n\nτ²-bench — conversational tool-agents with a simulated user\nSWE-bench — the coding-agent benchmark and its saturation story\nWhy Do Multi-Agent LLM Systems Fail? — a failure taxonomy worth extending\nA Survey on Evaluation of LLM-based Agents\nHolistic Agent Leaderboard — cost-aware evaluation\n\n\n\n2. Fine-tuning small models for agentic tasks\nCan a 4–9B open-weight model be made meaningfully better at tool calling, reflection, or planning with a modest fine-tune? This is squarely semester-sized: generate or collect traces, LoRA-tune, compare against prompting the same base model. (Pretraining is out of scope — see above.)\n\nFireAct — fine-tuning on agent trajectories\nAgentTuning — instruction-tuning for agent abilities\nToolLLM — training for large-scale API use\nxLAM — a family of function-calling models\nDeepSeek-R1 — see the distillation section: small models learning from reasoning traces\n\n\n\n3. Agentic AI safety and security\nAgent safety is not chatbot safety: the question is not “did the model say something harmful” but “what did the system actually do.” A strong architectural question from the idea doc: at which layer should prompt-injection defenses operate — model prompting, tool authorization, or execution monitoring?\n\nNot What You’ve Signed Up For — indirect prompt injection, the founding paper\nAgentDojo — an injection benchmark you can run\nAgentHarm — measuring harmful task completion\nDefeating Prompt Injections by Design (CaMeL)\nDesign Patterns for Securing LLM Agents\n\n\n\n4. Tool use and MCP\nTool use looks solved in demos and is not solved scientifically. Selection is fragile to description wording, tool-set size, and near-duplicate distractors — and MCP adds questions about poisoning, permissions, and provenance.\n\nTool Preferences in Agentic LLMs are Unreliable — small description changes shift tool usage by more than 10×; a perfect paper to extend\nWhat Are Tools Anyway? — the survey that maps the area\nGorilla — LLMs and massive API sets\nModel Context Protocol: Landscape and Security\n\nA clean experiment: give an agent 5, 20, 50, and 100 tools with progressively similar distractors, and measure selection accuracy, cost, and failure modes.\n\n\n5. Memory and context\nOlder memory benchmarks test whether an agent can retrieve a fact; the open question is whether it uses remembered information appropriately when acting — and what it should forget.\n\nMem2ActBench - benchmark for evaluating long-term memory; can be easily extended\nMemGPT — memory hierarchies\nGenerative Agents — memory in believable simulation\nMem0 and A-Mem — production memory systems\n\nA clean experiment from the idea doc: compare append-everything, overwrite, recency-weighted, and conflict-aware memory policies as user preferences change; measure task success, stale-memory errors, and token cost.",
-    "crumbs": [
-      "Final Project",
-      "Research Resources"
-    ]
-  },
-  {
-    "objectID": "week1.html",
-    "href": "week1.html",
-    "title": "Week 1 — Setup",
-    "section": "",
-    "text": "Welcome to Agentic AI. There is no ICA this week. Your job before next week is small: install one editor, and work through the Python primer if your Python is rusty or new. Everything else, including Python itself, will be installed next week in one step.",
-    "crumbs": [
-      "Week 1 · Setup"
-    ]
-  },
-  {
-    "objectID": "week1.html#install-vs-code",
-    "href": "week1.html#install-vs-code",
-    "title": "Week 1 — Setup",
-    "section": "1. Install VS Code",
-    "text": "1. Install VS Code\nVS Code is the editor we will use all semester for notebooks and code.\n\nDownload it from code.visualstudio.com and install it. On a Mac, drag the app into your Applications folder. On Windows, run the installer with the default options.\nOpen VS Code, click the Extensions icon in the left bar (four squares), and install two extensions, both published by Microsoft: Python and Jupyter.\n\nThat is the whole task. You do not need to configure anything else yet.",
-    "crumbs": [
-      "Week 1 · Setup"
-    ]
-  },
-  {
-    "objectID": "week1.html#python-primer",
-    "href": "week1.html#python-primer",
-    "title": "Week 1 — Setup",
-    "section": "2. Python primer",
-    "text": "2. Python primer\nIf you have not written much Python, or you have never seen things like TypedDict, list comprehensions, or decorators, work through the primer before Week 2. It assumes no prior Python and everything in it comes back later in the course.\nThe easiest way to run it is Google Colab, which runs the notebook in your browser with nothing to install. You will need a Google account.\nOpen the Python Primer in Colab\nIn Colab, run cells with Shift+Enter, top to bottom. Change things and rerun them. The primer ends with eight exercises. If those feel fine, you are ready for Week 2.\nIf you want to go deeper than the primer, the official Python tutorial is the best next stop. It is free, well written, and goes well beyond what we need. Chapters 3 through 5 line up with the primer if you want a second pass at the same ideas.",
-    "crumbs": [
-      "Week 1 · Setup"
-    ]
-  },
-  {
-    "objectID": "week1.html#do-i-need-to-install-python",
-    "href": "week1.html#do-i-need-to-install-python",
-    "title": "Week 1 — Setup",
-    "section": "Do I need to install Python?",
-    "text": "Do I need to install Python?\nNot yet. Next week we will set up the full course environment with a tool called uv, and it installs the right version of Python for you as part of one command. If you install Python on your own this week, you will not break anything, but you also will not need it, and having several Pythons on one machine is a common source of confusion. Wait for the Week 2 setup guide.",
-    "crumbs": [
-      "Week 1 · Setup"
+      "Week 3 — Building Agents",
+      "Week 3a · Memory & Structured Output"
     ]
   },
   {
@@ -266,6 +129,176 @@
     "crumbs": [
       "Week 2 — LLM Foundations",
       "Week 2b · Environment Setup"
+    ]
+  },
+  {
+    "objectID": "week1.html",
+    "href": "week1.html",
+    "title": "Week 1 — Setup",
+    "section": "",
+    "text": "Welcome to Agentic AI. There is no ICA this week. Your job before next week is small: install one editor, and work through the Python primer if your Python is rusty or new. Everything else, including Python itself, will be installed next week in one step.",
+    "crumbs": [
+      "Week 1 · Setup"
+    ]
+  },
+  {
+    "objectID": "week1.html#install-vs-code",
+    "href": "week1.html#install-vs-code",
+    "title": "Week 1 — Setup",
+    "section": "1. Install VS Code",
+    "text": "1. Install VS Code\nVS Code is the editor we will use all semester for notebooks and code.\n\nDownload it from code.visualstudio.com and install it. On a Mac, drag the app into your Applications folder. On Windows, run the installer with the default options.\nOpen VS Code, click the Extensions icon in the left bar (four squares), and install two extensions, both published by Microsoft: Python and Jupyter.\n\nThat is the whole task. You do not need to configure anything else yet.",
+    "crumbs": [
+      "Week 1 · Setup"
+    ]
+  },
+  {
+    "objectID": "week1.html#python-primer",
+    "href": "week1.html#python-primer",
+    "title": "Week 1 — Setup",
+    "section": "2. Python primer",
+    "text": "2. Python primer\nIf you have not written much Python, or you have never seen things like TypedDict, list comprehensions, or decorators, work through the primer before Week 2. It assumes no prior Python and everything in it comes back later in the course.\nThe easiest way to run it is Google Colab, which runs the notebook in your browser with nothing to install. You will need a Google account.\nOpen the Python Primer in Colab\nIn Colab, run cells with Shift+Enter, top to bottom. Change things and rerun them. The primer ends with eight exercises. If those feel fine, you are ready for Week 2.\nIf you want to go deeper than the primer, the official Python tutorial is the best next stop. It is free, well written, and goes well beyond what we need. Chapters 3 through 5 line up with the primer if you want a second pass at the same ideas.",
+    "crumbs": [
+      "Week 1 · Setup"
+    ]
+  },
+  {
+    "objectID": "week1.html#do-i-need-to-install-python",
+    "href": "week1.html#do-i-need-to-install-python",
+    "title": "Week 1 — Setup",
+    "section": "Do I need to install Python?",
+    "text": "Do I need to install Python?\nNot yet. Next week we will set up the full course environment with a tool called uv, and it installs the right version of Python for you as part of one command. If you install Python on your own this week, you will not break anything, but you also will not need it, and having several Pythons on one machine is a common source of confusion. Wait for the Week 2 setup guide.",
+    "crumbs": [
+      "Week 1 · Setup"
+    ]
+  },
+  {
+    "objectID": "research.html",
+    "href": "research.html",
+    "title": "Final Project — Research Resources",
+    "section": "",
+    "text": "This page is a starting point for finding your final project idea. The areas and papers below are initial directions; the strongest projects usually come from a question you find yourself while reading. What follows first is the one rule that is not optional.",
+    "crumbs": [
+      "Final Project",
+      "Research Resources"
+    ]
+  },
+  {
+    "objectID": "research.html#the-rule",
+    "href": "research.html#the-rule",
+    "title": "Final Project — Research Resources",
+    "section": "The rule",
+    "text": "The rule\nAn application domain alone is not a research contribution. “We will build a travel-planning agent” is not a project. “We investigate whether explicit constraint tracking improves long-horizon planning agents under changing constraints” is. The domain is the testbed; the mechanism is the contribution. Every strong project fits this template:\n\nagentic mechanism → experimental manipulation → measured agent behavior\n\nFor example: memory policy → preference updates → stale-action rate. Or: tool descriptions → distractor similarity → tool-selection accuracy.",
+    "crumbs": [
+      "Final Project",
+      "Research Resources"
+    ]
+  },
+  {
+    "objectID": "research.html#what-fits-in-a-semester",
+    "href": "research.html#what-fits-in-a-semester",
+    "title": "Final Project — Research Resources",
+    "section": "What fits in a semester",
+    "text": "What fits in a semester\nFeasible: controlled experiments on existing or synthetic benchmarks · fine-tuning small open-weight models (LoRA on a 4–9B model is a weekend on some GPU) · trajectory analyses over logged runs · architectural comparisons under a fixed token budget.\nNot feasible: pretraining a model · large-scale RL training · months of human data collection",
+    "crumbs": [
+      "Final Project",
+      "Research Resources"
+    ]
+  },
+  {
+    "objectID": "research.html#where-to-look",
+    "href": "research.html#where-to-look",
+    "title": "Final Project — Research Resources",
+    "section": "Where to look",
+    "text": "Where to look\n\nNeurIPS proceedings — including the Datasets & Benchmarks track, where most agent benchmarks are published\nICLR on OpenReview — reviews are public; reading them teaches you how the field argues\nICML proceedings\nACL Anthology — ACL, EMNLP, NAACL; most tool-use and agent-NLP work lands here\nCOLM — the LLM-focused venue; young, high signal\nWorkshops are the goldmine for project-scale ideas. Each year NeurIPS, ICLR, and ICML host workshops on language agents, open-world agents, safe and trustworthy agents, and multi-agent systems. Workshop papers are shorter, newer, and closer to what a semester project can extend. Check the current workshop lists at neurips.cc, iclr.cc, and icml.cc, and search OpenReview for “agents” workshops.\nFor staying current: arXiv cs.CL and cs.AI, navigated with Semantic Scholar.",
+    "crumbs": [
+      "Final Project",
+      "Research Resources"
+    ]
+  },
+  {
+    "objectID": "research.html#starting-directions",
+    "href": "research.html#starting-directions",
+    "title": "Final Project — Research Resources",
+    "section": "Starting directions",
+    "text": "Starting directions\nIn what follows, we provide a few anchor papers per area. Read the anchors, then follow their citations forward on Semantic Scholar or Google Scholar to explore who cited this, and what they found wrong with it.\n\n1. Benchmarking and evaluation\nTask success alone poorly characterizes agents. Open questions: which trajectory features predict failure before a task ends, how many runs characterize reliability, how cost should enter benchmarks, and how reliable LLM-as-judge scoring really is.\n\nτ²-bench — conversational tool-agents with a simulated user\nSWE-bench — the coding-agent benchmark and its saturation story\nWhy Do Multi-Agent LLM Systems Fail? — a failure taxonomy worth extending\nA Survey on Evaluation of LLM-based Agents\nHolistic Agent Leaderboard — cost-aware evaluation\n\n\n\n2. Fine-tuning small models for agentic tasks\nCan a 4–9B open-weight model be made meaningfully better at tool calling, reflection, or planning with a modest fine-tune? This is squarely semester-sized: generate or collect traces, LoRA-tune, compare against prompting the same base model. (Pretraining is out of scope — see above.)\n\nFireAct — fine-tuning on agent trajectories\nAgentTuning — instruction-tuning for agent abilities\nToolLLM — training for large-scale API use\nxLAM — a family of function-calling models\nDeepSeek-R1 — see the distillation section: small models learning from reasoning traces\n\n\n\n3. Agentic AI safety and security\nAgent safety is not chatbot safety: the question is not “did the model say something harmful” but “what did the system actually do.” A strong architectural question from the idea doc: at which layer should prompt-injection defenses operate — model prompting, tool authorization, or execution monitoring?\n\nNot What You’ve Signed Up For — indirect prompt injection, the founding paper\nAgentDojo — an injection benchmark you can run\nAgentHarm — measuring harmful task completion\nDefeating Prompt Injections by Design (CaMeL)\nDesign Patterns for Securing LLM Agents\n\n\n\n4. Tool use and MCP\nTool use looks solved in demos and is not solved scientifically. Selection is fragile to description wording, tool-set size, and near-duplicate distractors — and MCP adds questions about poisoning, permissions, and provenance.\n\nTool Preferences in Agentic LLMs are Unreliable — small description changes shift tool usage by more than 10×; a perfect paper to extend\nWhat Are Tools Anyway? — the survey that maps the area\nGorilla — LLMs and massive API sets\nModel Context Protocol: Landscape and Security\n\nA clean experiment: give an agent 5, 20, 50, and 100 tools with progressively similar distractors, and measure selection accuracy, cost, and failure modes.\n\n\n5. Memory and context\nOlder memory benchmarks test whether an agent can retrieve a fact; the open question is whether it uses remembered information appropriately when acting — and what it should forget.\n\nMem2ActBench - benchmark for evaluating long-term memory; can be easily extended\nMemGPT — memory hierarchies\nGenerative Agents — memory in believable simulation\nMem0 and A-Mem — production memory systems\n\nA clean experiment from the idea doc: compare append-everything, overwrite, recency-weighted, and conflict-aware memory policies as user preferences change; measure task success, stale-memory errors, and token cost.",
+    "crumbs": [
+      "Final Project",
+      "Research Resources"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Agentic AI — Course Materials",
+    "section": "",
+    "text": "Welcome to Agentic AI. This site is where I post everything you need for each class session: setup instructions, the code we build together, links I’ll reference on screen, and anything you’ll want to copy and paste during lecture.\nProf. Yildirim",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#schedule",
+    "href": "index.html#schedule",
+    "title": "Agentic AI — Course Materials",
+    "section": "Schedule",
+    "text": "Schedule\nThe schedule below provides links to readings and documentation for each day. The core reading for each session is shown in bold.\n\n\n\n\n\n\n\n\n\n\n\nWk\nDate\nTopic\nPapers\nFramework docs\n\n\n\n\n1\nF 9/11\nIntroduction to Agentic AI\nBuilding Effective AgentsRise and Potential of LLM Agents\nWorkflows and agents · Philosophy\n\n\n2\nT 9/15\nLLM Foundations\nAttention Is All You NeedImproving Language Understanding\n3Blue1Brown: LLMs visualized (recommended watch) · Karpathy: Let’s build GPT\n\n\n2\nF 9/18\nLLM Foundations\nInstructGPTChain-of-Thought\nModels · Messages\n\n\n3\nT 9/22\nSimple Agent Architecture\nToolformerMRKL\nTools · Agents\n\n\n3\nF 9/25\nTool-Calling\nReActWhat Are Tools Anyway?\nMemory · Structured output\n\n\n4\nT 9/29\nShort-term & Long-term Memory\nGenerative AgentsMemGPT\nThinking in LangGraph · Graph API · Persistence\n\n\n4\nF 10/2\nContext Management\nLost in the MiddleEffective Context Engineering\nContext engineering · Middleware\n\n\n5\nT 10/6\nRetrieval-Augmented Generation\nRAGRAG Survey (§2–3)\nRetrieval · Semantic search\n\n\n5\nF 10/9\nReflection & Self-critique\nReflexionSelf-RAG · Self-Refine\nGraph API loops · Unit testing\n\n\n6\nT 10/13\nPlanning & Task Decomposition\nVoyagerTree of Thoughts · HuggingGPT (skim)\nSubgraphs · Skills\n\n\n6\nF 10/16\nAgentic RAG\nCorrective RAGAdaptive-RAG\nCustom RAG agent · Multi-source routing",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "week2a.html",
+    "href": "week2a.html",
+    "title": "Week 2a — LLM Foundations",
+    "section": "",
+    "text": "Today we are going to run an LLM locally: a real open-weight model, on your laptop, no API key, no cloud.",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2a · Run a local LLM"
+    ]
+  },
+  {
+    "objectID": "week2a.html#install-ollama",
+    "href": "week2a.html#install-ollama",
+    "title": "Week 2a — LLM Foundations",
+    "section": "1. Install Ollama",
+    "text": "1. Install Ollama\nOllama is the tool we’ll use to download and run open-weight models.\n\nmacOSWindowsLinux\n\n\nDownload the app from ollama.com/download, drag it into Applications, and open it once. Then verify in Terminal:\nollama --version\nIf you use Homebrew, brew install ollama works too.\n\n\nDownload and run the installer from ollama.com/download. Then open PowerShell and verify:\nollama --version\n\n\nOne command:\ncurl -fsSL https://ollama.com/install.sh | sh\nThen verify:\nollama --version",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2a · Run a local LLM"
+    ]
+  },
+  {
+    "objectID": "week2a.html#download-and-run-a-model",
+    "href": "week2a.html#download-and-run-a-model",
+    "title": "Week 2a — LLM Foundations",
+    "section": "2. Download and run a model",
+    "text": "2. Download and run a model\nWe’ll use Qwen 3.5, an open-weight model family that comes in sizes from 0.8B to 122B parameters. One command downloads the default size (about 6.6 GB) and drops you into a chat:\nollama run qwen3.5\nType a message and watch it answer, token by token — that streaming is the autoregressive loop from lecture, live. Type /bye to exit the chat.\nPick a size that fits your machine. The default is a good middle ground, but if your laptop has 8 GB of RAM or you want a faster download, grab a smaller one; if you have a big machine, try a bigger one:\nollama run qwen3.5:2b     # small and quick — any laptop\nollama run qwen3.5:4b     # 8 GB RAM\nollama run qwen3.5:9b     # 16 GB RAM (the default)\nollama run qwen3.5:27b    # 32 GB+ RAM\nThe full list of sizes is on the model page. Rule of thumb: the download size is roughly the RAM the model needs while running.\nAlso grab these two for class. They are tiny (a few hundred megabytes each, seconds to download, run on anything) and we will use them together in a demonstration:\nollama pull qwen2.5:0.5b        # instruction-tuned\nollama pull qwen2.5:0.5b-base   # raw pretrained — no post-training\nSame architecture, same size, same training data — the only difference is what happened after pretraining. Ask them both a question in class and you will see exactly what that difference buys. (ollama pull downloads without starting a chat; ollama run does both.)",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2a · Run a local LLM"
+    ]
+  },
+  {
+    "objectID": "week2a.html#commands-youll-actually-use",
+    "href": "week2a.html#commands-youll-actually-use",
+    "title": "Week 2a — LLM Foundations",
+    "section": "3. Commands you’ll actually use",
+    "text": "3. Commands you’ll actually use\nollama list        # models you have downloaded\nollama ps          # models currently loaded in memory\nollama rm qwen3.5  # delete a model and free the disk space\nAnd inside a chat, /bye exits.",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2a · Run a local LLM"
+    ]
+  },
+  {
+    "objectID": "week2a.html#why-were-doing-this",
+    "href": "week2a.html#why-were-doing-this",
+    "title": "Week 2a — LLM Foundations",
+    "section": "Why we’re doing this",
+    "text": "Why we’re doing this\nOllama also runs a local API server (at localhost:11434), which means later in the course your agents can call a model that is entirely yours. We will use that for local inference.",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2a · Run a local LLM"
     ]
   }
 ]
