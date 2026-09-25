@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Week 2b — Course Environment Setup – Agentic AI - Fall 2026 | Northeastern CS</title>
+<title>Week 3b — The Customer Support Agent – Agentic AI - Fall 2026 | Northeastern CS</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -133,7 +133,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week2a.html">Week 2 — LLM Foundations</a></li><li class="breadcrumb-item"><a href="./week2b-setup.html">Week 2b · Environment Setup</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week3a.html">Week 3 — Building Agents</a></li><li class="breadcrumb-item"><a href="./week3b.html">Week 3b · Customer Support Agent</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -191,7 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./week2b-setup.html" class="sidebar-item-text sidebar-link active">
+  <a href="./week2b-setup.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Week 2b · Environment Setup</span></a>
   </div>
 </li>
@@ -214,7 +214,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./week3b.html" class="sidebar-item-text sidebar-link">
+  <a href="./week3b.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Week 3b · Customer Support Agent</span></a>
   </div>
 </li>
@@ -230,24 +230,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#install-uv" id="toc-install-uv" class="nav-link active" data-scroll-target="#install-uv">1. Install uv</a></li>
-  <li><a href="#create-your-course-project" id="toc-create-your-course-project" class="nav-link" data-scroll-target="#create-your-course-project">2. Create your course project</a></li>
-  <li><a href="#create-the-environment" id="toc-create-the-environment" class="nav-link" data-scroll-target="#create-the-environment">3. Create the environment</a></li>
-  <li><a href="#get-the-lecture-files-and-install-the-dependencies" id="toc-get-the-lecture-files-and-install-the-dependencies" class="nav-link" data-scroll-target="#get-the-lecture-files-and-install-the-dependencies">4. Get the lecture files and install the dependencies</a></li>
-  <li><a href="#add-your-api-keys" id="toc-add-your-api-keys" class="nav-link" data-scroll-target="#add-your-api-keys">5. Add your API keys</a></li>
-  <li><a href="#point-vs-code-at-your-environment" id="toc-point-vs-code-at-your-environment" class="nav-link" data-scroll-target="#point-vs-code-at-your-environment">6. Point VS Code at your environment</a></li>
-  <li><a href="#verify" id="toc-verify" class="nav-link" data-scroll-target="#verify">7. Verify</a></li>
-  <li><a href="#some-common-errors" id="toc-some-common-errors" class="nav-link" data-scroll-target="#some-common-errors">Some Common Errors</a></li>
+  <li><a href="#get-todays-files" id="toc-get-todays-files" class="nav-link active" data-scroll-target="#get-todays-files">Get today’s files</a></li>
+  <li><a href="#windows" id="toc-windows" class="nav-link" data-scroll-target="#windows">Windows</a></li>
+  <li><a href="#linux" id="toc-linux" class="nav-link" data-scroll-target="#linux">Linux</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week2a.html">Week 2 — LLM Foundations</a></li><li class="breadcrumb-item"><a href="./week2b-setup.html">Week 2b · Environment Setup</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week3a.html">Week 3 — Building Agents</a></li><li class="breadcrumb-item"><a href="./week3b.html">Week 3b · Customer Support Agent</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Week 2b — Course Environment Setup</h1>
-<p class="subtitle lead">Setting up the project to pull the lecture files</p>
+<h1 class="title">Week 3b — The Customer Support Agent</h1>
+<p class="subtitle lead">Pull today’s files, run the project, deploy it</p>
 </div>
 
 
@@ -264,138 +259,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Please follow these instructions carefully.</p>
-<p>By the end you will have one folder that looks like this:</p>
-<pre><code>agentic-ai-course/
-├── .venv/            your Python environment (created in step 3)
-├── .env              your API keys (step 5)
-├── lecture-files/    files from class, one folder per day (step 4, read-only)
-│   └── W02b/
-└── W02b/             your working copy of the day's files</code></pre>
-<section id="install-uv" class="level2">
-<h2 class="anchored" data-anchor-id="install-uv">1. Install uv</h2>
-<p><code>uv</code> is a fast Python environment manager. It also installs Python itself, so you do not need to install Python separately — whatever Python you do or do not have on your machine, the result is the same.</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">macOS</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Linux</a></li></ul>
-<div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p>In Terminal:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-LsSf</span> https://astral.sh/uv/install.sh <span class="kw">|</span> <span class="fu">sh</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Then close and reopen the terminal, and verify:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<p>In PowerShell:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>powershell <span class="op">-</span>ExecutionPolicy ByPass <span class="op">-</span>c <span class="st">"irm https://astral.sh/uv/install.ps1 | iex"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Then close and reopen PowerShell, and verify:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>uv <span class="op">--</span>version</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-LsSf</span> https://astral.sh/uv/install.sh <span class="kw">|</span> <span class="fu">sh</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Then close and reopen the terminal, and verify:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</div>
+<p>Today’s folder has more in it than usual: the notebook we build in class, plus a complete project skeleton you will fill at the end of the session.</p>
+<pre><code>W03b/
+├── W03b.1_CustomerSupport_Agent.ipynb    the class notebook
+├── agentui.py                            chat UI used by the notebook
+├── figures/                              diagrams the notebook displays
+└── support_agent/                        the project skeleton (end of class)</code></pre>
+<section id="get-todays-files" class="level2">
+<h2 class="anchored" data-anchor-id="get-todays-files">Get today’s files</h2>
+<p>From your course project folder (<code>agentic-ai-course</code>), in the VS Code terminal: ::: {.panel-tabset} ## macOS</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> lecture-files</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> lecture-files/W03b W03b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="create-your-course-project" class="level2">
-<h2 class="anchored" data-anchor-id="create-your-course-project">2. Create your course project</h2>
-<p>Make one folder for the whole course and open it in VS Code:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> agentic-ai-course</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> agentic-ai-course</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If <code>code</code> is not recognized, open VS Code manually, then File, Open Folder.</p>
-<p><strong>From here on, run commands in VS Code’s integrated terminal (Terminal &gt; New Terminal) </strong> so you are always in the right place.</p>
+<section id="windows" class="level2">
+<h2 class="anchored" data-anchor-id="windows">Windows</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> lecture-files</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>git pull</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> <span class="op">..</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Copy-Item</span> <span class="op">-</span>Recurse lecture-files<span class="op">/</span>W03b W03b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="create-the-environment" class="level2">
-<h2 class="anchored" data-anchor-id="create-the-environment">3. Create the environment</h2>
-<p>From inside <code>agentic-ai-course</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> venv <span class="at">--python</span> 3.13</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This creates <code>.venv</code>, a self-contained Python 3.13 environment that lives in your project folder. Everything we install goes in here and nowhere else.</p>
-</section>
-<section id="get-the-lecture-files-and-install-the-dependencies" class="level2">
-<h2 class="anchored" data-anchor-id="get-the-lecture-files-and-install-the-dependencies">4. Get the lecture files and install the dependencies</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/agenticllms/lecture-files.git</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> pip install <span class="at">-r</span> lecture-files/requirements.txt</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> lecture-files/W02b W02b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The first command brings in the class files; the second installs every library the course uses into your <code>.venv</code>. Note there is no <code>pip</code> on its own anywhere in this course: it is always <code>uv pip</code>, which cannot install into the wrong Python. The third makes your working copy of today’s files.</p>
-<p><strong>Each class day</strong>, the process will involve the following: pull, then copy the day’s folder out and work in the copy.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> lecture-files</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> lecture-files/W03a W03a</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>(Windows PowerShell: <code>Copy-Item -Recurse lecture-files/W03a W03a</code>.)</p>
-<p>Pulling is additive: it brings the new day’s folder and leaves previous days untouched. But here is the rule that keeps it that way: <strong>treat <code>lecture-files</code> as read-only and do your work in the copies.</strong> Running a notebook saves outputs into the file, which counts as a local edit, and local edits are what make a future <code>git pull</code> refuse. If <code>lecture-files</code> ever does get messy, reset it with <code>git restore .</code> from inside that folder — safe, because nothing of yours lives there.</p>
-</section>
-<section id="add-your-api-keys" class="level2">
-<h2 class="anchored" data-anchor-id="add-your-api-keys">5. Add your API keys</h2>
-<p>Copy the template to your project root and rename it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> lecture-files/example.env .env</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Open <code>.env</code> in VS Code and paste in your keys — <code>GOOGLE_API_KEY</code> and <code>TAVILY_API_KEY</code> will be required later; the others are optional. Never commit or share this file, and never paste a key into a notebook cell.</p>
-</section>
-<section id="point-vs-code-at-your-environment" class="level2">
-<h2 class="anchored" data-anchor-id="point-vs-code-at-your-environment">6. Point VS Code at your environment</h2>
-<p>This is a crucial step:</p>
-<ol type="1">
-<li>Open any notebook from your <code>W02b/</code> copy.</li>
-<li>Click the kernel picker in the top-right corner of the notebook.</li>
-<li>Choose the interpreter at <code>agentic-ai-course/.venv</code> (it may be listed as <code>.venv (Python 3.13)</code>).</li>
-</ol>
-<p>VS Code remembers this per notebook. If a notebook ever complains that a module is missing, check the kernel picker before anything else — nine times out of ten the notebook is quietly running some other Python.</p>
-</section>
-<section id="verify" class="level2">
-<h2 class="anchored" data-anchor-id="verify">7. Verify</h2>
-<p>Open <code>W02b/W02b.1_LLM_API_Basics.ipynb</code> and run the first cell. If it prints that the API key is loaded, you are done. If not, see below.</p>
-</section>
-<section id="some-common-errors" class="level2">
-<h2 class="anchored" data-anchor-id="some-common-errors">Some Common Errors</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Symptom</th>
-<th>Cause</th>
-<th>Fix</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>ModuleNotFoundError</code></td>
-<td>Notebook is on the wrong kernel</td>
-<td>Kernel picker → choose <code>.venv</code> → restart kernel</td>
-</tr>
-<tr class="even">
-<td><code>pip: command not found</code></td>
-<td>Bare <code>pip</code> is not on your PATH</td>
-<td>Use <code>uv pip install ...</code> instead</td>
-</tr>
-<tr class="odd">
-<td><code>No API key found</code></td>
-<td><code>.env</code> missing, misplaced, or kernel started before you created it</td>
-<td><code>.env</code> goes in the project root, next to <code>.venv</code>; then restart the kernel</td>
-</tr>
-<tr class="even">
-<td>Works in one notebook, not another</td>
-<td>The two notebooks are on different kernels</td>
-<td>Set both to <code>.venv</code></td>
-</tr>
-<tr class="odd">
-<td><code>uv: command not found</code> right after install</td>
-<td>Terminal opened before the install finished</td>
-<td>Close and reopen the terminal</td>
-</tr>
-<tr class="even">
-<td><code>git pull</code> refuses: local changes would be overwritten</td>
-<td>You ran or edited notebooks inside <code>lecture-files</code></td>
-<td><code>cd lecture-files</code>, then <code>git restore .</code>, then pull again. Work in copies from now on</td>
-</tr>
-</tbody>
-</table>
-<p>Last, please keep in mind that environment problems are not a test of your ability; everyone hits them, including me.</p>
+<section id="linux" class="level2">
+<h2 class="anchored" data-anchor-id="linux">Linux</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> lecture-files</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> lecture-files/W03b W03b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>::: Then open the notebook from your <code>W03b</code> copy, not from <code>lecture-files</code>, and select the <code>.venv</code> kernel. One new package this week (for the optional OpenRouter model): from anywhere,</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> pip install langchain-openrouter</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>or re-run <code>uv pip install -r lecture-files/requirements.txt</code>, which now includes it. ## From notebook to project At the end of class we move the working code out of the notebook and into <code>support_agent/</code>, file by file. The transfer map is in <code>support_agent/README.md</code>: each notebook section has exactly one destination file. When the transfer is complete, both of these work from inside <code>support_agent/</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> agent.agent     <span class="co"># command-line chat; 'quit' files the ticket</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> app.py             <span class="co"># the same agent behind a chat window</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If <code>python -m agent.agent</code> errors with an import problem, you are probably running <code>python agent/agent.py</code> instead — the <code>-m</code> module form is required, from the project folder. ## Deploy it to Hugging Face Spaces The finished project runs on the public internet in about five minutes, for free. 1. Create an account at <a href="https://huggingface.co">huggingface.co</a> if you do not have one. 2. Go to <a href="https://huggingface.co/new-space">huggingface.co/new-space</a>: SDK <strong>Gradio</strong>, visibility <strong>Public</strong>. Pick <strong>CPU basic</strong> hardware if your account offers it; if only ZeroGPU is available, that works too — <code>app.py</code> already registers a decoy <code>@spaces.GPU</code> function so ZeroGPU’s startup check passes (this app never touches a GPU). 3. Upload the <strong>contents</strong> of <code>support_agent/</code> — drag and drop under the Files tab, or <code>git push</code> to the Space’s repo. The configuration block at the top of <code>README.md</code> tells Spaces to serve <code>app.py</code>. 4. In the Space’s <strong>Settings</strong>, under Variables and secrets, add <code>GOOGLE_API_KEY</code> as a <strong>secret</strong>. It reaches the app as an environment variable; the code picks it up with no changes. 5. Wait for the build, then open the Space and talk to your agent. Three things to know: - <strong>Never put the key in any uploaded file.</strong> The secret store is the only place it belongs. A key committed to a public Space is a key you must revoke. - Free Spaces <strong>sleep after about two days idle</strong> and take up to a minute to wake. - The Space is public: anyone with the link chats on your API quota. Fine for a demo; take it down or rotate the key when you are done showing it off. ## Slides <a href="week3b-slides.html">Tools decide, or the model decides?</a> — the design rules of thumb from today’s discussion.</p>
 
 
 </section>
