@@ -15,29 +15,40 @@
     "href": "week3b.html#get-todays-files",
     "title": "Week 3b — The Customer Support Agent",
     "section": "Get today’s files",
-    "text": "Get today’s files\nFrom your course project folder (agentic-ai-course), in the VS Code terminal: ::: {.panel-tabset} ## macOS\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W03b W03b",
+    "text": "Get today’s files\nFrom your course project folder (agentic-ai-course), in the VS Code terminal:\n\nmacOSWindowsLinux\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W03b W03b\n\n\ncd lecture-files\ngit pull\ncd ..\nCopy-Item -Recurse lecture-files/W03b W03b\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W03b W03b\n\n\n\nThen open the notebook from your W03b copy, not from lecture-files, and select the .venv kernel. One new package this week (for the optional OpenRouter model): from anywhere,\nuv pip install langchain-openrouter\nor re-run uv pip install -r lecture-files/requirements.txt, which now includes it.",
     "crumbs": [
       "Week 3 — Building Agents",
       "Week 3b · Customer Support Agent"
     ]
   },
   {
-    "objectID": "week3b.html#windows",
-    "href": "week3b.html#windows",
+    "objectID": "week3b.html#from-notebook-to-project",
+    "href": "week3b.html#from-notebook-to-project",
     "title": "Week 3b — The Customer Support Agent",
-    "section": "Windows",
-    "text": "Windows\ncd lecture-files\ngit pull\ncd ..\nCopy-Item -Recurse lecture-files/W03b W03b",
+    "section": "From notebook to project",
+    "text": "From notebook to project\nAt the end of class we move the working code out of the notebook and into support_agent/, file by file. The transfer map is in support_agent/README.md: each notebook section has exactly one destination file. When the transfer is complete, both of these work from inside support_agent/:\npython -m agent.agent     # command-line chat; 'quit' files the ticket\npython app.py             # the same agent behind a chat window\nIf python -m agent.agent errors with an import problem, you are probably running python agent/agent.py instead — the -m module form is required, from the project folder.",
     "crumbs": [
       "Week 3 — Building Agents",
       "Week 3b · Customer Support Agent"
     ]
   },
   {
-    "objectID": "week3b.html#linux",
-    "href": "week3b.html#linux",
+    "objectID": "week3b.html#deploy-it-to-hugging-face-spaces",
+    "href": "week3b.html#deploy-it-to-hugging-face-spaces",
     "title": "Week 3b — The Customer Support Agent",
-    "section": "Linux",
-    "text": "Linux\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W03b W03b\n::: Then open the notebook from your W03b copy, not from lecture-files, and select the .venv kernel. One new package this week (for the optional OpenRouter model): from anywhere,\nuv pip install langchain-openrouter\nor re-run uv pip install -r lecture-files/requirements.txt, which now includes it. ## From notebook to project At the end of class we move the working code out of the notebook and into support_agent/, file by file. The transfer map is in support_agent/README.md: each notebook section has exactly one destination file. When the transfer is complete, both of these work from inside support_agent/:\npython -m agent.agent     # command-line chat; 'quit' files the ticket\npython app.py             # the same agent behind a chat window\nIf python -m agent.agent errors with an import problem, you are probably running python agent/agent.py instead — the -m module form is required, from the project folder. ## Deploy it to Hugging Face Spaces The finished project runs on the public internet in about five minutes, for free. 1. Create an account at huggingface.co if you do not have one. 2. Go to huggingface.co/new-space: SDK Gradio, visibility Public. Pick CPU basic hardware if your account offers it; if only ZeroGPU is available, that works too — app.py already registers a decoy @spaces.GPU function so ZeroGPU’s startup check passes (this app never touches a GPU). 3. Upload the contents of support_agent/ — drag and drop under the Files tab, or git push to the Space’s repo. The configuration block at the top of README.md tells Spaces to serve app.py. 4. In the Space’s Settings, under Variables and secrets, add GOOGLE_API_KEY as a secret. It reaches the app as an environment variable; the code picks it up with no changes. 5. Wait for the build, then open the Space and talk to your agent. Three things to know: - Never put the key in any uploaded file. The secret store is the only place it belongs. A key committed to a public Space is a key you must revoke. - Free Spaces sleep after about two days idle and take up to a minute to wake. - The Space is public: anyone with the link chats on your API quota. Fine for a demo; take it down or rotate the key when you are done showing it off. ## Slides Tools decide, or the model decides? — the design rules of thumb from today’s discussion.",
+    "section": "Deploy it to Hugging Face Spaces",
+    "text": "Deploy it to Hugging Face Spaces\nThe finished project runs on the public internet in about five minutes, for free.\n\nCreate an account at huggingface.co if you do not have one.\nGo to huggingface.co/new-space: SDK Gradio, visibility Public. Pick CPU basic hardware if your account offers it; if only ZeroGPU is available, that works too — app.py already registers a decoy @spaces.GPU function so ZeroGPU’s startup check passes (this app never touches a GPU).\nUpload the contents of support_agent/ — drag and drop under the Files tab, or git push to the Space’s repo. The configuration block at the top of README.md tells Spaces to serve app.py.\nIn the Space’s Settings, under Variables and secrets, add GOOGLE_API_KEY as a secret. It reaches the app as an environment variable; the code picks it up with no changes.\nWait for the build, then open the Space and talk to your agent.\n\nThree things to know:\n\nNever put the key in any uploaded file. The secret store is the only place it belongs. A key committed to a public Space is a key you must revoke.\nFree Spaces sleep after about two days idle and take up to a minute to wake.\nThe Space is public: anyone with the link chats on your API quota. Fine for a demo; take it down or rotate the key when you are done showing it off.",
+    "crumbs": [
+      "Week 3 — Building Agents",
+      "Week 3b · Customer Support Agent"
+    ]
+  },
+  {
+    "objectID": "week3b.html#slides",
+    "href": "week3b.html#slides",
+    "title": "Week 3b — The Customer Support Agent",
+    "section": "Slides",
+    "text": "Slides\nTools decide, or the model decides? — the design rules of thumb from today’s discussion.",
     "crumbs": [
       "Week 3 — Building Agents",
       "Week 3b · Customer Support Agent"

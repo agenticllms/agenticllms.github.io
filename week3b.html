@@ -231,8 +231,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#get-todays-files" id="toc-get-todays-files" class="nav-link active" data-scroll-target="#get-todays-files">Get today’s files</a></li>
-  <li><a href="#windows" id="toc-windows" class="nav-link" data-scroll-target="#windows">Windows</a></li>
-  <li><a href="#linux" id="toc-linux" class="nav-link" data-scroll-target="#linux">Linux</a></li>
+  <li><a href="#from-notebook-to-project" id="toc-from-notebook-to-project" class="nav-link" data-scroll-target="#from-notebook-to-project">From notebook to project</a></li>
+  <li><a href="#deploy-it-to-hugging-face-spaces" id="toc-deploy-it-to-hugging-face-spaces" class="nav-link" data-scroll-target="#deploy-it-to-hugging-face-spaces">Deploy it to Hugging Face Spaces</a></li>
+  <li><a href="#slides" id="toc-slides" class="nav-link" data-scroll-target="#slides">Slides</a></li>
   </ul>
 </nav>
     </div>
@@ -267,31 +268,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 └── support_agent/                        the project skeleton (end of class)</code></pre>
 <section id="get-todays-files" class="level2">
 <h2 class="anchored" data-anchor-id="get-todays-files">Get today’s files</h2>
-<p>From your course project folder (<code>agentic-ai-course</code>), in the VS Code terminal: ::: {.panel-tabset} ## macOS</p>
+<p>From your course project folder (<code>agentic-ai-course</code>), in the VS Code terminal:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">macOS</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Linux</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> lecture-files</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> lecture-files/W03b W03b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="windows" class="level2">
-<h2 class="anchored" data-anchor-id="windows">Windows</h2>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> lecture-files</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>git pull</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> <span class="op">..</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Copy-Item</span> <span class="op">-</span>Recurse lecture-files<span class="op">/</span>W03b W03b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="linux" class="level2">
-<h2 class="anchored" data-anchor-id="linux">Linux</h2>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> lecture-files</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> lecture-files/W03b W03b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>::: Then open the notebook from your <code>W03b</code> copy, not from <code>lecture-files</code>, and select the <code>.venv</code> kernel. One new package this week (for the optional OpenRouter model): from anywhere,</p>
+</div>
+</div>
+</div>
+<p>Then open the notebook from your <code>W03b</code> copy, not from <code>lecture-files</code>, and select the <code>.venv</code> kernel. One new package this week (for the optional OpenRouter model): from anywhere,</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> pip install langchain-openrouter</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>or re-run <code>uv pip install -r lecture-files/requirements.txt</code>, which now includes it. ## From notebook to project At the end of class we move the working code out of the notebook and into <code>support_agent/</code>, file by file. The transfer map is in <code>support_agent/README.md</code>: each notebook section has exactly one destination file. When the transfer is complete, both of these work from inside <code>support_agent/</code>:</p>
+<p>or re-run <code>uv pip install -r lecture-files/requirements.txt</code>, which now includes it.</p>
+</section>
+<section id="from-notebook-to-project" class="level2">
+<h2 class="anchored" data-anchor-id="from-notebook-to-project">From notebook to project</h2>
+<p>At the end of class we move the working code out of the notebook and into <code>support_agent/</code>, file by file. The transfer map is in <code>support_agent/README.md</code>: each notebook section has exactly one destination file. When the transfer is complete, both of these work from inside <code>support_agent/</code>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> agent.agent     <span class="co"># command-line chat; 'quit' files the ticket</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> app.py             <span class="co"># the same agent behind a chat window</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If <code>python -m agent.agent</code> errors with an import problem, you are probably running <code>python agent/agent.py</code> instead — the <code>-m</code> module form is required, from the project folder. ## Deploy it to Hugging Face Spaces The finished project runs on the public internet in about five minutes, for free. 1. Create an account at <a href="https://huggingface.co">huggingface.co</a> if you do not have one. 2. Go to <a href="https://huggingface.co/new-space">huggingface.co/new-space</a>: SDK <strong>Gradio</strong>, visibility <strong>Public</strong>. Pick <strong>CPU basic</strong> hardware if your account offers it; if only ZeroGPU is available, that works too — <code>app.py</code> already registers a decoy <code>@spaces.GPU</code> function so ZeroGPU’s startup check passes (this app never touches a GPU). 3. Upload the <strong>contents</strong> of <code>support_agent/</code> — drag and drop under the Files tab, or <code>git push</code> to the Space’s repo. The configuration block at the top of <code>README.md</code> tells Spaces to serve <code>app.py</code>. 4. In the Space’s <strong>Settings</strong>, under Variables and secrets, add <code>GOOGLE_API_KEY</code> as a <strong>secret</strong>. It reaches the app as an environment variable; the code picks it up with no changes. 5. Wait for the build, then open the Space and talk to your agent. Three things to know: - <strong>Never put the key in any uploaded file.</strong> The secret store is the only place it belongs. A key committed to a public Space is a key you must revoke. - Free Spaces <strong>sleep after about two days idle</strong> and take up to a minute to wake. - The Space is public: anyone with the link chats on your API quota. Fine for a demo; take it down or rotate the key when you are done showing it off. ## Slides <a href="week3b-slides.html">Tools decide, or the model decides?</a> — the design rules of thumb from today’s discussion.</p>
+<p>If <code>python -m agent.agent</code> errors with an import problem, you are probably running <code>python agent/agent.py</code> instead — the <code>-m</code> module form is required, from the project folder.</p>
+</section>
+<section id="deploy-it-to-hugging-face-spaces" class="level2">
+<h2 class="anchored" data-anchor-id="deploy-it-to-hugging-face-spaces">Deploy it to Hugging Face Spaces</h2>
+<p>The finished project runs on the public internet in about five minutes, for free.</p>
+<ol type="1">
+<li>Create an account at <a href="https://huggingface.co">huggingface.co</a> if you do not have one.</li>
+<li>Go to <a href="https://huggingface.co/new-space">huggingface.co/new-space</a>: SDK <strong>Gradio</strong>, visibility <strong>Public</strong>. Pick <strong>CPU basic</strong> hardware if your account offers it; if only ZeroGPU is available, that works too — <code>app.py</code> already registers a decoy <code>@spaces.GPU</code> function so ZeroGPU’s startup check passes (this app never touches a GPU).</li>
+<li>Upload the <strong>contents</strong> of <code>support_agent/</code> — drag and drop under the Files tab, or <code>git push</code> to the Space’s repo. The configuration block at the top of <code>README.md</code> tells Spaces to serve <code>app.py</code>.</li>
+<li>In the Space’s <strong>Settings</strong>, under Variables and secrets, add <code>GOOGLE_API_KEY</code> as a <strong>secret</strong>. It reaches the app as an environment variable; the code picks it up with no changes.</li>
+<li>Wait for the build, then open the Space and talk to your agent.</li>
+</ol>
+<p>Three things to know:</p>
+<ul>
+<li><strong>Never put the key in any uploaded file.</strong> The secret store is the only place it belongs. A key committed to a public Space is a key you must revoke.</li>
+<li>Free Spaces <strong>sleep after about two days idle</strong> and take up to a minute to wake.</li>
+<li>The Space is public: anyone with the link chats on your API quota. Fine for a demo; take it down or rotate the key when you are done showing it off.</li>
+</ul>
+</section>
+<section id="slides" class="level2">
+<h2 class="anchored" data-anchor-id="slides">Slides</h2>
+<p><a href="week3b-slides.html">Tools decide, or the model decides?</a> — the design rules of thumb from today’s discussion.</p>
 
 
 </section>
