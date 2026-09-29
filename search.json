@@ -1,5 +1,49 @@
 [
   {
+    "objectID": "week4a.html",
+    "href": "week4a.html",
+    "title": "Week 4a — LangGraph Basics",
+    "section": "",
+    "text": "Today’s folder has one notebook and the diagrams it displays.",
+    "crumbs": [
+      "Week 4 — LangGraph",
+      "Week 4a · LangGraph Basics"
+    ]
+  },
+  {
+    "objectID": "week4a.html#get-todays-files",
+    "href": "week4a.html#get-todays-files",
+    "title": "Week 4a — LangGraph Basics",
+    "section": "Get today’s files",
+    "text": "Get today’s files\nFrom your course project folder (agentic-ai-course), in the VS Code terminal:\n\nmacOSWindowsLinux\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W04a W04a\n\n\ncd lecture-files\ngit pull\ncd ..\nCopy-Item -Recurse lecture-files/W04a W04a\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W04a W04a\n\n\n\nThen open the notebook from your W04a copy, not from lecture-files, and select the .venv kernel.\nNo new packages this week — langgraph is already in lecture-files/requirements.txt from the Week 2b setup.",
+    "crumbs": [
+      "Week 4 — LangGraph",
+      "Week 4a · LangGraph Basics"
+    ]
+  },
+  {
+    "objectID": "week4a.html#deploying-an-app-on-render.com",
+    "href": "week4a.html#deploying-an-app-on-render.com",
+    "title": "Week 4a — LangGraph Basics",
+    "section": "Deploying an app on Render.com",
+    "text": "Deploying an app on Render.com\nYour DADA1 agent has to run somewhere other than your laptop. Render will do it for free, from a GitHub repository.\n\nThree changes before it will run there\nYour app runs on a machine you do not control, and two things that are true on your laptop stop being true there.\nListen where Render can reach you. demo.launch() with no arguments binds to 127.0.0.1 on port 7860 — reachable from your own browser, invisible to everything else. Render assigns a port in the PORT environment variable and expects the process on 0.0.0.0:\nimport os\n\ndemo.launch(server_name=\"0.0.0.0\",\n            server_port=int(os.environ.get(\"PORT\", 7860)))\nSkip this and the build succeeds, then the deploy fails with no open ports detected. It reads like a network problem and is not one.\nList every package you import. The Week 3b requirements.txt deliberately leaves gradio out, because Hugging Face Spaces supplies its own. Render supplies nothing, so gradio&gt;=5 has to be in the file or the app dies at import with ModuleNotFoundError.\nKeep .env out of the repository. If the project has no .gitignore, add one before the first commit:\n.env\n__pycache__/\n*.pyc\nThe DADA1 project already has all three: app.py binds correctly, requirements.txt is complete, and there is a .gitignore. The Week 3b support agent has none of them, which is what we fix in class.\n\n\nSign in to GitHub from the terminal\nGitHub stopped accepting passwords for git operations years ago, so the first git push from a new machine fails unless something is holding a credential for you. The least painful fix is GitHub’s own command-line tool, which signs you in through the browser and then hands the credential to git — after which pushing works from the VS Code terminal and from the Source Control panel, without either asking you again.\nInstall it:\n\nmacOSWindowsLinux\n\n\nbrew install gh\nNo Homebrew? Download the installer from cli.github.com.\n\n\nwinget install --id GitHub.cli\nThen close and reopen the terminal so gh is on your PATH.\n\n\nsudo apt install gh\nIf your distribution’s gh is missing or ancient, follow the install instructions.\n\n\n\nThen, once:\ngh auth login\nAnswer GitHub.com, then HTTPS, then Login with a web browser. It prints a one-time code, opens GitHub, and you paste the code there. When it asks whether to authenticate git with your GitHub credentials, say yes — that is the step that makes git push work.\nIf you skipped that last prompt, or you are not sure:\ngh auth setup-git     # wires gh in as git's credential helper\ngh auth status        # shows who you are signed in as\nYou only do this once per machine. Everything after it is ordinary git push.\n\n\nPush it to GitHub\nRender deploys from a repo, so that comes first. Your DADA1 folder becomes the repository — not lecture-files, which is shared and read-only:\ncd DADA1\ngit init\ngit add .\ngit status          # check that .env is NOT in this list\ngit commit -m \"DADA1 trip planner agent\"\nThen create an empty repository on GitHub, private, and push to it. Render reads private repositories once you connect your GitHub account, and a public repository holding your solution is an honour-code problem.\n\n\nCreate the service\n\nSign in at render.com with your GitHub account.\nNew → Web Service, then pick your repository. Grant Render access to it if prompted.\nSet these, taking care with the first one:\n\nRoot Directory: trip_planner — your app sits one level below the repository root, and Render looks in the root unless you tell it otherwise.\nBuild command: pip install -r requirements.txt\nStart command: python app.py\nInstance type: Free.\n\nUnder Environment, add GOOGLE_API_KEY, TAVILY_API_KEY and TICKETMASTER_API_KEY as environment variables.\nCreate the service and watch the log. The first build takes a few minutes.\n\nFour things to know:\n\nKeys go in Render’s environment variables, never in the repository. Anything committed to git stays in the history even after you delete the file, so a key that reaches GitHub has to be revoked, not removed.\nRoot Directory is where most first deploys fail. If the log says it cannot find requirements.txt, this is why. It lives under Advanced when you create the service, and under Settings → Build & Deploy afterwards.\nA deploy that builds and then dies is usually the port. See the first of the three changes above; it is the most common way a working app fails to come up here.\nFree services sleep after about fifteen minutes idle, and the next request waits thirty seconds or so while it wakes. Send your own app a request now and then in the days before it is graded, and say so in your README — a sleeping app looks like a broken one.",
+    "crumbs": [
+      "Week 4 — LangGraph",
+      "Week 4a · LangGraph Basics"
+    ]
+  },
+  {
+    "objectID": "week4a.html#slides",
+    "href": "week4a.html#slides",
+    "title": "Week 4a — LangGraph Basics",
+    "section": "Slides",
+    "text": "Slides\nWhy LangGraph? — the pieces underneath create_agent.",
+    "crumbs": [
+      "Week 4 — LangGraph",
+      "Week 4a · LangGraph Basics"
+    ]
+  },
+  {
     "objectID": "week3b.html",
     "href": "week3b.html",
     "title": "Week 3b — The Customer Support Agent",
@@ -362,5 +406,110 @@
     "title": "Tools decide, or the model decides?",
     "section": "Motivation",
     "text": "Motivation\nEvery agent splits its work between two workers: - code, which is exact, repeatable, and auditable - the model, which is flexible, contextual, and probabilistic Where you draw that line is most of agent design. Today’s version of the question: why does check_return_eligibility compute the verdict itself, instead of handing the model the number of days? ## Rule 1: Policy lives in code If a rule fits in an if statement and being wrong has a cost, the if belongs in the tool.\nif days &lt;= RETURN_POLICY_DAYS:\n    return \"Eligible: ...\"\n\nThe model applies “within 30 days” usually correctly. Code applies it always.\nBoundaries are where models slip: day 30 vs 31, “about a month, close enough.”\nWhen the policy changes to 60 days, you edit one constant — not a prompt, not the model’s habits. ## Rule 2: Judgment lives in the model Some decisions no if statement can express. Those belong to the model:\nwhat the customer is actually asking\nwhich tool fits the question\nwhen to try again, and when to stop and explain\ntone: how to deliver a “no” If you find yourself writing prompt rules that read like code, move them into code. If you find yourself writing code that guesses at meaning, hand it to the model. ## Rule 3: Return facts and verdicts\n\nEligible: delivered 15 days ago; returns are\naccepted within 30 days of delivery.\n\nThe verdict enforces the rule: not negotiable, identical every run.\nThe facts keep the model flexible: it can still answer “when did it arrive?” A tool that returns only a verdict starves the model. A tool that returns only facts outsources the policy. ## Rule 4: Tools are pressure-proof Customer: “Come on, it’s barely been a month. Make an exception.”\nA rule in the prompt is a request. A sympathetic model can bend it.\nA rule in the tool is enforcement. The model can only relay the verdict — and apologize. Same principle as a read-only database tool: the model is never asked nicely not to write. It cannot. ## Rule 5: Tool responses steer the model The docstring decides whether a tool gets called. The return string decides what happens next.\n\n0 trips matched. A filter value is probably spelled\ndifferently — call get_column_values to see what\nis actually in the data.\nA tool that returns 0 teaches the model nothing. Error messages, warnings, and hints in return strings are prompts — write them like you mean it. ## Rule 6: Tools stand alone check_return_eligibility looks the order up itself (it has two “redundant” lines) because the model may call it first, with no lookup before it. - Every tool fetches what it needs and validates its own inputs. - No tool assumes another ran before it. - Couple tools through shared state only when you must — and then pay for it: extra docstring rules, new failure modes. ## Examples | Task | Who decides | |—|—| | Parse a date, compute day differences | tool | | Is this order eligible for a return? | tool | | Which tool fits this question? | model | | Enforce read-only, row limits, timeouts | tool | | How to phrase the refusal | model | | When is the conversation answered? | model | | How many tool calls is too many? | code (a budget) | ## In summary The model proposes; the runtime disposes. Code owns everything you cannot afford to have improvised. The model owns everything you could not have scripted."
+  },
+  {
+    "objectID": "week4a-slides.html#where-we-are",
+    "href": "week4a-slides.html#where-we-are",
+    "title": "Why LangGraph?",
+    "section": "Where we are",
+    "text": "Where we are\nSince Week 2 we have written agents like this:\nagent = create_agent(model=model, tools=TOOLS,\n                     system_prompt=SYSTEM_PROMPT,\n                     checkpointer=InMemorySaver())\nOne call gives us the whole loop: the model proposes a tool call, the runtime executes it, the result goes back, and round it goes until the model answers in words.\nWe have used that loop. We have not yet been able to change it."
+  },
+  {
+    "objectID": "week4a-slides.html#four-things-we-cannot-ask-it-for",
+    "href": "week4a-slides.html#four-things-we-cannot-ask-it-for",
+    "title": "Why LangGraph?",
+    "section": "Four things we cannot ask it for",
+    "text": "Four things we cannot ask it for\n\nCheck the model’s proposed tool call before it runs, and refuse some of them\nBranch on something other than a tool call — the customer’s tier, the length of the conversation\nRun two lookups at once and combine the results\nStop, wait for a person to approve something, and pick up where we left off\n\nNone of these is exotic; each is ordinary in an application people actually use. And none of them is a parameter of create_agent."
+  },
+  {
+    "objectID": "week4a-slides.html#the-same-library-one-level-down",
+    "href": "week4a-slides.html#the-same-library-one-level-down",
+    "title": "Why LangGraph?",
+    "section": "The same library, one level down",
+    "text": "The same library, one level down\ncreate_agent is not a different technology. It builds a LangGraph graph and runs it, and that graph is available to us directly.\nThree elements, and only three:\n\nState — the data the graph carries\nNodes — functions that read state and return an update\nEdges — what runs next\n\nWe’ll take each one in turn, and then put them together."
+  },
+  {
+    "objectID": "week4a-slides.html#state-one-dict-shared",
+    "href": "week4a-slides.html#state-one-dict-shared",
+    "title": "Why LangGraph?",
+    "section": "State: one dict, shared",
+    "text": "State: one dict, shared\nState is a dictionary, described with a TypedDict so the keys are declared:\nclass SupportState(TypedDict):\n    message: str\n    reply: str\nEvery node receives the whole state. No node receives arguments of its own, and there are no globals — if a node needs something, it must be in the state."
+  },
+  {
+    "objectID": "week4a-slides.html#nodes-return-updates-not-state",
+    "href": "week4a-slides.html#nodes-return-updates-not-state",
+    "title": "Why LangGraph?",
+    "section": "Nodes return updates, not state",
+    "text": "Nodes return updates, not state\nA node returns only the keys it changed:\ndef billing(state: SupportState) -&gt; dict:\n    return {\"reply\": \"Billing team: we will review the charge.\"}\nIt never touches message, so it does not mention it. LangGraph merges the update into the state for us.\nNote what a node is: a plain function. No decorator, no base class. Anything you can write in Python can be a node."
+  },
+  {
+    "objectID": "week4a-slides.html#how-updates-combine",
+    "href": "week4a-slides.html#how-updates-combine",
+    "title": "Why LangGraph?",
+    "section": "How updates combine",
+    "text": "How updates combine\nBy default a key is overwritten — the last write wins:\ndef n1(s): return {\"items\": [\"a\"]}\ndef n2(s): return {\"items\": [\"b\"]}\n# after n1 then n2:  {\"items\": [\"b\"]}\nFor most keys that is what we want. For a conversation it is a disaster: each model reply would erase everything said before it."
+  },
+  {
+    "objectID": "week4a-slides.html#reducers",
+    "href": "week4a-slides.html#reducers",
+    "title": "Why LangGraph?",
+    "section": "Reducers",
+    "text": "Reducers\nA reducer is a rule attached to a key saying how an update combines with what is there:\nclass MessagesState(TypedDict):\n    messages: Annotated[list[AnyMessage], add_messages]\nadd_messages appends rather than replaces. MessagesState is built in, and it is the state every agent we write from here on will use.\nOne detail worth knowing: if an incoming message carries the same id as one already in the list, add_messages replaces it instead of appending. That is how a message gets edited in place."
+  },
+  {
+    "objectID": "week4a-slides.html#edges-the-fixed-kind",
+    "href": "week4a-slides.html#edges-the-fixed-kind",
+    "title": "Why LangGraph?",
+    "section": "Edges: the fixed kind",
+    "text": "Edges: the fixed kind\nbuilder.add_edge(\"write_joke\", \"improve_joke\")\nThe route was decided when we drew the edge. Whatever the state says, improve_joke runs next.\nA graph of only fixed edges is a workflow: the model does the writing, but it makes no decisions about what happens next."
+  },
+  {
+    "objectID": "week4a-slides.html#edges-the-conditional-kind",
+    "href": "week4a-slides.html#edges-the-conditional-kind",
+    "title": "Why LangGraph?",
+    "section": "Edges: the conditional kind",
+    "text": "Edges: the conditional kind\nA conditional edge hands the decision to a function:\ndef route(state: SupportState) -&gt; Literal[\"billing\", \"general\"]:\n    text = state[\"message\"].lower()\n    if any(w in text for w in [\"refund\", \"charge\", \"payment\"]):\n        return \"billing\"\n    return \"general\"\n\nbuilder.add_conditional_edges(START, route)\nThe function reads the state and names the node to run next. Now the path is chosen while the graph runs, not while we write it."
+  },
+  {
+    "objectID": "week4a-slides.html#that-annotation-is-doing-work",
+    "href": "week4a-slides.html#that-annotation-is-doing-work",
+    "title": "Why LangGraph?",
+    "section": "That annotation is doing work",
+    "text": "That annotation is doing work\ndef route(state) -&gt; Literal[\"billing\", \"general\"]:\nLangGraph reads the return type to learn which nodes this edge can reach. That is how it draws the branches.\nReplace it with -&gt; str and the router still works perfectly — while the diagram quietly collapses to a single arrow from start to end. The code is right and the picture is a lie.\nThe alternative is to pass the destinations explicitly:\nbuilder.add_conditional_edges(START, route,\n                              {\"billing_query\": \"billing\",\n                               \"general_query\": \"general\"})\nUse that form when the string the function returns is not a node name."
+  },
+  {
+    "objectID": "week4a-slides.html#start-and-end",
+    "href": "week4a-slides.html#start-and-end",
+    "title": "Why LangGraph?",
+    "section": "START and END",
+    "text": "START and END\nbuilder.add_edge(START, \"router\")\nbuilder.add_edge(\"billing\", END)\nTwo markers, not functions of ours. START is where the input enters, END is where the graph stops. A node with no path to END runs forever."
+  },
+  {
+    "objectID": "week4a-slides.html#compile-then-run",
+    "href": "week4a-slides.html#compile-then-run",
+    "title": "Why LangGraph?",
+    "section": "Compile, then run",
+    "text": "Compile, then run\ngraph = builder.compile()\ngraph.invoke({\"message\": \"I want a refund\"})\ncompile() checks the graph — unreachable nodes, edges to names that do not exist — and returns something runnable. It is also the moment a checkpointer is attached.\ninvoke returns the final state. stream gives it to us step by step, which is how we watch a graph make its decisions:\nfor chunk in graph.stream(state, stream_mode=\"values\"):\n    print(chunk)"
+  },
+  {
+    "objectID": "week4a-slides.html#a-router-is-still-not-an-agent",
+    "href": "week4a-slides.html#a-router-is-still-not-an-agent",
+    "title": "Why LangGraph?",
+    "section": "A router is still not an agent",
+    "text": "A router is still not an agent\nOur router decides once, on the way in, and then the work runs to completion.\nAn agent decides, acts, looks at what came back, and decides again. That is a cycle — the graph returns to a node it has already visited, and the model’s tool calls are the routing signal.\nCycles are the reason this is a graph library and not a chain library. We build one in the next notebook."
+  },
+  {
+    "objectID": "week4a-slides.html#when-to-use-which",
+    "href": "week4a-slides.html#when-to-use-which",
+    "title": "Why LangGraph?",
+    "section": "When to use which",
+    "text": "When to use which\ncreate_agent is not deprecated by any of this. For a straightforward tool-using agent it is the right call, and it is less code to get wrong.\nReach for the graph when you need what it cannot give you: a check between the model and a tool, branching on something other than a tool call, parallel work, or a pause for human approval.\nKnowing the graph also means that when create_agent misbehaves, we know what it is doing."
+  },
+  {
+    "objectID": "week4a-slides.html#in-summary",
+    "href": "week4a-slides.html#in-summary",
+    "title": "Why LangGraph?",
+    "section": "In summary",
+    "text": "In summary\n\nState is a shared dict; nodes return only what they changed\nReducers decide how updates combine — appending for messages, overwriting for everything else\nFixed edges make a workflow; conditional edges make a decision\nCycles are what turn a workflow into an agent"
   }
 ]
