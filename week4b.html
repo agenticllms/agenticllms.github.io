@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Week 4a — LangGraph Basics – Agentic AI - Fall 2026 | Northeastern CS</title>
+<title>Week 4b — The Customer Support Agent in LangGraph – Agentic AI - Fall 2026 | Northeastern CS</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -133,7 +133,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week4a.html">Week 4 — LangGraph</a></li><li class="breadcrumb-item"><a href="./week4a.html">Week 4a · LangGraph Basics</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week4a.html">Week 4 — LangGraph</a></li><li class="breadcrumb-item"><a href="./week4b.html">Week 4b · Customer Support Agent</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -231,13 +231,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./week4a.html" class="sidebar-item-text sidebar-link active">
+  <a href="./week4a.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Week 4a · LangGraph Basics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./week4b.html" class="sidebar-item-text sidebar-link">
+  <a href="./week4b.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Week 4b · Customer Support Agent</span></a>
   </div>
 </li>
@@ -254,23 +254,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#get-todays-files" id="toc-get-todays-files" class="nav-link active" data-scroll-target="#get-todays-files">Get today’s files</a></li>
-  <li><a href="#deploying-an-app-on-render.com" id="toc-deploying-an-app-on-render.com" class="nav-link" data-scroll-target="#deploying-an-app-on-render.com">Deploying an app on Render.com</a>
-  <ul class="collapse">
-  <li><a href="#three-changes-before-it-will-run-there" id="toc-three-changes-before-it-will-run-there" class="nav-link" data-scroll-target="#three-changes-before-it-will-run-there">Three changes before it will run there</a></li>
-  <li><a href="#sign-in-to-github-from-the-terminal" id="toc-sign-in-to-github-from-the-terminal" class="nav-link" data-scroll-target="#sign-in-to-github-from-the-terminal">Sign in to GitHub from the terminal</a></li>
-  <li><a href="#push-it-to-github" id="toc-push-it-to-github" class="nav-link" data-scroll-target="#push-it-to-github">Push it to GitHub</a></li>
-  <li><a href="#create-the-service" id="toc-create-the-service" class="nav-link" data-scroll-target="#create-the-service">Create the service</a></li>
-  </ul></li>
-  <li><a href="#slides" id="toc-slides" class="nav-link" data-scroll-target="#slides">Slides</a></li>
+  <li><a href="#the-tools-come-from-a-file-this-time" id="toc-the-tools-come-from-a-file-this-time" class="nav-link" data-scroll-target="#the-tools-come-from-a-file-this-time">The tools come from a file this time</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week4a.html">Week 4 — LangGraph</a></li><li class="breadcrumb-item"><a href="./week4a.html">Week 4a · LangGraph Basics</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week4a.html">Week 4 — LangGraph</a></li><li class="breadcrumb-item"><a href="./week4b.html">Week 4b · Customer Support Agent</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Week 4a — LangGraph Basics</h1>
+<h1 class="title">Week 4b — The Customer Support Agent in LangGraph</h1>
 <p class="subtitle lead">Pull today’s files</p>
 </div>
 
@@ -288,10 +281,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Today’s folder has one notebook and the diagrams it displays.</p>
-<pre><code>W04a/
-├── W04a.1_LangGraph_Basics.ipynb    the class notebook
-└── figures/                         diagrams the notebook displays</code></pre>
+<p>Today’s folder has two notebooks and the files they share.</p>
+<pre><code>W04b/
+├── W04b.1_Messages_Tools_State.ipynb     messages, tools, and graph state
+├── W04b.2_CustomerSupport_Agent.ipynb    the agent itself
+├── support_tools.py                      the four Husky Tech tools and the system prompt
+├── agentui.py                            the chat UI from W03a
+└── figures/                              the diagram the second notebook displays</code></pre>
 <section id="get-todays-files" class="level2">
 <h2 class="anchored" data-anchor-id="get-todays-files">Get today’s files</h2>
 <p>From your course project folder (<code>agentic-ai-course</code>), in the VS Code terminal:</p>
@@ -302,110 +298,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> lecture-files</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> lecture-files/W04a W04a</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> lecture-files/W04b W04b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> lecture-files</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>git pull</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> <span class="op">..</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Copy-Item</span> <span class="op">-</span>Recurse lecture-files<span class="op">/</span>W04a W04a</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Copy-Item</span> <span class="op">-</span>Recurse lecture-files<span class="op">/</span>W04b W04b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> lecture-files</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> lecture-files/W04a W04a</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> lecture-files/W04b W04b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
-<p>Then open the notebook from your <code>W04a</code> copy, not from <code>lecture-files</code>, and select the <code>.venv</code> kernel.</p>
-<p>No new packages this week — <code>langgraph</code> is already in <code>lecture-files/requirements.txt</code> from the Week 2b setup.</p>
+<p>Then open the notebooks from your <code>W04b</code> copy, not from <code>lecture-files</code>, and select the <code>.venv</code> kernel. Work through <code>W04b.1</code> first. The second notebook starts where the first one stops.</p>
+<p>No new packages this week.</p>
 </section>
-<section id="deploying-an-app-on-render.com" class="level2">
-<h2 class="anchored" data-anchor-id="deploying-an-app-on-render.com">Deploying an app on Render.com</h2>
-<p>Your DADA1 agent has to run somewhere other than your laptop. <a href="https://render.com">Render</a> will do it for free, from a GitHub repository.</p>
-<section id="three-changes-before-it-will-run-there" class="level3">
-<h3 class="anchored" data-anchor-id="three-changes-before-it-will-run-there">Three changes before it will run there</h3>
-<p>Your app runs on a machine you do not control, and two things that are true on your laptop stop being true there.</p>
-<p><strong>Listen where Render can reach you.</strong> <code>demo.launch()</code> with no arguments binds to <code>127.0.0.1</code> on port 7860 — reachable from your own browser, invisible to everything else. Render assigns a port in the <code>PORT</code> environment variable and expects the process on <code>0.0.0.0</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>demo.launch(server_name<span class="op">=</span><span class="st">"0.0.0.0"</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>            server_port<span class="op">=</span><span class="bu">int</span>(os.environ.get(<span class="st">"PORT"</span>, <span class="dv">7860</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Skip this and the build succeeds, then the deploy fails with <em>no open ports detected</em>. It reads like a network problem and is not one.</p>
-<p><strong>List every package you import.</strong> The Week 3b <code>requirements.txt</code> deliberately leaves <code>gradio</code> out, because Hugging Face Spaces supplies its own. Render supplies nothing, so <code>gradio&gt;=5</code> has to be in the file or the app dies at import with <code>ModuleNotFoundError</code>.</p>
-<p><strong>Keep <code>.env</code> out of the repository.</strong> If the project has no <code>.gitignore</code>, add one before the first commit:</p>
-<pre><code>.env
-__pycache__/
-*.pyc</code></pre>
-<p>The DADA1 project already has all three: <code>app.py</code> binds correctly, <code>requirements.txt</code> is complete, and there is a <code>.gitignore</code>. The Week 3b support agent has none of them, which is what we fix in class.</p>
-</section>
-<section id="sign-in-to-github-from-the-terminal" class="level3">
-<h3 class="anchored" data-anchor-id="sign-in-to-github-from-the-terminal">Sign in to GitHub from the terminal</h3>
-<p>GitHub stopped accepting passwords for git operations years ago, so the first <code>git push</code> from a new machine fails unless something is holding a credential for you. The least painful fix is GitHub’s own command-line tool, which signs you in through the browser and then hands the credential to git — after which pushing works from the VS Code terminal and from the Source Control panel, without either asking you again.</p>
-<p>Install it:</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">macOS</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">Linux</a></li></ul>
-<div class="tab-content">
-<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install gh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>No Homebrew? Download the installer from <a href="https://cli.github.com">cli.github.com</a>.</p>
-</div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>winget install <span class="op">--</span>id GitHub<span class="op">.</span><span class="fu">cli</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Then close and reopen the terminal so <code>gh</code> is on your PATH.</p>
-</div>
-<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install gh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If your distribution’s <code>gh</code> is missing or ancient, follow the <a href="https://github.com/cli/cli/blob/trunk/docs/install_linux.md">install instructions</a>.</p>
-</div>
-</div>
-</div>
-<p>Then, once:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gh</span> auth login</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Answer <strong>GitHub.com</strong>, then <strong>HTTPS</strong>, then <strong>Login with a web browser</strong>. It prints a one-time code, opens GitHub, and you paste the code there. When it asks whether to authenticate git with your GitHub credentials, say yes — that is the step that makes <code>git push</code> work.</p>
-<p>If you skipped that last prompt, or you are not sure:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gh</span> auth setup-git     <span class="co"># wires gh in as git's credential helper</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">gh</span> auth status        <span class="co"># shows who you are signed in as</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You only do this once per machine. Everything after it is ordinary <code>git push</code>.</p>
-</section>
-<section id="push-it-to-github" class="level3">
-<h3 class="anchored" data-anchor-id="push-it-to-github">Push it to GitHub</h3>
-<p>Render deploys from a repo, so that comes first. Your <code>DADA1</code> folder becomes the repository — not <code>lecture-files</code>, which is shared and read-only:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> DADA1</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status          <span class="co"># check that .env is NOT in this list</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"DADA1 trip planner agent"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Then create an empty repository on GitHub, <strong>private</strong>, and push to it. Render reads private repositories once you connect your GitHub account, and a public repository holding your solution is an honour-code problem.</p>
-</section>
-<section id="create-the-service" class="level3">
-<h3 class="anchored" data-anchor-id="create-the-service">Create the service</h3>
-<ol type="1">
-<li>Sign in at <a href="https://render.com">render.com</a> with your GitHub account.</li>
-<li><strong>New → Web Service</strong>, then pick your repository. Grant Render access to it if prompted.</li>
-<li>Set these, taking care with the first one:
-<ul>
-<li><strong>Root Directory:</strong> <code>trip_planner</code> — your app sits one level below the repository root, and Render looks in the root unless you tell it otherwise.</li>
-<li><strong>Build command:</strong> <code>pip install -r requirements.txt</code></li>
-<li><strong>Start command:</strong> <code>python app.py</code></li>
-<li><strong>Instance type:</strong> Free.</li>
-</ul></li>
-<li>Under <strong>Environment</strong>, add <code>GOOGLE_API_KEY</code>, <code>TAVILY_API_KEY</code> and <code>TICKETMASTER_API_KEY</code> as environment variables.</li>
-<li>Create the service and watch the log. The first build takes a few minutes.</li>
-</ol>
-<p>Four things to know:</p>
-<ul>
-<li><strong>Keys go in Render’s environment variables, never in the repository.</strong> Anything committed to git stays in the history even after you delete the file, so a key that reaches GitHub has to be revoked, not removed.</li>
-<li><strong><code>Root Directory</code> is where most first deploys fail.</strong> If the log says it cannot find <code>requirements.txt</code>, this is why. It lives under Advanced when you create the service, and under Settings → Build &amp; Deploy afterwards.</li>
-<li><strong>A deploy that builds and then dies is usually the port.</strong> See the first of the three changes above; it is the most common way a working app fails to come up here.</li>
-<li><strong>Free services sleep after about fifteen minutes idle</strong>, and the next request waits thirty seconds or so while it wakes. Send your own app a request now and then in the days before it is graded, and say so in your README — a sleeping app looks like a broken one.</li>
-</ul>
-</section>
-</section>
-<section id="slides" class="level2">
-<h2 class="anchored" data-anchor-id="slides">Slides</h2>
-<p><a href="week4a-slides.html">Why LangGraph?</a> — the pieces underneath <code>create_agent</code>.</p>
+<section id="the-tools-come-from-a-file-this-time" class="level2">
+<h2 class="anchored" data-anchor-id="the-tools-come-from-a-file-this-time">The tools come from a file this time</h2>
+<p>Both notebooks begin with a line like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> support_tools <span class="im">import</span> TOOLS, SYSTEM_PROMPT</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>These are the four tools you wrote in W03b, moved into <code>support_tools.py</code> so the notebooks can stay about the graph. Open that file and read it before you start. Nothing in it is new, but two things are worth looking at again now that the graph is the subject: every tool returns a readable string instead of raising, and every docstring is written for the model that has to choose between them.</p>
+<p><strong>If you edit <code>support_tools.py</code>, restart the kernel.</strong> Python imports a module once per session and then serves the cached copy, so a tool you add or change will not appear and you will see an <code>ImportError</code> for something you are looking at in the editor. Restarting the kernel is the fix. If you would rather not lose your other variables:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> importlib, support_tools</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(support_tools)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 
 </section>

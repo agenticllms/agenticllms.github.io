@@ -1,411 +1,36 @@
 [
   {
-    "objectID": "week4a.html",
-    "href": "week4a.html",
-    "title": "Week 4a — LangGraph Basics",
+    "objectID": "week4b.html",
+    "href": "week4b.html",
+    "title": "Week 4b — The Customer Support Agent in LangGraph",
     "section": "",
-    "text": "Today’s folder has one notebook and the diagrams it displays.",
+    "text": "Today’s folder has two notebooks and the files they share.",
     "crumbs": [
       "Week 4 — LangGraph",
-      "Week 4a · LangGraph Basics"
+      "Week 4b · Customer Support Agent"
     ]
   },
   {
-    "objectID": "week4a.html#get-todays-files",
-    "href": "week4a.html#get-todays-files",
-    "title": "Week 4a — LangGraph Basics",
+    "objectID": "week4b.html#get-todays-files",
+    "href": "week4b.html#get-todays-files",
+    "title": "Week 4b — The Customer Support Agent in LangGraph",
     "section": "Get today’s files",
-    "text": "Get today’s files\nFrom your course project folder (agentic-ai-course), in the VS Code terminal:\n\nmacOSWindowsLinux\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W04a W04a\n\n\ncd lecture-files\ngit pull\ncd ..\nCopy-Item -Recurse lecture-files/W04a W04a\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W04a W04a\n\n\n\nThen open the notebook from your W04a copy, not from lecture-files, and select the .venv kernel.\nNo new packages this week — langgraph is already in lecture-files/requirements.txt from the Week 2b setup.",
+    "text": "Get today’s files\nFrom your course project folder (agentic-ai-course), in the VS Code terminal:\n\nmacOSWindowsLinux\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W04b W04b\n\n\ncd lecture-files\ngit pull\ncd ..\nCopy-Item -Recurse lecture-files/W04b W04b\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W04b W04b\n\n\n\nThen open the notebooks from your W04b copy, not from lecture-files, and select the .venv kernel. Work through W04b.1 first. The second notebook starts where the first one stops.\nNo new packages this week.",
     "crumbs": [
       "Week 4 — LangGraph",
-      "Week 4a · LangGraph Basics"
+      "Week 4b · Customer Support Agent"
     ]
   },
   {
-    "objectID": "week4a.html#deploying-an-app-on-render.com",
-    "href": "week4a.html#deploying-an-app-on-render.com",
-    "title": "Week 4a — LangGraph Basics",
-    "section": "Deploying an app on Render.com",
-    "text": "Deploying an app on Render.com\nYour DADA1 agent has to run somewhere other than your laptop. Render will do it for free, from a GitHub repository.\n\nThree changes before it will run there\nYour app runs on a machine you do not control, and two things that are true on your laptop stop being true there.\nListen where Render can reach you. demo.launch() with no arguments binds to 127.0.0.1 on port 7860 — reachable from your own browser, invisible to everything else. Render assigns a port in the PORT environment variable and expects the process on 0.0.0.0:\nimport os\n\ndemo.launch(server_name=\"0.0.0.0\",\n            server_port=int(os.environ.get(\"PORT\", 7860)))\nSkip this and the build succeeds, then the deploy fails with no open ports detected. It reads like a network problem and is not one.\nList every package you import. The Week 3b requirements.txt deliberately leaves gradio out, because Hugging Face Spaces supplies its own. Render supplies nothing, so gradio&gt;=5 has to be in the file or the app dies at import with ModuleNotFoundError.\nKeep .env out of the repository. If the project has no .gitignore, add one before the first commit:\n.env\n__pycache__/\n*.pyc\nThe DADA1 project already has all three: app.py binds correctly, requirements.txt is complete, and there is a .gitignore. The Week 3b support agent has none of them, which is what we fix in class.\n\n\nSign in to GitHub from the terminal\nGitHub stopped accepting passwords for git operations years ago, so the first git push from a new machine fails unless something is holding a credential for you. The least painful fix is GitHub’s own command-line tool, which signs you in through the browser and then hands the credential to git — after which pushing works from the VS Code terminal and from the Source Control panel, without either asking you again.\nInstall it:\n\nmacOSWindowsLinux\n\n\nbrew install gh\nNo Homebrew? Download the installer from cli.github.com.\n\n\nwinget install --id GitHub.cli\nThen close and reopen the terminal so gh is on your PATH.\n\n\nsudo apt install gh\nIf your distribution’s gh is missing or ancient, follow the install instructions.\n\n\n\nThen, once:\ngh auth login\nAnswer GitHub.com, then HTTPS, then Login with a web browser. It prints a one-time code, opens GitHub, and you paste the code there. When it asks whether to authenticate git with your GitHub credentials, say yes — that is the step that makes git push work.\nIf you skipped that last prompt, or you are not sure:\ngh auth setup-git     # wires gh in as git's credential helper\ngh auth status        # shows who you are signed in as\nYou only do this once per machine. Everything after it is ordinary git push.\n\n\nPush it to GitHub\nRender deploys from a repo, so that comes first. Your DADA1 folder becomes the repository — not lecture-files, which is shared and read-only:\ncd DADA1\ngit init\ngit add .\ngit status          # check that .env is NOT in this list\ngit commit -m \"DADA1 trip planner agent\"\nThen create an empty repository on GitHub, private, and push to it. Render reads private repositories once you connect your GitHub account, and a public repository holding your solution is an honour-code problem.\n\n\nCreate the service\n\nSign in at render.com with your GitHub account.\nNew → Web Service, then pick your repository. Grant Render access to it if prompted.\nSet these, taking care with the first one:\n\nRoot Directory: trip_planner — your app sits one level below the repository root, and Render looks in the root unless you tell it otherwise.\nBuild command: pip install -r requirements.txt\nStart command: python app.py\nInstance type: Free.\n\nUnder Environment, add GOOGLE_API_KEY, TAVILY_API_KEY and TICKETMASTER_API_KEY as environment variables.\nCreate the service and watch the log. The first build takes a few minutes.\n\nFour things to know:\n\nKeys go in Render’s environment variables, never in the repository. Anything committed to git stays in the history even after you delete the file, so a key that reaches GitHub has to be revoked, not removed.\nRoot Directory is where most first deploys fail. If the log says it cannot find requirements.txt, this is why. It lives under Advanced when you create the service, and under Settings → Build & Deploy afterwards.\nA deploy that builds and then dies is usually the port. See the first of the three changes above; it is the most common way a working app fails to come up here.\nFree services sleep after about fifteen minutes idle, and the next request waits thirty seconds or so while it wakes. Send your own app a request now and then in the days before it is graded, and say so in your README — a sleeping app looks like a broken one.",
+    "objectID": "week4b.html#the-tools-come-from-a-file-this-time",
+    "href": "week4b.html#the-tools-come-from-a-file-this-time",
+    "title": "Week 4b — The Customer Support Agent in LangGraph",
+    "section": "The tools come from a file this time",
+    "text": "The tools come from a file this time\nBoth notebooks begin with a line like this:\nfrom support_tools import TOOLS, SYSTEM_PROMPT\nThese are the four tools you wrote in W03b, moved into support_tools.py so the notebooks can stay about the graph. Open that file and read it before you start. Nothing in it is new, but two things are worth looking at again now that the graph is the subject: every tool returns a readable string instead of raising, and every docstring is written for the model that has to choose between them.\nIf you edit support_tools.py, restart the kernel. Python imports a module once per session and then serves the cached copy, so a tool you add or change will not appear and you will see an ImportError for something you are looking at in the editor. Restarting the kernel is the fix. If you would rather not lose your other variables:\nimport importlib, support_tools\nimportlib.reload(support_tools)",
     "crumbs": [
       "Week 4 — LangGraph",
-      "Week 4a · LangGraph Basics"
+      "Week 4b · Customer Support Agent"
     ]
-  },
-  {
-    "objectID": "week4a.html#slides",
-    "href": "week4a.html#slides",
-    "title": "Week 4a — LangGraph Basics",
-    "section": "Slides",
-    "text": "Slides\nWhy LangGraph? — the pieces underneath create_agent.",
-    "crumbs": [
-      "Week 4 — LangGraph",
-      "Week 4a · LangGraph Basics"
-    ]
-  },
-  {
-    "objectID": "week3b.html",
-    "href": "week3b.html",
-    "title": "Week 3b — The Customer Support Agent",
-    "section": "",
-    "text": "Today’s folder has more in it than usual: the notebook we build in class, plus a complete project skeleton you will fill at the end of the session.",
-    "crumbs": [
-      "Week 3 — Building Agents",
-      "Week 3b · Customer Support Agent"
-    ]
-  },
-  {
-    "objectID": "week3b.html#get-todays-files",
-    "href": "week3b.html#get-todays-files",
-    "title": "Week 3b — The Customer Support Agent",
-    "section": "Get today’s files",
-    "text": "Get today’s files\nFrom your course project folder (agentic-ai-course), in the VS Code terminal:\n\nmacOSWindowsLinux\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W03b W03b\n\n\ncd lecture-files\ngit pull\ncd ..\nCopy-Item -Recurse lecture-files/W03b W03b\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W03b W03b\n\n\n\nThen open the notebook from your W03b copy, not from lecture-files, and select the .venv kernel. One new package this week (for the optional OpenRouter model): from anywhere,\nuv pip install langchain-openrouter\nor re-run uv pip install -r lecture-files/requirements.txt, which now includes it.",
-    "crumbs": [
-      "Week 3 — Building Agents",
-      "Week 3b · Customer Support Agent"
-    ]
-  },
-  {
-    "objectID": "week3b.html#from-notebook-to-project",
-    "href": "week3b.html#from-notebook-to-project",
-    "title": "Week 3b — The Customer Support Agent",
-    "section": "From notebook to project",
-    "text": "From notebook to project\nAt the end of class we move the working code out of the notebook and into support_agent/, file by file. The transfer map is in support_agent/README.md: each notebook section has exactly one destination file. When the transfer is complete, both of these work from inside support_agent/:\npython -m agent.agent     # command-line chat; 'quit' files the ticket\npython app.py             # the same agent behind a chat window\nIf python -m agent.agent errors with an import problem, you are probably running python agent/agent.py instead — the -m module form is required, from the project folder.",
-    "crumbs": [
-      "Week 3 — Building Agents",
-      "Week 3b · Customer Support Agent"
-    ]
-  },
-  {
-    "objectID": "week3b.html#deploy-it-to-hugging-face-spaces",
-    "href": "week3b.html#deploy-it-to-hugging-face-spaces",
-    "title": "Week 3b — The Customer Support Agent",
-    "section": "Deploy it to Hugging Face Spaces",
-    "text": "Deploy it to Hugging Face Spaces\nThe finished project runs on the public internet in about five minutes, for free.\n\nCreate an account at huggingface.co if you do not have one.\nGo to huggingface.co/new-space: SDK Gradio, visibility Public. Pick CPU basic hardware if your account offers it; if only ZeroGPU is available, that works too — app.py already registers a decoy @spaces.GPU function so ZeroGPU’s startup check passes (this app never touches a GPU).\nUpload the contents of support_agent/ — drag and drop under the Files tab, or git push to the Space’s repo. The configuration block at the top of README.md tells Spaces to serve app.py.\nIn the Space’s Settings, under Variables and secrets, add GOOGLE_API_KEY as a secret. It reaches the app as an environment variable; the code picks it up with no changes.\nWait for the build, then open the Space and talk to your agent.\n\nThree things to know:\n\nNever put the key in any uploaded file. The secret store is the only place it belongs. A key committed to a public Space is a key you must revoke.\nFree Spaces sleep after about two days idle and take up to a minute to wake.\nThe Space is public: anyone with the link chats on your API quota. Fine for a demo; take it down or rotate the key when you are done showing it off.",
-    "crumbs": [
-      "Week 3 — Building Agents",
-      "Week 3b · Customer Support Agent"
-    ]
-  },
-  {
-    "objectID": "week3b.html#slides",
-    "href": "week3b.html#slides",
-    "title": "Week 3b — The Customer Support Agent",
-    "section": "Slides",
-    "text": "Slides\nTools decide, or the model decides? — the design rules of thumb from today’s discussion.",
-    "crumbs": [
-      "Week 3 — Building Agents",
-      "Week 3b · Customer Support Agent"
-    ]
-  },
-  {
-    "objectID": "week3a.html",
-    "href": "week3a.html",
-    "title": "Week 3a — Memory and Structured Output",
-    "section": "",
-    "text": "Today’s files are in the W03a folder: two notebooks, plus agentui.py, a small chat interface we will use at the end of class.",
-    "crumbs": [
-      "Week 3 — Building Agents",
-      "Week 3a · Memory & Structured Output"
-    ]
-  },
-  {
-    "objectID": "week3a.html#get-todays-files",
-    "href": "week3a.html#get-todays-files",
-    "title": "Week 3a — Memory and Structured Output",
-    "section": "Get today’s files",
-    "text": "Get today’s files\nFrom your course project folder (agentic-ai-course), in the VS Code terminal:\n\nmacOSWindowsLinux\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W03a W03a\n\n\ncd lecture-files\ngit pull\ncd ..\nCopy-Item -Recurse lecture-files/W03a W03a\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W03a W03a\n\n\n\nThen open the notebooks from your W03a copy, not from lecture-files, and select the .venv kernel.",
-    "crumbs": [
-      "Week 3 — Building Agents",
-      "Week 3a · Memory & Structured Output"
-    ]
-  },
-  {
-    "objectID": "week3a.html#if-your-project-has-a-course-files-folder",
-    "href": "week3a.html#if-your-project-has-a-course-files-folder",
-    "title": "Week 3a — Memory and Structured Output",
-    "section": "If your project has a course-files folder",
-    "text": "If your project has a course-files folder\nThe first version of the setup instructions had you clone the course repository under the name course-files. We have since moved the lecture files to their own repository, so if that is what you have, run these two commands once, from your project folder:\n\nmacOSWindowsLinux\n\n\ngit clone https://github.com/agenticllms/lecture-files.git\nrm -rf course-files\n\n\ngit clone https://github.com/agenticllms/lecture-files.git\nRemove-Item -Recurse -Force course-files\n\n\ngit clone https://github.com/agenticllms/lecture-files.git\nrm -rf course-files\n\n\n\nNothing of yours is lost: your working copies and your .env and .venv all live outside course-files. After this, the pull steps above are all you ever need.",
-    "crumbs": [
-      "Week 3 — Building Agents",
-      "Week 3a · Memory & Structured Output"
-    ]
-  },
-  {
-    "objectID": "week2b-setup.html",
-    "href": "week2b-setup.html",
-    "title": "Week 2b — Course Environment Setup",
-    "section": "",
-    "text": "Please follow these instructions carefully.\nBy the end you will have one folder that looks like this:",
-    "crumbs": [
-      "Week 2 — LLM Foundations",
-      "Week 2b · Environment Setup"
-    ]
-  },
-  {
-    "objectID": "week2b-setup.html#install-uv",
-    "href": "week2b-setup.html#install-uv",
-    "title": "Week 2b — Course Environment Setup",
-    "section": "1. Install uv",
-    "text": "1. Install uv\nuv is a fast Python environment manager. It also installs Python itself, so you do not need to install Python separately — whatever Python you do or do not have on your machine, the result is the same.\n\nmacOSWindowsLinux\n\n\nIn Terminal:\ncurl -LsSf https://astral.sh/uv/install.sh | sh\nThen close and reopen the terminal, and verify:\nuv --version\n\n\nIn PowerShell:\npowershell -ExecutionPolicy ByPass -c \"irm https://astral.sh/uv/install.ps1 | iex\"\nThen close and reopen PowerShell, and verify:\nuv --version\n\n\ncurl -LsSf https://astral.sh/uv/install.sh | sh\nThen close and reopen the terminal, and verify:\nuv --version",
-    "crumbs": [
-      "Week 2 — LLM Foundations",
-      "Week 2b · Environment Setup"
-    ]
-  },
-  {
-    "objectID": "week2b-setup.html#create-your-course-project",
-    "href": "week2b-setup.html#create-your-course-project",
-    "title": "Week 2b — Course Environment Setup",
-    "section": "2. Create your course project",
-    "text": "2. Create your course project\nMake one folder for the whole course and open it in VS Code:\nmkdir agentic-ai-course\ncd agentic-ai-course\ncode .\nIf code is not recognized, open VS Code manually, then File, Open Folder.\nFrom here on, run commands in VS Code’s integrated terminal (Terminal &gt; New Terminal)  so you are always in the right place.",
-    "crumbs": [
-      "Week 2 — LLM Foundations",
-      "Week 2b · Environment Setup"
-    ]
-  },
-  {
-    "objectID": "week2b-setup.html#create-the-environment",
-    "href": "week2b-setup.html#create-the-environment",
-    "title": "Week 2b — Course Environment Setup",
-    "section": "3. Create the environment",
-    "text": "3. Create the environment\nFrom inside agentic-ai-course:\nuv venv --python 3.13\nThis creates .venv, a self-contained Python 3.13 environment that lives in your project folder. Everything we install goes in here and nowhere else.",
-    "crumbs": [
-      "Week 2 — LLM Foundations",
-      "Week 2b · Environment Setup"
-    ]
-  },
-  {
-    "objectID": "week2b-setup.html#get-the-lecture-files-and-install-the-dependencies",
-    "href": "week2b-setup.html#get-the-lecture-files-and-install-the-dependencies",
-    "title": "Week 2b — Course Environment Setup",
-    "section": "4. Get the lecture files and install the dependencies",
-    "text": "4. Get the lecture files and install the dependencies\ngit clone https://github.com/agenticllms/lecture-files.git\nuv pip install -r lecture-files/requirements.txt\ncp -r lecture-files/W02b W02b\nThe first command brings in the class files; the second installs every library the course uses into your .venv. Note there is no pip on its own anywhere in this course: it is always uv pip, which cannot install into the wrong Python. The third makes your working copy of today’s files.\nEach class day, the process will involve the following: pull, then copy the day’s folder out and work in the copy.\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W03a W03a\n(Windows PowerShell: Copy-Item -Recurse lecture-files/W03a W03a.)\nPulling is additive: it brings the new day’s folder and leaves previous days untouched. But here is the rule that keeps it that way: treat lecture-files as read-only and do your work in the copies. Running a notebook saves outputs into the file, which counts as a local edit, and local edits are what make a future git pull refuse. If lecture-files ever does get messy, reset it with git restore . from inside that folder — safe, because nothing of yours lives there.",
-    "crumbs": [
-      "Week 2 — LLM Foundations",
-      "Week 2b · Environment Setup"
-    ]
-  },
-  {
-    "objectID": "week2b-setup.html#add-your-api-keys",
-    "href": "week2b-setup.html#add-your-api-keys",
-    "title": "Week 2b — Course Environment Setup",
-    "section": "5. Add your API keys",
-    "text": "5. Add your API keys\nCopy the template to your project root and rename it:\ncp lecture-files/example.env .env\nOpen .env in VS Code and paste in your keys — GOOGLE_API_KEY and TAVILY_API_KEY will be required later; the others are optional. Never commit or share this file, and never paste a key into a notebook cell.",
-    "crumbs": [
-      "Week 2 — LLM Foundations",
-      "Week 2b · Environment Setup"
-    ]
-  },
-  {
-    "objectID": "week2b-setup.html#point-vs-code-at-your-environment",
-    "href": "week2b-setup.html#point-vs-code-at-your-environment",
-    "title": "Week 2b — Course Environment Setup",
-    "section": "6. Point VS Code at your environment",
-    "text": "6. Point VS Code at your environment\nThis is a crucial step:\n\nOpen any notebook from your W02b/ copy.\nClick the kernel picker in the top-right corner of the notebook.\nChoose the interpreter at agentic-ai-course/.venv (it may be listed as .venv (Python 3.13)).\n\nVS Code remembers this per notebook. If a notebook ever complains that a module is missing, check the kernel picker before anything else — nine times out of ten the notebook is quietly running some other Python.",
-    "crumbs": [
-      "Week 2 — LLM Foundations",
-      "Week 2b · Environment Setup"
-    ]
-  },
-  {
-    "objectID": "week2b-setup.html#verify",
-    "href": "week2b-setup.html#verify",
-    "title": "Week 2b — Course Environment Setup",
-    "section": "7. Verify",
-    "text": "7. Verify\nOpen W02b/W02b.1_LLM_API_Basics.ipynb and run the first cell. If it prints that the API key is loaded, you are done. If not, see below.",
-    "crumbs": [
-      "Week 2 — LLM Foundations",
-      "Week 2b · Environment Setup"
-    ]
-  },
-  {
-    "objectID": "week2b-setup.html#some-common-errors",
-    "href": "week2b-setup.html#some-common-errors",
-    "title": "Week 2b — Course Environment Setup",
-    "section": "Some Common Errors",
-    "text": "Some Common Errors\n\n\n\n\n\n\n\n\nSymptom\nCause\nFix\n\n\n\n\nModuleNotFoundError\nNotebook is on the wrong kernel\nKernel picker → choose .venv → restart kernel\n\n\npip: command not found\nBare pip is not on your PATH\nUse uv pip install ... instead\n\n\nNo API key found\n.env missing, misplaced, or kernel started before you created it\n.env goes in the project root, next to .venv; then restart the kernel\n\n\nWorks in one notebook, not another\nThe two notebooks are on different kernels\nSet both to .venv\n\n\nuv: command not found right after install\nTerminal opened before the install finished\nClose and reopen the terminal\n\n\ngit pull refuses: local changes would be overwritten\nYou ran or edited notebooks inside lecture-files\ncd lecture-files, then git restore ., then pull again. Work in copies from now on\n\n\n\nLast, please keep in mind that environment problems are not a test of your ability; everyone hits them, including me.",
-    "crumbs": [
-      "Week 2 — LLM Foundations",
-      "Week 2b · Environment Setup"
-    ]
-  },
-  {
-    "objectID": "week1.html",
-    "href": "week1.html",
-    "title": "Week 1 — Setup",
-    "section": "",
-    "text": "Welcome to Agentic AI. There is no ICA this week. Your job before next week is small: install one editor, and work through the Python primer if your Python is rusty or new. Everything else, including Python itself, will be installed next week in one step.",
-    "crumbs": [
-      "Week 1 · Setup"
-    ]
-  },
-  {
-    "objectID": "week1.html#install-vs-code",
-    "href": "week1.html#install-vs-code",
-    "title": "Week 1 — Setup",
-    "section": "1. Install VS Code",
-    "text": "1. Install VS Code\nVS Code is the editor we will use all semester for notebooks and code.\n\nDownload it from code.visualstudio.com and install it. On a Mac, drag the app into your Applications folder. On Windows, run the installer with the default options.\nOpen VS Code, click the Extensions icon in the left bar (four squares), and install two extensions, both published by Microsoft: Python and Jupyter.\n\nThat is the whole task. You do not need to configure anything else yet.",
-    "crumbs": [
-      "Week 1 · Setup"
-    ]
-  },
-  {
-    "objectID": "week1.html#python-primer",
-    "href": "week1.html#python-primer",
-    "title": "Week 1 — Setup",
-    "section": "2. Python primer",
-    "text": "2. Python primer\nIf you have not written much Python, or you have never seen things like TypedDict, list comprehensions, or decorators, work through the primer before Week 2. It assumes no prior Python and everything in it comes back later in the course.\nThe easiest way to run it is Google Colab, which runs the notebook in your browser with nothing to install. You will need a Google account.\nOpen the Python Primer in Colab\nIn Colab, run cells with Shift+Enter, top to bottom. Change things and rerun them. The primer ends with eight exercises. If those feel fine, you are ready for Week 2.\nIf you want to go deeper than the primer, the official Python tutorial is the best next stop. It is free, well written, and goes well beyond what we need. Chapters 3 through 5 line up with the primer if you want a second pass at the same ideas.",
-    "crumbs": [
-      "Week 1 · Setup"
-    ]
-  },
-  {
-    "objectID": "week1.html#do-i-need-to-install-python",
-    "href": "week1.html#do-i-need-to-install-python",
-    "title": "Week 1 — Setup",
-    "section": "Do I need to install Python?",
-    "text": "Do I need to install Python?\nNot yet. Next week we will set up the full course environment with a tool called uv, and it installs the right version of Python for you as part of one command. If you install Python on your own this week, you will not break anything, but you also will not need it, and having several Pythons on one machine is a common source of confusion. Wait for the Week 2 setup guide.",
-    "crumbs": [
-      "Week 1 · Setup"
-    ]
-  },
-  {
-    "objectID": "research.html",
-    "href": "research.html",
-    "title": "Final Project — Research Resources",
-    "section": "",
-    "text": "This page is a starting point for finding your final project idea. The areas and papers below are initial directions; the strongest projects usually come from a question you find yourself while reading. What follows first is the one rule that is not optional.",
-    "crumbs": [
-      "Final Project",
-      "Research Resources"
-    ]
-  },
-  {
-    "objectID": "research.html#the-rule",
-    "href": "research.html#the-rule",
-    "title": "Final Project — Research Resources",
-    "section": "The rule",
-    "text": "The rule\nAn application domain alone is not a research contribution. “We will build a travel-planning agent” is not a project. “We investigate whether explicit constraint tracking improves long-horizon planning agents under changing constraints” is. The domain is the testbed; the mechanism is the contribution. Every strong project fits this template:\n\nagentic mechanism → experimental manipulation → measured agent behavior\n\nFor example: memory policy → preference updates → stale-action rate. Or: tool descriptions → distractor similarity → tool-selection accuracy.",
-    "crumbs": [
-      "Final Project",
-      "Research Resources"
-    ]
-  },
-  {
-    "objectID": "research.html#what-fits-in-a-semester",
-    "href": "research.html#what-fits-in-a-semester",
-    "title": "Final Project — Research Resources",
-    "section": "What fits in a semester",
-    "text": "What fits in a semester\nFeasible: controlled experiments on existing or synthetic benchmarks · fine-tuning small open-weight models (LoRA on a 4–9B model is a weekend on some GPU) · trajectory analyses over logged runs · architectural comparisons under a fixed token budget.\nNot feasible: pretraining a model · large-scale RL training · months of human data collection",
-    "crumbs": [
-      "Final Project",
-      "Research Resources"
-    ]
-  },
-  {
-    "objectID": "research.html#where-to-look",
-    "href": "research.html#where-to-look",
-    "title": "Final Project — Research Resources",
-    "section": "Where to look",
-    "text": "Where to look\n\nNeurIPS proceedings — including the Datasets & Benchmarks track, where most agent benchmarks are published\nICLR on OpenReview — reviews are public; reading them teaches you how the field argues\nICML proceedings\nACL Anthology — ACL, EMNLP, NAACL; most tool-use and agent-NLP work lands here\nCOLM — the LLM-focused venue; young, high signal\nWorkshops are the goldmine for project-scale ideas. Each year NeurIPS, ICLR, and ICML host workshops on language agents, open-world agents, safe and trustworthy agents, and multi-agent systems. Workshop papers are shorter, newer, and closer to what a semester project can extend. Check the current workshop lists at neurips.cc, iclr.cc, and icml.cc, and search OpenReview for “agents” workshops.\nFor staying current: arXiv cs.CL and cs.AI, navigated with Semantic Scholar.",
-    "crumbs": [
-      "Final Project",
-      "Research Resources"
-    ]
-  },
-  {
-    "objectID": "research.html#starting-directions",
-    "href": "research.html#starting-directions",
-    "title": "Final Project — Research Resources",
-    "section": "Starting directions",
-    "text": "Starting directions\nIn what follows, we provide a few anchor papers per area. Read the anchors, then follow their citations forward on Semantic Scholar or Google Scholar to explore who cited this, and what they found wrong with it.\n\n1. Benchmarking and evaluation\nTask success alone poorly characterizes agents. Open questions: which trajectory features predict failure before a task ends, how many runs characterize reliability, how cost should enter benchmarks, and how reliable LLM-as-judge scoring really is.\n\nτ²-bench — conversational tool-agents with a simulated user\nSWE-bench — the coding-agent benchmark and its saturation story\nWhy Do Multi-Agent LLM Systems Fail? — a failure taxonomy worth extending\nA Survey on Evaluation of LLM-based Agents\nHolistic Agent Leaderboard — cost-aware evaluation\n\n\n\n2. Fine-tuning small models for agentic tasks\nCan a 4–9B open-weight model be made meaningfully better at tool calling, reflection, or planning with a modest fine-tune? This is squarely semester-sized: generate or collect traces, LoRA-tune, compare against prompting the same base model. (Pretraining is out of scope — see above.)\n\nFireAct — fine-tuning on agent trajectories\nAgentTuning — instruction-tuning for agent abilities\nToolLLM — training for large-scale API use\nxLAM — a family of function-calling models\nDeepSeek-R1 — see the distillation section: small models learning from reasoning traces\n\n\n\n3. Agentic AI safety and security\nAgent safety is not chatbot safety: the question is not “did the model say something harmful” but “what did the system actually do.” A strong architectural question from the idea doc: at which layer should prompt-injection defenses operate — model prompting, tool authorization, or execution monitoring?\n\nNot What You’ve Signed Up For — indirect prompt injection, the founding paper\nAgentDojo — an injection benchmark you can run\nAgentHarm — measuring harmful task completion\nDefeating Prompt Injections by Design (CaMeL)\nDesign Patterns for Securing LLM Agents\n\n\n\n4. Tool use and MCP\nTool use looks solved in demos and is not solved scientifically. Selection is fragile to description wording, tool-set size, and near-duplicate distractors — and MCP adds questions about poisoning, permissions, and provenance.\n\nTool Preferences in Agentic LLMs are Unreliable — small description changes shift tool usage by more than 10×; a perfect paper to extend\nWhat Are Tools Anyway? — the survey that maps the area\nGorilla — LLMs and massive API sets\nModel Context Protocol: Landscape and Security\n\nA clean experiment: give an agent 5, 20, 50, and 100 tools with progressively similar distractors, and measure selection accuracy, cost, and failure modes.\n\n\n5. Memory and context\nOlder memory benchmarks test whether an agent can retrieve a fact; the open question is whether it uses remembered information appropriately when acting — and what it should forget.\n\nMem2ActBench - benchmark for evaluating long-term memory; can be easily extended\nMemGPT — memory hierarchies\nGenerative Agents — memory in believable simulation\nMem0 and A-Mem — production memory systems\n\nA clean experiment from the idea doc: compare append-everything, overwrite, recency-weighted, and conflict-aware memory policies as user preferences change; measure task success, stale-memory errors, and token cost.",
-    "crumbs": [
-      "Final Project",
-      "Research Resources"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Agentic AI — Course Materials",
-    "section": "",
-    "text": "Welcome to Agentic AI. This site is where I post everything you need for each class session: setup instructions, the code we build together, links I’ll reference on screen, and anything you’ll want to copy and paste during lecture.\nProf. Yildirim",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#schedule",
-    "href": "index.html#schedule",
-    "title": "Agentic AI — Course Materials",
-    "section": "Schedule",
-    "text": "Schedule\nThe schedule below provides links to readings and documentation for each day. The core reading for each session is shown in bold.\n\n\n\n\n\n\n\n\n\n\n\nWk\nDate\nTopic\nPapers\nFramework docs\n\n\n\n\n1\nF 9/11\nIntroduction to Agentic AI\nBuilding Effective AgentsRise and Potential of LLM Agents\nWorkflows and agents · Philosophy\n\n\n2\nT 9/15\nLLM Foundations\nAttention Is All You NeedImproving Language Understanding\n3Blue1Brown: LLMs visualized (recommended watch) · Karpathy: Let’s build GPT\n\n\n2\nF 9/18\nLLM Foundations\nInstructGPTChain-of-Thought\nModels · Messages\n\n\n3\nT 9/22\nSimple Agent Architecture\nToolformerMRKL\nTools · Agents\n\n\n3\nF 9/25\nTool-Calling\nReActWhat Are Tools Anyway?\nMemory · Structured output\n\n\n4\nT 9/29\nShort-term & Long-term Memory\nGenerative AgentsMemGPT\nThinking in LangGraph · Graph API · Persistence\n\n\n4\nF 10/2\nContext Management\nLost in the MiddleEffective Context Engineering\nContext engineering · Middleware\n\n\n5\nT 10/6\nRetrieval-Augmented Generation\nRAGRAG Survey (§2–3)\nRetrieval · Semantic search\n\n\n5\nF 10/9\nReflection & Self-critique\nReflexionSelf-RAG · Self-Refine\nGraph API loops · Unit testing\n\n\n6\nT 10/13\nPlanning & Task Decomposition\nVoyagerTree of Thoughts · HuggingGPT (skim)\nSubgraphs · Skills\n\n\n6\nF 10/16\nAgentic RAG\nCorrective RAGAdaptive-RAG\nCustom RAG agent · Multi-source routing",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "week2a.html",
-    "href": "week2a.html",
-    "title": "Week 2a — LLM Foundations",
-    "section": "",
-    "text": "Today we are going to run an LLM locally: a real open-weight model, on your laptop, no API key, no cloud.",
-    "crumbs": [
-      "Week 2 — LLM Foundations",
-      "Week 2a · Run a local LLM"
-    ]
-  },
-  {
-    "objectID": "week2a.html#install-ollama",
-    "href": "week2a.html#install-ollama",
-    "title": "Week 2a — LLM Foundations",
-    "section": "1. Install Ollama",
-    "text": "1. Install Ollama\nOllama is the tool we’ll use to download and run open-weight models.\n\nmacOSWindowsLinux\n\n\nDownload the app from ollama.com/download, drag it into Applications, and open it once. Then verify in Terminal:\nollama --version\nIf you use Homebrew, brew install ollama works too.\n\n\nDownload and run the installer from ollama.com/download. Then open PowerShell and verify:\nollama --version\n\n\nOne command:\ncurl -fsSL https://ollama.com/install.sh | sh\nThen verify:\nollama --version",
-    "crumbs": [
-      "Week 2 — LLM Foundations",
-      "Week 2a · Run a local LLM"
-    ]
-  },
-  {
-    "objectID": "week2a.html#download-and-run-a-model",
-    "href": "week2a.html#download-and-run-a-model",
-    "title": "Week 2a — LLM Foundations",
-    "section": "2. Download and run a model",
-    "text": "2. Download and run a model\nWe’ll use Qwen 3.5, an open-weight model family that comes in sizes from 0.8B to 122B parameters. One command downloads the default size (about 6.6 GB) and drops you into a chat:\nollama run qwen3.5\nType a message and watch it answer, token by token — that streaming is the autoregressive loop from lecture, live. Type /bye to exit the chat.\nPick a size that fits your machine. The default is a good middle ground, but if your laptop has 8 GB of RAM or you want a faster download, grab a smaller one; if you have a big machine, try a bigger one:\nollama run qwen3.5:2b     # small and quick — any laptop\nollama run qwen3.5:4b     # 8 GB RAM\nollama run qwen3.5:9b     # 16 GB RAM (the default)\nollama run qwen3.5:27b    # 32 GB+ RAM\nThe full list of sizes is on the model page. Rule of thumb: the download size is roughly the RAM the model needs while running.\nAlso grab these two for class. They are tiny (a few hundred megabytes each, seconds to download, run on anything) and we will use them together in a demonstration:\nollama pull qwen2.5:0.5b        # instruction-tuned\nollama pull qwen2.5:0.5b-base   # raw pretrained — no post-training\nSame architecture, same size, same training data — the only difference is what happened after pretraining. Ask them both a question in class and you will see exactly what that difference buys. (ollama pull downloads without starting a chat; ollama run does both.)",
-    "crumbs": [
-      "Week 2 — LLM Foundations",
-      "Week 2a · Run a local LLM"
-    ]
-  },
-  {
-    "objectID": "week2a.html#commands-youll-actually-use",
-    "href": "week2a.html#commands-youll-actually-use",
-    "title": "Week 2a — LLM Foundations",
-    "section": "3. Commands you’ll actually use",
-    "text": "3. Commands you’ll actually use\nollama list        # models you have downloaded\nollama ps          # models currently loaded in memory\nollama rm qwen3.5  # delete a model and free the disk space\nAnd inside a chat, /bye exits.",
-    "crumbs": [
-      "Week 2 — LLM Foundations",
-      "Week 2a · Run a local LLM"
-    ]
-  },
-  {
-    "objectID": "week2a.html#why-were-doing-this",
-    "href": "week2a.html#why-were-doing-this",
-    "title": "Week 2a — LLM Foundations",
-    "section": "Why we’re doing this",
-    "text": "Why we’re doing this\nOllama also runs a local API server (at localhost:11434), which means later in the course your agents can call a model that is entirely yours. We will use that for local inference.",
-    "crumbs": [
-      "Week 2 — LLM Foundations",
-      "Week 2a · Run a local LLM"
-    ]
-  },
-  {
-    "objectID": "week3b-slides.html#motivation",
-    "href": "week3b-slides.html#motivation",
-    "title": "Tools decide, or the model decides?",
-    "section": "Motivation",
-    "text": "Motivation\nEvery agent splits its work between two workers: - code, which is exact, repeatable, and auditable - the model, which is flexible, contextual, and probabilistic Where you draw that line is most of agent design. Today’s version of the question: why does check_return_eligibility compute the verdict itself, instead of handing the model the number of days? ## Rule 1: Policy lives in code If a rule fits in an if statement and being wrong has a cost, the if belongs in the tool.\nif days &lt;= RETURN_POLICY_DAYS:\n    return \"Eligible: ...\"\n\nThe model applies “within 30 days” usually correctly. Code applies it always.\nBoundaries are where models slip: day 30 vs 31, “about a month, close enough.”\nWhen the policy changes to 60 days, you edit one constant — not a prompt, not the model’s habits. ## Rule 2: Judgment lives in the model Some decisions no if statement can express. Those belong to the model:\nwhat the customer is actually asking\nwhich tool fits the question\nwhen to try again, and when to stop and explain\ntone: how to deliver a “no” If you find yourself writing prompt rules that read like code, move them into code. If you find yourself writing code that guesses at meaning, hand it to the model. ## Rule 3: Return facts and verdicts\n\nEligible: delivered 15 days ago; returns are\naccepted within 30 days of delivery.\n\nThe verdict enforces the rule: not negotiable, identical every run.\nThe facts keep the model flexible: it can still answer “when did it arrive?” A tool that returns only a verdict starves the model. A tool that returns only facts outsources the policy. ## Rule 4: Tools are pressure-proof Customer: “Come on, it’s barely been a month. Make an exception.”\nA rule in the prompt is a request. A sympathetic model can bend it.\nA rule in the tool is enforcement. The model can only relay the verdict — and apologize. Same principle as a read-only database tool: the model is never asked nicely not to write. It cannot. ## Rule 5: Tool responses steer the model The docstring decides whether a tool gets called. The return string decides what happens next.\n\n0 trips matched. A filter value is probably spelled\ndifferently — call get_column_values to see what\nis actually in the data.\nA tool that returns 0 teaches the model nothing. Error messages, warnings, and hints in return strings are prompts — write them like you mean it. ## Rule 6: Tools stand alone check_return_eligibility looks the order up itself (it has two “redundant” lines) because the model may call it first, with no lookup before it. - Every tool fetches what it needs and validates its own inputs. - No tool assumes another ran before it. - Couple tools through shared state only when you must — and then pay for it: extra docstring rules, new failure modes. ## Examples | Task | Who decides | |—|—| | Parse a date, compute day differences | tool | | Is this order eligible for a return? | tool | | Which tool fits this question? | model | | Enforce read-only, row limits, timeouts | tool | | How to phrase the refusal | model | | When is the conversation answered? | model | | How many tool calls is too many? | code (a budget) | ## In summary The model proposes; the runtime disposes. Code owns everything you cannot afford to have improvised. The model owns everything you could not have scripted."
   },
   {
     "objectID": "week4a-slides.html#where-we-are",
@@ -511,5 +136,413 @@
     "title": "Why LangGraph?",
     "section": "In summary",
     "text": "In summary\n\nState is a shared dict; nodes return only what they changed\nReducers decide how updates combine — appending for messages, overwriting for everything else\nFixed edges make a workflow; conditional edges make a decision\nCycles are what turn a workflow into an agent"
+  },
+  {
+    "objectID": "week3b-slides.html#motivation",
+    "href": "week3b-slides.html#motivation",
+    "title": "Tools decide, or the model decides?",
+    "section": "Motivation",
+    "text": "Motivation\nEvery agent splits its work between two workers: - code, which is exact, repeatable, and auditable - the model, which is flexible, contextual, and probabilistic Where you draw that line is most of agent design. Today’s version of the question: why does check_return_eligibility compute the verdict itself, instead of handing the model the number of days? ## Rule 1: Policy lives in code If a rule fits in an if statement and being wrong has a cost, the if belongs in the tool.\nif days &lt;= RETURN_POLICY_DAYS:\n    return \"Eligible: ...\"\n\nThe model applies “within 30 days” usually correctly. Code applies it always.\nBoundaries are where models slip: day 30 vs 31, “about a month, close enough.”\nWhen the policy changes to 60 days, you edit one constant — not a prompt, not the model’s habits. ## Rule 2: Judgment lives in the model Some decisions no if statement can express. Those belong to the model:\nwhat the customer is actually asking\nwhich tool fits the question\nwhen to try again, and when to stop and explain\ntone: how to deliver a “no” If you find yourself writing prompt rules that read like code, move them into code. If you find yourself writing code that guesses at meaning, hand it to the model. ## Rule 3: Return facts and verdicts\n\nEligible: delivered 15 days ago; returns are\naccepted within 30 days of delivery.\n\nThe verdict enforces the rule: not negotiable, identical every run.\nThe facts keep the model flexible: it can still answer “when did it arrive?” A tool that returns only a verdict starves the model. A tool that returns only facts outsources the policy. ## Rule 4: Tools are pressure-proof Customer: “Come on, it’s barely been a month. Make an exception.”\nA rule in the prompt is a request. A sympathetic model can bend it.\nA rule in the tool is enforcement. The model can only relay the verdict — and apologize. Same principle as a read-only database tool: the model is never asked nicely not to write. It cannot. ## Rule 5: Tool responses steer the model The docstring decides whether a tool gets called. The return string decides what happens next.\n\n0 trips matched. A filter value is probably spelled\ndifferently — call get_column_values to see what\nis actually in the data.\nA tool that returns 0 teaches the model nothing. Error messages, warnings, and hints in return strings are prompts — write them like you mean it. ## Rule 6: Tools stand alone check_return_eligibility looks the order up itself (it has two “redundant” lines) because the model may call it first, with no lookup before it. - Every tool fetches what it needs and validates its own inputs. - No tool assumes another ran before it. - Couple tools through shared state only when you must — and then pay for it: extra docstring rules, new failure modes. ## Examples | Task | Who decides | |—|—| | Parse a date, compute day differences | tool | | Is this order eligible for a return? | tool | | Which tool fits this question? | model | | Enforce read-only, row limits, timeouts | tool | | How to phrase the refusal | model | | When is the conversation answered? | model | | How many tool calls is too many? | code (a budget) | ## In summary The model proposes; the runtime disposes. Code owns everything you cannot afford to have improvised. The model owns everything you could not have scripted."
+  },
+  {
+    "objectID": "week2a.html",
+    "href": "week2a.html",
+    "title": "Week 2a — LLM Foundations",
+    "section": "",
+    "text": "Today we are going to run an LLM locally: a real open-weight model, on your laptop, no API key, no cloud.",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2a · Run a local LLM"
+    ]
+  },
+  {
+    "objectID": "week2a.html#install-ollama",
+    "href": "week2a.html#install-ollama",
+    "title": "Week 2a — LLM Foundations",
+    "section": "1. Install Ollama",
+    "text": "1. Install Ollama\nOllama is the tool we’ll use to download and run open-weight models.\n\nmacOSWindowsLinux\n\n\nDownload the app from ollama.com/download, drag it into Applications, and open it once. Then verify in Terminal:\nollama --version\nIf you use Homebrew, brew install ollama works too.\n\n\nDownload and run the installer from ollama.com/download. Then open PowerShell and verify:\nollama --version\n\n\nOne command:\ncurl -fsSL https://ollama.com/install.sh | sh\nThen verify:\nollama --version",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2a · Run a local LLM"
+    ]
+  },
+  {
+    "objectID": "week2a.html#download-and-run-a-model",
+    "href": "week2a.html#download-and-run-a-model",
+    "title": "Week 2a — LLM Foundations",
+    "section": "2. Download and run a model",
+    "text": "2. Download and run a model\nWe’ll use Qwen 3.5, an open-weight model family that comes in sizes from 0.8B to 122B parameters. One command downloads the default size (about 6.6 GB) and drops you into a chat:\nollama run qwen3.5\nType a message and watch it answer, token by token — that streaming is the autoregressive loop from lecture, live. Type /bye to exit the chat.\nPick a size that fits your machine. The default is a good middle ground, but if your laptop has 8 GB of RAM or you want a faster download, grab a smaller one; if you have a big machine, try a bigger one:\nollama run qwen3.5:2b     # small and quick — any laptop\nollama run qwen3.5:4b     # 8 GB RAM\nollama run qwen3.5:9b     # 16 GB RAM (the default)\nollama run qwen3.5:27b    # 32 GB+ RAM\nThe full list of sizes is on the model page. Rule of thumb: the download size is roughly the RAM the model needs while running.\nAlso grab these two for class. They are tiny (a few hundred megabytes each, seconds to download, run on anything) and we will use them together in a demonstration:\nollama pull qwen2.5:0.5b        # instruction-tuned\nollama pull qwen2.5:0.5b-base   # raw pretrained — no post-training\nSame architecture, same size, same training data — the only difference is what happened after pretraining. Ask them both a question in class and you will see exactly what that difference buys. (ollama pull downloads without starting a chat; ollama run does both.)",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2a · Run a local LLM"
+    ]
+  },
+  {
+    "objectID": "week2a.html#commands-youll-actually-use",
+    "href": "week2a.html#commands-youll-actually-use",
+    "title": "Week 2a — LLM Foundations",
+    "section": "3. Commands you’ll actually use",
+    "text": "3. Commands you’ll actually use\nollama list        # models you have downloaded\nollama ps          # models currently loaded in memory\nollama rm qwen3.5  # delete a model and free the disk space\nAnd inside a chat, /bye exits.",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2a · Run a local LLM"
+    ]
+  },
+  {
+    "objectID": "week2a.html#why-were-doing-this",
+    "href": "week2a.html#why-were-doing-this",
+    "title": "Week 2a — LLM Foundations",
+    "section": "Why we’re doing this",
+    "text": "Why we’re doing this\nOllama also runs a local API server (at localhost:11434), which means later in the course your agents can call a model that is entirely yours. We will use that for local inference.",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2a · Run a local LLM"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Agentic AI — Course Materials",
+    "section": "",
+    "text": "Welcome to Agentic AI. This site is where I post everything you need for each class session: setup instructions, the code we build together, links I’ll reference on screen, and anything you’ll want to copy and paste during lecture.\nProf. Yildirim",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#schedule",
+    "href": "index.html#schedule",
+    "title": "Agentic AI — Course Materials",
+    "section": "Schedule",
+    "text": "Schedule\nThe schedule below provides links to readings and documentation for each day. The core reading for each session is shown in bold.\n\n\n\n\n\n\n\n\n\n\n\nWk\nDate\nTopic\nPapers\nFramework docs\n\n\n\n\n1\nF 9/11\nIntroduction to Agentic AI\nBuilding Effective AgentsRise and Potential of LLM Agents\nWorkflows and agents · Philosophy\n\n\n2\nT 9/15\nLLM Foundations\nAttention Is All You NeedImproving Language Understanding\n3Blue1Brown: LLMs visualized (recommended watch) · Karpathy: Let’s build GPT\n\n\n2\nF 9/18\nLLM Foundations\nInstructGPTChain-of-Thought\nModels · Messages\n\n\n3\nT 9/22\nSimple Agent Architecture\nToolformerMRKL\nTools · Agents\n\n\n3\nF 9/25\nTool-Calling\nReActWhat Are Tools Anyway?\nMemory · Structured output\n\n\n4\nT 9/29\nShort-term & Long-term Memory\nGenerative AgentsMemGPT\nThinking in LangGraph · Graph API · Persistence\n\n\n4\nF 10/2\nContext Management\nLost in the MiddleEffective Context Engineering\nContext engineering · Middleware\n\n\n5\nT 10/6\nRetrieval-Augmented Generation\nRAGRAG Survey (§2–3)\nRetrieval · Semantic search\n\n\n5\nF 10/9\nReflection & Self-critique\nReflexionSelf-RAG · Self-Refine\nGraph API loops · Unit testing\n\n\n6\nT 10/13\nPlanning & Task Decomposition\nVoyagerTree of Thoughts · HuggingGPT (skim)\nSubgraphs · Skills\n\n\n6\nF 10/16\nAgentic RAG\nCorrective RAGAdaptive-RAG\nCustom RAG agent · Multi-source routing",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "research.html",
+    "href": "research.html",
+    "title": "Final Project — Research Resources",
+    "section": "",
+    "text": "This page is a starting point for finding your final project idea. The areas and papers below are initial directions; the strongest projects usually come from a question you find yourself while reading. What follows first is the one rule that is not optional.",
+    "crumbs": [
+      "Final Project",
+      "Research Resources"
+    ]
+  },
+  {
+    "objectID": "research.html#the-rule",
+    "href": "research.html#the-rule",
+    "title": "Final Project — Research Resources",
+    "section": "The rule",
+    "text": "The rule\nAn application domain alone is not a research contribution. “We will build a travel-planning agent” is not a project. “We investigate whether explicit constraint tracking improves long-horizon planning agents under changing constraints” is. The domain is the testbed; the mechanism is the contribution. Every strong project fits this template:\n\nagentic mechanism → experimental manipulation → measured agent behavior\n\nFor example: memory policy → preference updates → stale-action rate. Or: tool descriptions → distractor similarity → tool-selection accuracy.",
+    "crumbs": [
+      "Final Project",
+      "Research Resources"
+    ]
+  },
+  {
+    "objectID": "research.html#what-fits-in-a-semester",
+    "href": "research.html#what-fits-in-a-semester",
+    "title": "Final Project — Research Resources",
+    "section": "What fits in a semester",
+    "text": "What fits in a semester\nFeasible: controlled experiments on existing or synthetic benchmarks · fine-tuning small open-weight models (LoRA on a 4–9B model is a weekend on some GPU) · trajectory analyses over logged runs · architectural comparisons under a fixed token budget.\nNot feasible: pretraining a model · large-scale RL training · months of human data collection",
+    "crumbs": [
+      "Final Project",
+      "Research Resources"
+    ]
+  },
+  {
+    "objectID": "research.html#where-to-look",
+    "href": "research.html#where-to-look",
+    "title": "Final Project — Research Resources",
+    "section": "Where to look",
+    "text": "Where to look\n\nNeurIPS proceedings — including the Datasets & Benchmarks track, where most agent benchmarks are published\nICLR on OpenReview — reviews are public; reading them teaches you how the field argues\nICML proceedings\nACL Anthology — ACL, EMNLP, NAACL; most tool-use and agent-NLP work lands here\nCOLM — the LLM-focused venue; young, high signal\nWorkshops are the goldmine for project-scale ideas. Each year NeurIPS, ICLR, and ICML host workshops on language agents, open-world agents, safe and trustworthy agents, and multi-agent systems. Workshop papers are shorter, newer, and closer to what a semester project can extend. Check the current workshop lists at neurips.cc, iclr.cc, and icml.cc, and search OpenReview for “agents” workshops.\nFor staying current: arXiv cs.CL and cs.AI, navigated with Semantic Scholar.",
+    "crumbs": [
+      "Final Project",
+      "Research Resources"
+    ]
+  },
+  {
+    "objectID": "research.html#starting-directions",
+    "href": "research.html#starting-directions",
+    "title": "Final Project — Research Resources",
+    "section": "Starting directions",
+    "text": "Starting directions\nIn what follows, we provide a few anchor papers per area. Read the anchors, then follow their citations forward on Semantic Scholar or Google Scholar to explore who cited this, and what they found wrong with it.\n\n1. Benchmarking and evaluation\nTask success alone poorly characterizes agents. Open questions: which trajectory features predict failure before a task ends, how many runs characterize reliability, how cost should enter benchmarks, and how reliable LLM-as-judge scoring really is.\n\nτ²-bench — conversational tool-agents with a simulated user\nSWE-bench — the coding-agent benchmark and its saturation story\nWhy Do Multi-Agent LLM Systems Fail? — a failure taxonomy worth extending\nA Survey on Evaluation of LLM-based Agents\nHolistic Agent Leaderboard — cost-aware evaluation\n\n\n\n2. Fine-tuning small models for agentic tasks\nCan a 4–9B open-weight model be made meaningfully better at tool calling, reflection, or planning with a modest fine-tune? This is squarely semester-sized: generate or collect traces, LoRA-tune, compare against prompting the same base model. (Pretraining is out of scope — see above.)\n\nFireAct — fine-tuning on agent trajectories\nAgentTuning — instruction-tuning for agent abilities\nToolLLM — training for large-scale API use\nxLAM — a family of function-calling models\nDeepSeek-R1 — see the distillation section: small models learning from reasoning traces\n\n\n\n3. Agentic AI safety and security\nAgent safety is not chatbot safety: the question is not “did the model say something harmful” but “what did the system actually do.” A strong architectural question from the idea doc: at which layer should prompt-injection defenses operate — model prompting, tool authorization, or execution monitoring?\n\nNot What You’ve Signed Up For — indirect prompt injection, the founding paper\nAgentDojo — an injection benchmark you can run\nAgentHarm — measuring harmful task completion\nDefeating Prompt Injections by Design (CaMeL)\nDesign Patterns for Securing LLM Agents\n\n\n\n4. Tool use and MCP\nTool use looks solved in demos and is not solved scientifically. Selection is fragile to description wording, tool-set size, and near-duplicate distractors — and MCP adds questions about poisoning, permissions, and provenance.\n\nTool Preferences in Agentic LLMs are Unreliable — small description changes shift tool usage by more than 10×; a perfect paper to extend\nWhat Are Tools Anyway? — the survey that maps the area\nGorilla — LLMs and massive API sets\nModel Context Protocol: Landscape and Security\n\nA clean experiment: give an agent 5, 20, 50, and 100 tools with progressively similar distractors, and measure selection accuracy, cost, and failure modes.\n\n\n5. Memory and context\nOlder memory benchmarks test whether an agent can retrieve a fact; the open question is whether it uses remembered information appropriately when acting — and what it should forget.\n\nMem2ActBench - benchmark for evaluating long-term memory; can be easily extended\nMemGPT — memory hierarchies\nGenerative Agents — memory in believable simulation\nMem0 and A-Mem — production memory systems\n\nA clean experiment from the idea doc: compare append-everything, overwrite, recency-weighted, and conflict-aware memory policies as user preferences change; measure task success, stale-memory errors, and token cost.",
+    "crumbs": [
+      "Final Project",
+      "Research Resources"
+    ]
+  },
+  {
+    "objectID": "week1.html",
+    "href": "week1.html",
+    "title": "Week 1 — Setup",
+    "section": "",
+    "text": "Welcome to Agentic AI. There is no ICA this week. Your job before next week is small: install one editor, and work through the Python primer if your Python is rusty or new. Everything else, including Python itself, will be installed next week in one step.",
+    "crumbs": [
+      "Week 1 · Setup"
+    ]
+  },
+  {
+    "objectID": "week1.html#install-vs-code",
+    "href": "week1.html#install-vs-code",
+    "title": "Week 1 — Setup",
+    "section": "1. Install VS Code",
+    "text": "1. Install VS Code\nVS Code is the editor we will use all semester for notebooks and code.\n\nDownload it from code.visualstudio.com and install it. On a Mac, drag the app into your Applications folder. On Windows, run the installer with the default options.\nOpen VS Code, click the Extensions icon in the left bar (four squares), and install two extensions, both published by Microsoft: Python and Jupyter.\n\nThat is the whole task. You do not need to configure anything else yet.",
+    "crumbs": [
+      "Week 1 · Setup"
+    ]
+  },
+  {
+    "objectID": "week1.html#python-primer",
+    "href": "week1.html#python-primer",
+    "title": "Week 1 — Setup",
+    "section": "2. Python primer",
+    "text": "2. Python primer\nIf you have not written much Python, or you have never seen things like TypedDict, list comprehensions, or decorators, work through the primer before Week 2. It assumes no prior Python and everything in it comes back later in the course.\nThe easiest way to run it is Google Colab, which runs the notebook in your browser with nothing to install. You will need a Google account.\nOpen the Python Primer in Colab\nIn Colab, run cells with Shift+Enter, top to bottom. Change things and rerun them. The primer ends with eight exercises. If those feel fine, you are ready for Week 2.\nIf you want to go deeper than the primer, the official Python tutorial is the best next stop. It is free, well written, and goes well beyond what we need. Chapters 3 through 5 line up with the primer if you want a second pass at the same ideas.",
+    "crumbs": [
+      "Week 1 · Setup"
+    ]
+  },
+  {
+    "objectID": "week1.html#do-i-need-to-install-python",
+    "href": "week1.html#do-i-need-to-install-python",
+    "title": "Week 1 — Setup",
+    "section": "Do I need to install Python?",
+    "text": "Do I need to install Python?\nNot yet. Next week we will set up the full course environment with a tool called uv, and it installs the right version of Python for you as part of one command. If you install Python on your own this week, you will not break anything, but you also will not need it, and having several Pythons on one machine is a common source of confusion. Wait for the Week 2 setup guide.",
+    "crumbs": [
+      "Week 1 · Setup"
+    ]
+  },
+  {
+    "objectID": "week2b-setup.html",
+    "href": "week2b-setup.html",
+    "title": "Week 2b — Course Environment Setup",
+    "section": "",
+    "text": "Please follow these instructions carefully.\nBy the end you will have one folder that looks like this:",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2b · Environment Setup"
+    ]
+  },
+  {
+    "objectID": "week2b-setup.html#install-uv",
+    "href": "week2b-setup.html#install-uv",
+    "title": "Week 2b — Course Environment Setup",
+    "section": "1. Install uv",
+    "text": "1. Install uv\nuv is a fast Python environment manager. It also installs Python itself, so you do not need to install Python separately — whatever Python you do or do not have on your machine, the result is the same.\n\nmacOSWindowsLinux\n\n\nIn Terminal:\ncurl -LsSf https://astral.sh/uv/install.sh | sh\nThen close and reopen the terminal, and verify:\nuv --version\n\n\nIn PowerShell:\npowershell -ExecutionPolicy ByPass -c \"irm https://astral.sh/uv/install.ps1 | iex\"\nThen close and reopen PowerShell, and verify:\nuv --version\n\n\ncurl -LsSf https://astral.sh/uv/install.sh | sh\nThen close and reopen the terminal, and verify:\nuv --version",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2b · Environment Setup"
+    ]
+  },
+  {
+    "objectID": "week2b-setup.html#create-your-course-project",
+    "href": "week2b-setup.html#create-your-course-project",
+    "title": "Week 2b — Course Environment Setup",
+    "section": "2. Create your course project",
+    "text": "2. Create your course project\nMake one folder for the whole course and open it in VS Code:\nmkdir agentic-ai-course\ncd agentic-ai-course\ncode .\nIf code is not recognized, open VS Code manually, then File, Open Folder.\nFrom here on, run commands in VS Code’s integrated terminal (Terminal &gt; New Terminal)  so you are always in the right place.",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2b · Environment Setup"
+    ]
+  },
+  {
+    "objectID": "week2b-setup.html#create-the-environment",
+    "href": "week2b-setup.html#create-the-environment",
+    "title": "Week 2b — Course Environment Setup",
+    "section": "3. Create the environment",
+    "text": "3. Create the environment\nFrom inside agentic-ai-course:\nuv venv --python 3.13\nThis creates .venv, a self-contained Python 3.13 environment that lives in your project folder. Everything we install goes in here and nowhere else.",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2b · Environment Setup"
+    ]
+  },
+  {
+    "objectID": "week2b-setup.html#get-the-lecture-files-and-install-the-dependencies",
+    "href": "week2b-setup.html#get-the-lecture-files-and-install-the-dependencies",
+    "title": "Week 2b — Course Environment Setup",
+    "section": "4. Get the lecture files and install the dependencies",
+    "text": "4. Get the lecture files and install the dependencies\ngit clone https://github.com/agenticllms/lecture-files.git\nuv pip install -r lecture-files/requirements.txt\ncp -r lecture-files/W02b W02b\nThe first command brings in the class files; the second installs every library the course uses into your .venv. Note there is no pip on its own anywhere in this course: it is always uv pip, which cannot install into the wrong Python. The third makes your working copy of today’s files.\nEach class day, the process will involve the following: pull, then copy the day’s folder out and work in the copy.\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W03a W03a\n(Windows PowerShell: Copy-Item -Recurse lecture-files/W03a W03a.)\nPulling is additive: it brings the new day’s folder and leaves previous days untouched. But here is the rule that keeps it that way: treat lecture-files as read-only and do your work in the copies. Running a notebook saves outputs into the file, which counts as a local edit, and local edits are what make a future git pull refuse. If lecture-files ever does get messy, reset it with git restore . from inside that folder — safe, because nothing of yours lives there.",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2b · Environment Setup"
+    ]
+  },
+  {
+    "objectID": "week2b-setup.html#add-your-api-keys",
+    "href": "week2b-setup.html#add-your-api-keys",
+    "title": "Week 2b — Course Environment Setup",
+    "section": "5. Add your API keys",
+    "text": "5. Add your API keys\nCopy the template to your project root and rename it:\ncp lecture-files/example.env .env\nOpen .env in VS Code and paste in your keys — GOOGLE_API_KEY and TAVILY_API_KEY will be required later; the others are optional. Never commit or share this file, and never paste a key into a notebook cell.",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2b · Environment Setup"
+    ]
+  },
+  {
+    "objectID": "week2b-setup.html#point-vs-code-at-your-environment",
+    "href": "week2b-setup.html#point-vs-code-at-your-environment",
+    "title": "Week 2b — Course Environment Setup",
+    "section": "6. Point VS Code at your environment",
+    "text": "6. Point VS Code at your environment\nThis is a crucial step:\n\nOpen any notebook from your W02b/ copy.\nClick the kernel picker in the top-right corner of the notebook.\nChoose the interpreter at agentic-ai-course/.venv (it may be listed as .venv (Python 3.13)).\n\nVS Code remembers this per notebook. If a notebook ever complains that a module is missing, check the kernel picker before anything else — nine times out of ten the notebook is quietly running some other Python.",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2b · Environment Setup"
+    ]
+  },
+  {
+    "objectID": "week2b-setup.html#verify",
+    "href": "week2b-setup.html#verify",
+    "title": "Week 2b — Course Environment Setup",
+    "section": "7. Verify",
+    "text": "7. Verify\nOpen W02b/W02b.1_LLM_API_Basics.ipynb and run the first cell. If it prints that the API key is loaded, you are done. If not, see below.",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2b · Environment Setup"
+    ]
+  },
+  {
+    "objectID": "week2b-setup.html#some-common-errors",
+    "href": "week2b-setup.html#some-common-errors",
+    "title": "Week 2b — Course Environment Setup",
+    "section": "Some Common Errors",
+    "text": "Some Common Errors\n\n\n\n\n\n\n\n\nSymptom\nCause\nFix\n\n\n\n\nModuleNotFoundError\nNotebook is on the wrong kernel\nKernel picker → choose .venv → restart kernel\n\n\npip: command not found\nBare pip is not on your PATH\nUse uv pip install ... instead\n\n\nNo API key found\n.env missing, misplaced, or kernel started before you created it\n.env goes in the project root, next to .venv; then restart the kernel\n\n\nWorks in one notebook, not another\nThe two notebooks are on different kernels\nSet both to .venv\n\n\nuv: command not found right after install\nTerminal opened before the install finished\nClose and reopen the terminal\n\n\ngit pull refuses: local changes would be overwritten\nYou ran or edited notebooks inside lecture-files\ncd lecture-files, then git restore ., then pull again. Work in copies from now on\n\n\n\nLast, please keep in mind that environment problems are not a test of your ability; everyone hits them, including me.",
+    "crumbs": [
+      "Week 2 — LLM Foundations",
+      "Week 2b · Environment Setup"
+    ]
+  },
+  {
+    "objectID": "week3a.html",
+    "href": "week3a.html",
+    "title": "Week 3a — Memory and Structured Output",
+    "section": "",
+    "text": "Today’s files are in the W03a folder: two notebooks, plus agentui.py, a small chat interface we will use at the end of class.",
+    "crumbs": [
+      "Week 3 — Building Agents",
+      "Week 3a · Memory & Structured Output"
+    ]
+  },
+  {
+    "objectID": "week3a.html#get-todays-files",
+    "href": "week3a.html#get-todays-files",
+    "title": "Week 3a — Memory and Structured Output",
+    "section": "Get today’s files",
+    "text": "Get today’s files\nFrom your course project folder (agentic-ai-course), in the VS Code terminal:\n\nmacOSWindowsLinux\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W03a W03a\n\n\ncd lecture-files\ngit pull\ncd ..\nCopy-Item -Recurse lecture-files/W03a W03a\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W03a W03a\n\n\n\nThen open the notebooks from your W03a copy, not from lecture-files, and select the .venv kernel.",
+    "crumbs": [
+      "Week 3 — Building Agents",
+      "Week 3a · Memory & Structured Output"
+    ]
+  },
+  {
+    "objectID": "week3a.html#if-your-project-has-a-course-files-folder",
+    "href": "week3a.html#if-your-project-has-a-course-files-folder",
+    "title": "Week 3a — Memory and Structured Output",
+    "section": "If your project has a course-files folder",
+    "text": "If your project has a course-files folder\nThe first version of the setup instructions had you clone the course repository under the name course-files. We have since moved the lecture files to their own repository, so if that is what you have, run these two commands once, from your project folder:\n\nmacOSWindowsLinux\n\n\ngit clone https://github.com/agenticllms/lecture-files.git\nrm -rf course-files\n\n\ngit clone https://github.com/agenticllms/lecture-files.git\nRemove-Item -Recurse -Force course-files\n\n\ngit clone https://github.com/agenticllms/lecture-files.git\nrm -rf course-files\n\n\n\nNothing of yours is lost: your working copies and your .env and .venv all live outside course-files. After this, the pull steps above are all you ever need.",
+    "crumbs": [
+      "Week 3 — Building Agents",
+      "Week 3a · Memory & Structured Output"
+    ]
+  },
+  {
+    "objectID": "week3b.html",
+    "href": "week3b.html",
+    "title": "Week 3b — The Customer Support Agent",
+    "section": "",
+    "text": "Today’s folder has more in it than usual: the notebook we build in class, plus a complete project skeleton you will fill at the end of the session.",
+    "crumbs": [
+      "Week 3 — Building Agents",
+      "Week 3b · Customer Support Agent"
+    ]
+  },
+  {
+    "objectID": "week3b.html#get-todays-files",
+    "href": "week3b.html#get-todays-files",
+    "title": "Week 3b — The Customer Support Agent",
+    "section": "Get today’s files",
+    "text": "Get today’s files\nFrom your course project folder (agentic-ai-course), in the VS Code terminal:\n\nmacOSWindowsLinux\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W03b W03b\n\n\ncd lecture-files\ngit pull\ncd ..\nCopy-Item -Recurse lecture-files/W03b W03b\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W03b W03b\n\n\n\nThen open the notebook from your W03b copy, not from lecture-files, and select the .venv kernel. One new package this week (for the optional OpenRouter model): from anywhere,\nuv pip install langchain-openrouter\nor re-run uv pip install -r lecture-files/requirements.txt, which now includes it.",
+    "crumbs": [
+      "Week 3 — Building Agents",
+      "Week 3b · Customer Support Agent"
+    ]
+  },
+  {
+    "objectID": "week3b.html#from-notebook-to-project",
+    "href": "week3b.html#from-notebook-to-project",
+    "title": "Week 3b — The Customer Support Agent",
+    "section": "From notebook to project",
+    "text": "From notebook to project\nAt the end of class we move the working code out of the notebook and into support_agent/, file by file. The transfer map is in support_agent/README.md: each notebook section has exactly one destination file. When the transfer is complete, both of these work from inside support_agent/:\npython -m agent.agent     # command-line chat; 'quit' files the ticket\npython app.py             # the same agent behind a chat window\nIf python -m agent.agent errors with an import problem, you are probably running python agent/agent.py instead — the -m module form is required, from the project folder.",
+    "crumbs": [
+      "Week 3 — Building Agents",
+      "Week 3b · Customer Support Agent"
+    ]
+  },
+  {
+    "objectID": "week3b.html#deploy-it-to-hugging-face-spaces",
+    "href": "week3b.html#deploy-it-to-hugging-face-spaces",
+    "title": "Week 3b — The Customer Support Agent",
+    "section": "Deploy it to Hugging Face Spaces",
+    "text": "Deploy it to Hugging Face Spaces\nThe finished project runs on the public internet in about five minutes, for free.\n\nCreate an account at huggingface.co if you do not have one.\nGo to huggingface.co/new-space: SDK Gradio, visibility Public. Pick CPU basic hardware if your account offers it; if only ZeroGPU is available, that works too — app.py already registers a decoy @spaces.GPU function so ZeroGPU’s startup check passes (this app never touches a GPU).\nUpload the contents of support_agent/ — drag and drop under the Files tab, or git push to the Space’s repo. The configuration block at the top of README.md tells Spaces to serve app.py.\nIn the Space’s Settings, under Variables and secrets, add GOOGLE_API_KEY as a secret. It reaches the app as an environment variable; the code picks it up with no changes.\nWait for the build, then open the Space and talk to your agent.\n\nThree things to know:\n\nNever put the key in any uploaded file. The secret store is the only place it belongs. A key committed to a public Space is a key you must revoke.\nFree Spaces sleep after about two days idle and take up to a minute to wake.\nThe Space is public: anyone with the link chats on your API quota. Fine for a demo; take it down or rotate the key when you are done showing it off.",
+    "crumbs": [
+      "Week 3 — Building Agents",
+      "Week 3b · Customer Support Agent"
+    ]
+  },
+  {
+    "objectID": "week3b.html#slides",
+    "href": "week3b.html#slides",
+    "title": "Week 3b — The Customer Support Agent",
+    "section": "Slides",
+    "text": "Slides\nTools decide, or the model decides? — the design rules of thumb from today’s discussion.",
+    "crumbs": [
+      "Week 3 — Building Agents",
+      "Week 3b · Customer Support Agent"
+    ]
+  },
+  {
+    "objectID": "week4a.html",
+    "href": "week4a.html",
+    "title": "Week 4a — LangGraph Basics",
+    "section": "",
+    "text": "Today’s folder has one notebook and the diagrams it displays.",
+    "crumbs": [
+      "Week 4 — LangGraph",
+      "Week 4a · LangGraph Basics"
+    ]
+  },
+  {
+    "objectID": "week4a.html#get-todays-files",
+    "href": "week4a.html#get-todays-files",
+    "title": "Week 4a — LangGraph Basics",
+    "section": "Get today’s files",
+    "text": "Get today’s files\nFrom your course project folder (agentic-ai-course), in the VS Code terminal:\n\nmacOSWindowsLinux\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W04a W04a\n\n\ncd lecture-files\ngit pull\ncd ..\nCopy-Item -Recurse lecture-files/W04a W04a\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W04a W04a\n\n\n\nThen open the notebook from your W04a copy, not from lecture-files, and select the .venv kernel.\nNo new packages this week — langgraph is already in lecture-files/requirements.txt from the Week 2b setup.",
+    "crumbs": [
+      "Week 4 — LangGraph",
+      "Week 4a · LangGraph Basics"
+    ]
+  },
+  {
+    "objectID": "week4a.html#deploying-an-app-on-render.com",
+    "href": "week4a.html#deploying-an-app-on-render.com",
+    "title": "Week 4a — LangGraph Basics",
+    "section": "Deploying an app on Render.com",
+    "text": "Deploying an app on Render.com\nYour DADA1 agent has to run somewhere other than your laptop. Render will do it for free, from a GitHub repository.\n\nThree changes before it will run there\nYour app runs on a machine you do not control, and two things that are true on your laptop stop being true there.\nListen where Render can reach you. demo.launch() with no arguments binds to 127.0.0.1 on port 7860 — reachable from your own browser, invisible to everything else. Render assigns a port in the PORT environment variable and expects the process on 0.0.0.0:\nimport os\n\ndemo.launch(server_name=\"0.0.0.0\",\n            server_port=int(os.environ.get(\"PORT\", 7860)))\nSkip this and the build succeeds, then the deploy fails with no open ports detected. It reads like a network problem and is not one.\nList every package you import. The Week 3b requirements.txt deliberately leaves gradio out, because Hugging Face Spaces supplies its own. Render supplies nothing, so gradio&gt;=5 has to be in the file or the app dies at import with ModuleNotFoundError.\nKeep .env out of the repository. If the project has no .gitignore, add one before the first commit:\n.env\n__pycache__/\n*.pyc\nThe DADA1 project already has all three: app.py binds correctly, requirements.txt is complete, and there is a .gitignore. The Week 3b support agent has none of them, which is what we fix in class.\n\n\nSign in to GitHub from the terminal\nGitHub stopped accepting passwords for git operations years ago, so the first git push from a new machine fails unless something is holding a credential for you. The least painful fix is GitHub’s own command-line tool, which signs you in through the browser and then hands the credential to git — after which pushing works from the VS Code terminal and from the Source Control panel, without either asking you again.\nInstall it:\n\nmacOSWindowsLinux\n\n\nbrew install gh\nNo Homebrew? Download the installer from cli.github.com.\n\n\nwinget install --id GitHub.cli\nThen close and reopen the terminal so gh is on your PATH.\n\n\nsudo apt install gh\nIf your distribution’s gh is missing or ancient, follow the install instructions.\n\n\n\nThen, once:\ngh auth login\nAnswer GitHub.com, then HTTPS, then Login with a web browser. It prints a one-time code, opens GitHub, and you paste the code there. When it asks whether to authenticate git with your GitHub credentials, say yes — that is the step that makes git push work.\nIf you skipped that last prompt, or you are not sure:\ngh auth setup-git     # wires gh in as git's credential helper\ngh auth status        # shows who you are signed in as\nYou only do this once per machine. Everything after it is ordinary git push.\n\n\nPush it to GitHub\nRender deploys from a repo, so that comes first. Your DADA1 folder becomes the repository — not lecture-files, which is shared and read-only:\ncd DADA1\ngit init\ngit add .\ngit status          # check that .env is NOT in this list\ngit commit -m \"DADA1 trip planner agent\"\nThen create an empty repository on GitHub, private, and push to it. Render reads private repositories once you connect your GitHub account, and a public repository holding your solution is an honour-code problem.\n\n\nCreate the service\n\nSign in at render.com with your GitHub account.\nNew → Web Service, then pick your repository. Grant Render access to it if prompted.\nSet these, taking care with the first one:\n\nRoot Directory: trip_planner — your app sits one level below the repository root, and Render looks in the root unless you tell it otherwise.\nBuild command: pip install -r requirements.txt\nStart command: python app.py\nInstance type: Free.\n\nUnder Environment, add GOOGLE_API_KEY, TAVILY_API_KEY and TICKETMASTER_API_KEY as environment variables.\nCreate the service and watch the log. The first build takes a few minutes.\n\nFour things to know:\n\nKeys go in Render’s environment variables, never in the repository. Anything committed to git stays in the history even after you delete the file, so a key that reaches GitHub has to be revoked, not removed.\nRoot Directory is where most first deploys fail. If the log says it cannot find requirements.txt, this is why. It lives under Advanced when you create the service, and under Settings → Build & Deploy afterwards.\nA deploy that builds and then dies is usually the port. See the first of the three changes above; it is the most common way a working app fails to come up here.\nFree services sleep after about fifteen minutes idle, and the next request waits thirty seconds or so while it wakes. Send your own app a request now and then in the days before it is graded, and say so in your README — a sleeping app looks like a broken one.",
+    "crumbs": [
+      "Week 4 — LangGraph",
+      "Week 4a · LangGraph Basics"
+    ]
+  },
+  {
+    "objectID": "week4a.html#slides",
+    "href": "week4a.html#slides",
+    "title": "Week 4a — LangGraph Basics",
+    "section": "Slides",
+    "text": "Slides\nWhy LangGraph? — the pieces underneath create_agent.",
+    "crumbs": [
+      "Week 4 — LangGraph",
+      "Week 4a · LangGraph Basics"
+    ]
   }
 ]
