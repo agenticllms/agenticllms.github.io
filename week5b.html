@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Week 1 — Setup – Agentic AI - Fall 2026 | Northeastern CS</title>
+<title>Week 5b — Reflection &amp; Self-critique – Agentic AI - Fall 2026 | Northeastern CS</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,6 +25,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -98,7 +133,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week1.html">Week 1 · Setup</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week5a.html">Week 5 — Retrieval</a></li><li class="breadcrumb-item"><a href="./week5b.html">Week 5b · Reflection &amp; Self-critique</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -135,7 +170,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./week1.html" class="sidebar-item-text sidebar-link active">
+  <a href="./week1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Week 1 · Setup</span></a>
   </div>
 </li>
@@ -225,7 +260,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./week5b.html" class="sidebar-item-text sidebar-link">
+  <a href="./week5b.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Week 5b · Reflection &amp; Self-critique</span></a>
   </div>
 </li>
@@ -241,19 +276,18 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#install-vs-code" id="toc-install-vs-code" class="nav-link active" data-scroll-target="#install-vs-code">1. Install VS Code</a></li>
-  <li><a href="#python-primer" id="toc-python-primer" class="nav-link" data-scroll-target="#python-primer">2. Python primer</a></li>
-  <li><a href="#do-i-need-to-install-python" id="toc-do-i-need-to-install-python" class="nav-link" data-scroll-target="#do-i-need-to-install-python">Do I need to install Python?</a></li>
+  <li><a href="#get-todays-files" id="toc-get-todays-files" class="nav-link active" data-scroll-target="#get-todays-files">Get today’s files</a></li>
+  <li><a href="#expect-to-hit-the-rate-limit" id="toc-expect-to-hit-the-rate-limit" class="nav-link" data-scroll-target="#expect-to-hit-the-rate-limit">Expect to hit the rate limit</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./week5a.html">Week 5 — Retrieval</a></li><li class="breadcrumb-item"><a href="./week5b.html">Week 5b · Reflection &amp; Self-critique</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Week 1 — Setup</h1>
-<p class="subtitle lead">What to install now, and a Python primer if you need one</p>
+<h1 class="title">Week 5b — Reflection &amp; Self-critique</h1>
+<p class="subtitle lead">Pull today’s files</p>
 </div>
 
 
@@ -270,27 +304,45 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Welcome to Agentic AI. There is no ICA this week. Your job before next week is small: install one editor, and work through the Python primer if your Python is rusty or new. Everything else, including Python itself, will be installed next week in one step.</p>
-<section id="install-vs-code" class="level2">
-<h2 class="anchored" data-anchor-id="install-vs-code">1. Install VS Code</h2>
-<p>VS Code is the editor we will use all semester for notebooks and code.</p>
-<ol type="1">
-<li>Download it from <a href="https://code.visualstudio.com/">code.visualstudio.com</a> and install it. On a Mac, drag the app into your Applications folder. On Windows, run the installer with the default options.</li>
-<li>Open VS Code, click the Extensions icon in the left bar (four squares), and install two extensions, both published by Microsoft: <strong>Python</strong> and <strong>Jupyter</strong>.</li>
-</ol>
-<p>That is the whole task. You do not need to configure anything else yet.</p>
+<p>Today’s folder has two notebooks, the document we search, the tools from last week, and the chat UI from Week 3.</p>
+<pre><code>W05b/
+├── W05b.1_Reflection.ipynb              the loop that grades its own retrieval
+├── W05b.2_Support_Agent_with_RAG.ipynb  the same loop, inside the support agent
+├── husky_policy.md                      the Husky Tech policy, the document we index
+├── support_tools.py                     the tools from W04b
+└── agentui.py                           the Gradio chat UI from W03b</code></pre>
+<section id="get-todays-files" class="level2">
+<h2 class="anchored" data-anchor-id="get-todays-files">Get today’s files</h2>
+<p>From your course project folder (<code>agentic-ai-course</code>), in the VS Code terminal:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">macOS</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Linux</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> lecture-files</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> lecture-files/W05b W05b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> lecture-files</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>git pull</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> <span class="op">..</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Copy-Item</span> <span class="op">-</span>Recurse lecture-files<span class="op">/</span>W05b W05b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> lecture-files</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> pull</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> lecture-files/W05b W05b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<p>Then open the notebooks from your <code>W05b</code> copy, not from <code>lecture-files</code>, and select the <code>.venv</code> kernel.</p>
 </section>
-<section id="python-primer" class="level2">
-<h2 class="anchored" data-anchor-id="python-primer">2. Python primer</h2>
-<p>If you have not written much Python, or you have never seen things like <code>TypedDict</code>, list comprehensions, or decorators, work through the primer before Week 2. It assumes no prior Python and everything in it comes back later in the course.</p>
-<p>The easiest way to run it is Google Colab, which runs the notebook in your browser with nothing to install. You will need a Google account.</p>
-<p><a href="https://colab.research.google.com/drive/1s60I7NQiTpOWg2tK-KmFyiC8ZAY24lo7?usp=sharing"><strong>Open the Python Primer in Colab</strong></a></p>
-<p>In Colab, run cells with Shift+Enter, top to bottom. Change things and rerun them. The primer ends with eight exercises. If those feel fine, you are ready for Week 2.</p>
-<p>If you want to go deeper than the primer, the <a href="https://docs.python.org/3/tutorial/">official Python tutorial</a> is the best next stop. It is free, well written, and goes well beyond what we need. Chapters 3 through 5 line up with the primer if you want a second pass at the same ideas.</p>
-</section>
-<section id="do-i-need-to-install-python" class="level2">
-<h2 class="anchored" data-anchor-id="do-i-need-to-install-python">Do I need to install Python?</h2>
-<p>Not yet. Next week we will set up the full course environment with a tool called <code>uv</code>, and it installs the right version of Python for you as part of one command. If you install Python on your own this week, you will not break anything, but you also will not need it, and having several Pythons on one machine is a common source of confusion. Wait for the Week 2 setup guide.</p>
+<section id="expect-to-hit-the-rate-limit" class="level2">
+<h2 class="anchored" data-anchor-id="expect-to-hit-the-rate-limit">Expect to hit the rate limit</h2>
+<p>Tuesday’s agent made two model calls per question, one to choose the tool and one to write the answer. Today’s makes those two plus a grade for every search attempt and a rewrite between them. A two-attempt search costs five calls where Tuesday’s cost two.</p>
+<p>The Gemini free tier allows 15 requests per minute, so a handful of questions in a row will trip it. Nesting multiplies calls per tool call, not per conversation. If you see a 429, wait a minute or switch the model cell to Ollama and re-run from there.</p>
 
 
 </section>
