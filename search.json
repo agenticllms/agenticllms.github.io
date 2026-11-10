@@ -528,43 +528,78 @@
     ]
   },
   {
-    "objectID": "week1.html",
-    "href": "week1.html",
-    "title": "Week 1 — Setup",
+    "objectID": "week10a.html",
+    "href": "week10a.html",
+    "title": "Week 10a — Evaluating Agents",
     "section": "",
-    "text": "Welcome to Agentic AI. There is no ICA this week. Your job before next week is small: install one editor, and work through the Python primer if your Python is rusty or new. Everything else, including Python itself, will be installed next week in one step.",
+    "text": "Today we build an evaluation for the Husky Tech support agent from Week 4. The notebook runs the agent on a fixed set of 16 tasks and checks every run at three levels: the outcome, with code that compares the refunds and escalations the agent made with the expected ones; the trajectory, with code that checks the tool calls; and the reply, with a model acting as a judge. Before we trust the judge, we check it against replies that people have already labeled.",
     "crumbs": [
-      "Week 1 · Setup"
+      "Week 10 — Evaluation",
+      "Week 10a · Evaluating Agents"
     ]
   },
   {
-    "objectID": "week1.html#install-vs-code",
-    "href": "week1.html#install-vs-code",
-    "title": "Week 1 — Setup",
-    "section": "1. Install VS Code",
-    "text": "1. Install VS Code\nVS Code is the editor we will use all semester for notebooks and code.\n\nDownload it from code.visualstudio.com and install it. On a Mac, drag the app into your Applications folder. On Windows, run the installer with the default options.\nOpen VS Code, click the Extensions icon in the left bar (four squares), and install two extensions, both published by Microsoft: Python and Jupyter.\n\nThat is the whole task. You do not need to configure anything else yet.",
+    "objectID": "week10a.html#get-todays-files",
+    "href": "week10a.html#get-todays-files",
+    "title": "Week 10a — Evaluating Agents",
+    "section": "Get today’s files",
+    "text": "Get today’s files\nFrom your course project folder (agentic-ai-course), in the VS Code terminal:\n\nmacOSWindowsLinux\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W10a W10a\n\n\ncd lecture-files\ngit pull\ncd ..\nCopy-Item -Recurse lecture-files/W10a W10a\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W10a W10a\n\n\n\nThen open the notebook from your W10a copy, not from lecture-files, and select the .venv kernel. There is nothing new to install.",
     "crumbs": [
-      "Week 1 · Setup"
+      "Week 10 — Evaluation",
+      "Week 10a · Evaluating Agents"
     ]
   },
   {
-    "objectID": "week1.html#python-primer",
-    "href": "week1.html#python-primer",
-    "title": "Week 1 — Setup",
-    "section": "2. Python primer",
-    "text": "2. Python primer\nIf you have not written much Python, or you have never seen things like TypedDict, list comprehensions, or decorators, work through the primer before Week 2. It assumes no prior Python and everything in it comes back later in the course.\nThe easiest way to run it is Google Colab, which runs the notebook in your browser with nothing to install. You will need a Google account.\nOpen the Python Primer in Colab\nIn Colab, run cells with Shift+Enter, top to bottom. Change things and rerun them. The primer ends with eight exercises. If those feel fine, you are ready for Week 2.\nIf you want to go deeper than the primer, the official Python tutorial is the best next stop. It is free, well written, and goes well beyond what we need. Chapters 3 through 5 line up with the primer if you want a second pass at the same ideas.",
+    "objectID": "week10a.html#choosing-the-models",
+    "href": "week10a.html#choosing-the-models",
+    "title": "Week 10a — Evaluating Agents",
+    "section": "Choosing the models",
+    "text": "Choosing the models\nSection 0 has one cell per model: a local Qwen model through Ollama, gpt-4.1-mini, Claude Haiku, and Gemini. Run one of them. That model is the agent.\nSection 5 defines a second model, the judge. The cell uses Claude Haiku, which needs an ANTHROPIC_API_KEY in your .env. If you don’t have one, use the agent’s model as the judge instead:\njudge = model\nA judge from a different model family is better, because judges tend to rate text from their own family more favorably. With one key, the notebook still works, and you’ll see in section 6 how far the judge agrees with the human labels.",
     "crumbs": [
-      "Week 1 · Setup"
+      "Week 10 — Evaluation",
+      "Week 10a · Evaluating Agents"
     ]
   },
   {
-    "objectID": "week1.html#do-i-need-to-install-python",
-    "href": "week1.html#do-i-need-to-install-python",
-    "title": "Week 1 — Setup",
-    "section": "Do I need to install Python?",
-    "text": "Do I need to install Python?\nNot yet. Next week we will set up the full course environment with a tool called uv, and it installs the right version of Python for you as part of one command. If you install Python on your own this week, you will not break anything, but you also will not need it, and having several Pythons on one machine is a common source of confusion. Wait for the Week 2 setup guide.",
+    "objectID": "week10a.html#calls-per-run",
+    "href": "week10a.html#calls-per-run",
+    "title": "Week 10a — Evaluating Agents",
+    "section": "Calls per run",
+    "text": "Calls per run\nRunning the notebook from top to bottom makes about 100 model calls: about 50 for the agent on the 16 tasks, and about 50 for the judge, most of them in section 6, where it grades 18 replies twice. On the Gemini free tier, the limit of 15 requests per minute is the one you are most likely to hit. If a cell stops with a 429 error, wait a minute and run that cell again.\nLangSmith tracing is optional. If LANGSMITH_TRACING=true is in your .env, every task run is traced, and you can find a task’s trace by its id.",
     "crumbs": [
-      "Week 1 · Setup"
+      "Week 10 — Evaluation",
+      "Week 10a · Evaluating Agents"
+    ]
+  },
+  {
+    "objectID": "week10a.html#if-the-judge-cell-fails",
+    "href": "week10a.html#if-the-judge-cell-fails",
+    "title": "Week 10a — Evaluating Agents",
+    "section": "If the judge cell fails",
+    "text": "If the judge cell fails\nThe judge returns its grade as a Verdict: an explanation and three yes-or-no fields, reason, grounded, and action_matches. In judge_reply, the judge is called with\ngrader = judge.with_structured_output(Verdict, method=\"json_schema\")\nmethod=\"json_schema\" asks the provider to constrain the model’s output to the schema, so the three fields come back as real booleans. OpenAI, Gemini, Anthropic, and Ollama all support it. Some models and providers do not, and then the judge cell fails in one of two ways.\n\nThe call is rejected with an error saying that the json_schema method or response format is not supported.\nA ValidationError like this one, because the model wrote its explanation into a yes-or-no field:\ngrounded\n  Input should be a valid boolean, unable to interpret input\n  [type=bool_parsing, input_value='False. The dates, days, ...appear in any evidence.', input_type=str]\n\nIn either case, make two changes in section 5.\nFirst, if you got the first error, remove method=\"json_schema\" in judge_reply:\ngrader = judge.with_structured_output(Verdict)\nSecond, add a validator to the Verdict class. It runs before Pydantic checks the type, and when a field arrives as text such as \"False. The dates ...\", it keeps only the first word:\nfrom pydantic import BaseModel, Field, field_validator\n\n\nclass Verdict(BaseModel):\n    explanation: str = Field(description=\"Two or three sentences on how the reply meets or misses each criterion.\")\n    reason: bool = Field(description=\"The reply states the policy rule that decided each request in the message.\")\n    grounded: bool = Field(description=\"Every order fact in the reply matches the evidence, and it promises nothing the evidence does not support.\")\n    action_matches: bool = Field(description=\"What the reply says was done matches the tool calls in the evidence.\")\n\n    @field_validator(\"reason\", \"grounded\", \"action_matches\", mode=\"before\")\n    @classmethod\n    def first_word(cls, value):\n        \"\"\"Some models write 'False. The dates ...' into a yes-or-no field. Keep only the first word.\"\"\"\n        if isinstance(value, str):\n            return value.strip().split()[0].strip(\".,:;\").lower() in (\"true\", \"yes\")\n        return value\nThen run the Verdict cell, the judge_reply cell, and the cells after them again. Real booleans pass through the validator unchanged.\nThe validator repairs the output after the fact, while json_schema prevents the problem, so use the validator only when your model needs it. It also has a cost. A field that starts with any word other than “true”, “false”, “yes”, or “no” is read as False. When you compare the judge with the human labels in section 6, read the judge’s explanations for the replies it got wrong, and check that none of them comes from a field the validator misread.",
+    "crumbs": [
+      "Week 10 — Evaluation",
+      "Week 10a · Evaluating Agents"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Agentic AI — Course Materials",
+    "section": "",
+    "text": "Welcome to Agentic AI. This site is where I post everything you need for each class session: setup instructions, the code we build together, links I’ll reference on screen, and anything you’ll want to copy and paste during lecture.\nProf. Yildirim",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#schedule",
+    "href": "index.html#schedule",
+    "title": "Agentic AI — Course Materials",
+    "section": "Schedule",
+    "text": "Schedule\nThe schedule below provides links to readings and documentation for each day. The core reading for each session is shown in bold.\n\n\n\n\n\n\n\n\n\n\n\nWk\nDate\nTopic\nPapers\nFramework docs\n\n\n\n\n1\nF 9/11\nIntroduction to Agentic AI\nBuilding Effective AgentsRise and Potential of LLM Agents\nWorkflows and agents · Philosophy\n\n\n2\nT 9/15\nLLM Foundations\nAttention Is All You NeedImproving Language Understanding\n3Blue1Brown: LLMs visualized (recommended watch) · Karpathy: Let’s build GPT\n\n\n2\nF 9/18\nLLM Foundations\nInstructGPTChain-of-Thought\nModels · Messages\n\n\n3\nT 9/22\nSimple Agent Architecture\nToolformerMRKL\nTools · Agents\n\n\n3\nF 9/25\nTool-Calling\nReActWhat Are Tools Anyway?\nMemory · Structured output\n\n\n4\nT 9/29\nShort-term & Long-term Memory\nGenerative AgentsMemGPT\nThinking in LangGraph · Graph API · Persistence\n\n\n4\nF 10/2\nContext Management\nLost in the MiddleEffective Context Engineering\nContext engineering · Middleware\n\n\n5\nT 10/6\nRetrieval-Augmented Generation\nRAGRAG Survey (§2–3)\nRetrieval · Semantic search\n\n\n5\nF 10/9\nReflection & Self-critique\nReflexionSelf-RAG · Self-Refine\nGraph API loops · Unit testing\n\n\n6\nT 10/13\nPlanning & Task Decomposition\nVoyagerTree of Thoughts · HuggingGPT (skim)\nSubgraphs · Skills\n\n\n6\nF 10/16\nAgentic RAG\nCorrective RAGAdaptive-RAG\nCustom RAG agent · Multi-source routing\n\n\n7\nT 10/20\nMulti-Agent Orchestration I\nWhy Do Multi-Agent LLM Systems Fail?AutoGen · Anthropic research system\nCustomer support with handoffs · Handoffs · Router\n\n\n7\nF 10/23\nMulti-Agent Orchestration II\nMetaGPTCAMEL (skim)\nSubagents · Subagents tutorial · Custom workflow\n\n\n8\nT 10/27\nMulti-Agent Orchestration III\nWhy Multi-Agent LLM Systems Fail (§4–5, re-read)Agents Are Not Enough (optional)\nLangGraph runtime · Studio\n\n\n8\nF 10/30\nMidterm Exam\n—\n—\n\n\n9\nT 11/3\nDeep Agents I: The Agent Harness\nEffective Harnesses for Long-Running AgentsMeasuring AI Ability to Complete Long Tasks (skim)\nDeep Agents overview · Subagents · Deep Agents (blog post)\n\n\n9\nF 11/6\nDeep Agents II: Backends and Sandboxes\nMaking Claude Code Safer with SandboxingDesign Patterns for Securing LLM Agents against Prompt Injections (skim)\nBackends · Sandboxes\n\n\n10\nT 11/10\nAgentic AI Evaluation\nSWE-benchτ-bench · LLM-as-a-Judge · AgentBench (skim)\nEvaluation concepts · Evaluate intermediate steps · Complex agent · LLM-as-judge\n\n\n10\nF 11/13\nAgentic AI Optimization\nDSPyCost tracking\nCaching · Fallbacks · Spend policies · Insights",
+    "crumbs": [
+      "Home"
     ]
   },
   {
@@ -623,23 +658,43 @@
     ]
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Agentic AI — Course Materials",
+    "objectID": "week1.html",
+    "href": "week1.html",
+    "title": "Week 1 — Setup",
     "section": "",
-    "text": "Welcome to Agentic AI. This site is where I post everything you need for each class session: setup instructions, the code we build together, links I’ll reference on screen, and anything you’ll want to copy and paste during lecture.\nProf. Yildirim",
+    "text": "Welcome to Agentic AI. There is no ICA this week. Your job before next week is small: install one editor, and work through the Python primer if your Python is rusty or new. Everything else, including Python itself, will be installed next week in one step.",
     "crumbs": [
-      "Home"
+      "Week 1 · Setup"
     ]
   },
   {
-    "objectID": "index.html#schedule",
-    "href": "index.html#schedule",
-    "title": "Agentic AI — Course Materials",
-    "section": "Schedule",
-    "text": "Schedule\nThe schedule below provides links to readings and documentation for each day. The core reading for each session is shown in bold.\n\n\n\n\n\n\n\n\n\n\n\nWk\nDate\nTopic\nPapers\nFramework docs\n\n\n\n\n1\nF 9/11\nIntroduction to Agentic AI\nBuilding Effective AgentsRise and Potential of LLM Agents\nWorkflows and agents · Philosophy\n\n\n2\nT 9/15\nLLM Foundations\nAttention Is All You NeedImproving Language Understanding\n3Blue1Brown: LLMs visualized (recommended watch) · Karpathy: Let’s build GPT\n\n\n2\nF 9/18\nLLM Foundations\nInstructGPTChain-of-Thought\nModels · Messages\n\n\n3\nT 9/22\nSimple Agent Architecture\nToolformerMRKL\nTools · Agents\n\n\n3\nF 9/25\nTool-Calling\nReActWhat Are Tools Anyway?\nMemory · Structured output\n\n\n4\nT 9/29\nShort-term & Long-term Memory\nGenerative AgentsMemGPT\nThinking in LangGraph · Graph API · Persistence\n\n\n4\nF 10/2\nContext Management\nLost in the MiddleEffective Context Engineering\nContext engineering · Middleware\n\n\n5\nT 10/6\nRetrieval-Augmented Generation\nRAGRAG Survey (§2–3)\nRetrieval · Semantic search\n\n\n5\nF 10/9\nReflection & Self-critique\nReflexionSelf-RAG · Self-Refine\nGraph API loops · Unit testing\n\n\n6\nT 10/13\nPlanning & Task Decomposition\nVoyagerTree of Thoughts · HuggingGPT (skim)\nSubgraphs · Skills\n\n\n6\nF 10/16\nAgentic RAG\nCorrective RAGAdaptive-RAG\nCustom RAG agent · Multi-source routing\n\n\n7\nT 10/20\nMulti-Agent Orchestration I\nWhy Do Multi-Agent LLM Systems Fail?AutoGen · Anthropic research system\nCustomer support with handoffs · Handoffs · Router\n\n\n7\nF 10/23\nMulti-Agent Orchestration II\nMetaGPTCAMEL (skim)\nSubagents · Subagents tutorial · Custom workflow\n\n\n8\nT 10/27\nMulti-Agent Orchestration III\nWhy Multi-Agent LLM Systems Fail (§4–5, re-read)Agents Are Not Enough (optional)\nLangGraph runtime · Studio\n\n\n8\nF 10/30\nMidterm Exam\n—\n—\n\n\n9\nT 11/3\nDeep Agents I: The Agent Harness\nEffective Harnesses for Long-Running AgentsMeasuring AI Ability to Complete Long Tasks (skim)\nDeep Agents overview · Subagents · Deep Agents (blog post)\n\n\n9\nF 11/6\nDeep Agents II: Backends and Sandboxes\nMaking Claude Code Safer with SandboxingDesign Patterns for Securing LLM Agents against Prompt Injections (skim)\nBackends · Sandboxes\n\n\n10\nT 11/10\nAgentic AI Evaluation\nSWE-benchτ-bench · LLM-as-a-Judge · AgentBench (skim)\nEvaluation concepts · Evaluate intermediate steps · Complex agent · LLM-as-judge\n\n\n10\nF 11/13\nAgentic AI Optimization\nDSPyCost tracking\nCaching · Fallbacks · Spend policies · Insights",
+    "objectID": "week1.html#install-vs-code",
+    "href": "week1.html#install-vs-code",
+    "title": "Week 1 — Setup",
+    "section": "1. Install VS Code",
+    "text": "1. Install VS Code\nVS Code is the editor we will use all semester for notebooks and code.\n\nDownload it from code.visualstudio.com and install it. On a Mac, drag the app into your Applications folder. On Windows, run the installer with the default options.\nOpen VS Code, click the Extensions icon in the left bar (four squares), and install two extensions, both published by Microsoft: Python and Jupyter.\n\nThat is the whole task. You do not need to configure anything else yet.",
     "crumbs": [
-      "Home"
+      "Week 1 · Setup"
+    ]
+  },
+  {
+    "objectID": "week1.html#python-primer",
+    "href": "week1.html#python-primer",
+    "title": "Week 1 — Setup",
+    "section": "2. Python primer",
+    "text": "2. Python primer\nIf you have not written much Python, or you have never seen things like TypedDict, list comprehensions, or decorators, work through the primer before Week 2. It assumes no prior Python and everything in it comes back later in the course.\nThe easiest way to run it is Google Colab, which runs the notebook in your browser with nothing to install. You will need a Google account.\nOpen the Python Primer in Colab\nIn Colab, run cells with Shift+Enter, top to bottom. Change things and rerun them. The primer ends with eight exercises. If those feel fine, you are ready for Week 2.\nIf you want to go deeper than the primer, the official Python tutorial is the best next stop. It is free, well written, and goes well beyond what we need. Chapters 3 through 5 line up with the primer if you want a second pass at the same ideas.",
+    "crumbs": [
+      "Week 1 · Setup"
+    ]
+  },
+  {
+    "objectID": "week1.html#do-i-need-to-install-python",
+    "href": "week1.html#do-i-need-to-install-python",
+    "title": "Week 1 — Setup",
+    "section": "Do I need to install Python?",
+    "text": "Do I need to install Python?\nNot yet. Next week we will set up the full course environment with a tool called uv, and it installs the right version of Python for you as part of one command. If you install Python on your own this week, you will not break anything, but you also will not need it, and having several Pythons on one machine is a common source of confusion. Wait for the Week 2 setup guide.",
+    "crumbs": [
+      "Week 1 · Setup"
     ]
   },
   {
