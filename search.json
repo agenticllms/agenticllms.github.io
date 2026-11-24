@@ -528,217 +528,102 @@
     ]
   },
   {
-    "objectID": "week11b.html",
-    "href": "week11b.html",
-    "title": "Week 11b — Long-Term Memory",
+    "objectID": "week12a.html",
+    "href": "week12a.html",
+    "title": "Week 12a — Memory as a Tool",
     "section": "",
-    "text": "On Tuesday we saved conversations in a database, so a thread survives a restart. Today we give the Husky Tech support agent a memory that outlasts the thread. We start with LangGraph’s store, then build an agent that reads a customer’s profile from the store and updates it on every turn, and finally move the store to a SQLite file and to Supabase.",
+    "text": "On Friday, the support agent kept a profile of each customer in the store, and a write_memory node updated it on every turn, whether or not the customer had said anything worth remembering. Today the agent decides for itself. We give the model three memory tools: one that saves a memory, one that reads the customer’s memories, and one that searches past support cases by similarity. The customer’s id comes from the app through the config, so the model can only reach the memories of the customer who is logged in.",
     "crumbs": [
-      "Week 11 — Context and Memory",
-      "Week 11b · Long-Term Memory"
+      "Week 12 — Memory as a Tool",
+      "Week 12a · Memory as a Tool"
     ]
   },
   {
-    "objectID": "week11b.html#get-todays-files",
-    "href": "week11b.html#get-todays-files",
-    "title": "Week 11b — Long-Term Memory",
+    "objectID": "week12a.html#get-todays-files",
+    "href": "week12a.html#get-todays-files",
+    "title": "Week 12a — Memory as a Tool",
     "section": "Get today’s files",
-    "text": "Get today’s files\nFrom your course project folder (agentic-ai-course), in the VS Code terminal:\n\nmacOSWindowsLinux\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W11b W11b\n\n\ncd lecture-files\ngit pull\ncd ..\nCopy-Item -Recurse lecture-files/W11b W11b\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W11b W11b\n\n\n\nThen open the notebook from your W11b copy, not from lecture-files, and select the .venv kernel.",
+    "text": "Get today’s files\nFrom your course project folder (agentic-ai-course), in the VS Code terminal:\n\nmacOSWindowsLinux\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W12a W12a\n\n\ncd lecture-files\ngit pull\ncd ..\nCopy-Item -Recurse lecture-files/W12a W12a\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W12a W12a\n\n\n\nThen open the notebook from your W12a copy, not from lecture-files, and select the .venv kernel.",
     "crumbs": [
-      "Week 11 — Context and Memory",
-      "Week 11b · Long-Term Memory"
+      "Week 12 — Memory as a Tool",
+      "Week 12a · Memory as a Tool"
     ]
   },
   {
-    "objectID": "week11b.html#packages",
-    "href": "week11b.html#packages",
-    "title": "Week 11b — Long-Term Memory",
+    "objectID": "week12a.html#packages",
+    "href": "week12a.html#packages",
+    "title": "Week 12a — Memory as a Tool",
     "section": "Packages",
-    "text": "Packages\nThere are no new packages today. The SQLite and Postgres stores come in the same packages as Tuesday’s checkpointers. If you missed Tuesday, install them now:\nuv pip install langgraph-checkpoint-sqlite langgraph-checkpoint-postgres \"psycopg[binary,pool]\"",
+    "text": "Packages\nThere are no new packages today. Section 4 uses an embedding model, and the packages for the three options were installed in Week 5. If one is missing, install it:\nuv pip install langchain-ollama langchain-google-genai langchain-nvidia-ai-endpoints",
     "crumbs": [
-      "Week 11 — Context and Memory",
-      "Week 11b · Long-Term Memory"
+      "Week 12 — Memory as a Tool",
+      "Week 12a · Memory as a Tool"
     ]
   },
   {
-    "objectID": "week11b.html#supabase",
-    "href": "week11b.html#supabase",
-    "title": "Week 11b — Long-Term Memory",
-    "section": "Supabase",
-    "text": "Supabase\nSection 5 uses the SUPABASE_DB_URL you added to your .env on Tuesday. If you have not set it up yet, follow the steps on the Week 11a page.\nIf you change SUPABASE_DB_URL while the notebook is open, restart the kernel before you run section 5 again. A connection pool opened with the old URL keeps trying to reconnect in the background until the kernel stops.",
+    "objectID": "week12a.html#choosing-the-embedding-model",
+    "href": "week12a.html#choosing-the-embedding-model",
+    "title": "Week 12a — Memory as a Tool",
+    "section": "Choosing the embedding model",
+    "text": "Choosing the embedding model\nSection 4 searches past support cases by similarity, so the store needs an embedding model. Run one of the three cells in the notebook:\n\nOllama qwen3-embedding:0.6b runs on your laptop. If you have not pulled it yet, run ollama pull qwen3-embedding:0.6b.\nGemini models/gemini-embedding-001 uses your GOOGLE_API_KEY.\nNVIDIA nvidia/nemotron-3.5-embed-1b uses your NVIDIA_API_KEY.\n\nNVIDIA retired nvidia/nemotron-3-embed-1b, the model in the Week 5 and 6 notebooks, on November 23, and it now fails with [410] Gone. If your project uses it, switch to nvidia/nemotron-3.5-embed-1b and build your index again. Vectors from the old model cannot be searched with the new one.",
     "crumbs": [
-      "Week 11 — Context and Memory",
-      "Week 11b · Long-Term Memory"
+      "Week 12 — Memory as a Tool",
+      "Week 12a · Memory as a Tool"
     ]
   },
   {
-    "objectID": "week11b.html#choosing-the-model",
-    "href": "week11b.html#choosing-the-model",
-    "title": "Week 11b — Long-Term Memory",
-    "section": "Choosing the model",
-    "text": "Choosing the model\nUse a hosted model: gpt-4.1-mini, Claude Haiku, or Gemini. The local qwen3.5:9b often saves the customer’s preference in the profile and then answers in English anyway.\nThe agent in section 3 calls the model at least twice per message, once to update the profile and once to answer. On the Gemini free tier, run the cells one at a time. If a cell stops with a 429 error, wait a minute and run it again.",
-    "crumbs": [
-      "Week 11 — Context and Memory",
-      "Week 11b · Long-Term Memory"
-    ]
-  },
-  {
-    "objectID": "week10b.html",
-    "href": "week10b.html",
-    "title": "Week 10b — Evaluation as an Experiment",
+    "objectID": "week11a.html",
+    "href": "week11a.html",
+    "title": "Week 11a — Context Management and Saving Threads",
     "section": "",
-    "text": "On Tuesday we evaluated the Husky Tech support agent by running each task once. Today we will run the evaluation as an experiment. We will compare two system prompts on the same 16 tasks, with five runs of every task under each prompt, and report the success rate with a 95% interval, pass^k, the paired difference between the prompts, the cost, and the failures.",
+    "text": "Today we work on what an agent remembers within a conversation. In the first notebook, the conversation gets long, and we try strategies to keep what the model reads under control: trimming, summarization, and offloading. In the second, we save the conversation in a database, first in a SQLite file and then in Postgres on Supabase, so that it survives a restart and a redeploy.",
     "crumbs": [
-      "Week 10 — Evaluation",
-      "Week 10b · Evaluation as an Experiment"
+      "Week 11 — Context and Memory",
+      "Week 11a · Context Management and Saving Threads"
     ]
   },
   {
-    "objectID": "week10b.html#get-todays-files",
-    "href": "week10b.html#get-todays-files",
-    "title": "Week 10b — Evaluation as an Experiment",
+    "objectID": "week11a.html#get-todays-files",
+    "href": "week11a.html#get-todays-files",
+    "title": "Week 11a — Context Management and Saving Threads",
     "section": "Get today’s files",
-    "text": "Get today’s files\nFrom your course project folder (agentic-ai-course), in the VS Code terminal:\n\nmacOSWindowsLinux\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W10b W10b\n\n\ncd lecture-files\ngit pull\ncd ..\nCopy-Item -Recurse lecture-files/W10b W10b\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W10b W10b\n\n\n\nThen open the notebook from your W10b copy, not from lecture-files, and select the .venv kernel. The notebook needs nothing new. To run the tests in husky_support, install pytest:\nuv pip install pytest\nW10b also contains a copy of the W10a notebook. Its cohen_kappa function now shows each chance term on its own line and returns nan when kappa is undefined, that is, when both raters give every item the same label. The notebook has a worked example of the function on ten labeled replies.",
+    "text": "Get today’s files\nFrom your course project folder (agentic-ai-course), in the VS Code terminal:\n\nmacOSWindowsLinux\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W11a W11a\n\n\ncd lecture-files\ngit pull\ncd ..\nCopy-Item -Recurse lecture-files/W11a W11a\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W11a W11a\n\n\n\nThen open the notebooks from your W11a copy, not from lecture-files, and select the .venv kernel.",
     "crumbs": [
-      "Week 10 — Evaluation",
-      "Week 10b · Evaluation as an Experiment"
+      "Week 11 — Context and Memory",
+      "Week 11a · Context Management and Saving Threads"
     ]
   },
   {
-    "objectID": "week10b.html#running-the-experiment",
-    "href": "week10b.html#running-the-experiment",
-    "title": "Week 10b — Evaluation as an Experiment",
-    "section": "Running the experiment",
-    "text": "Running the experiment\nThe notebook runs 16 tasks, 5 times each, under 2 prompts: 160 agent runs. You don’t have to run them. Our results with gpt-4.1-mini are saved in results/gpt-4.1-mini/, and with RUN = False, which is the default, sections 3 to 7 analyze those files without calling a model.\nTo run the experiment with your own model, set RUN = True. Your results go to a folder named after your model.\n\nWith gpt-4.1-mini, it took us about six minutes.\nOn the Gemini free tier, set pause=4 in the run_experiment call to stay under 15 requests per minute. The experiment then takes over half an hour.\nIf it stops partway, through a 429 error or a closed laptop, run the cell again. Every run is saved as soon as it finishes, and the runs already in the file are skipped.\n\nSection 8 sends a dataset and 32 agent runs to LangSmith, and runs only when USE_LANGSMITH = True. It needs LANGSMITH_API_KEY in your .env.",
+    "objectID": "week11a.html#packages-to-install",
+    "href": "week11a.html#packages-to-install",
+    "title": "Week 11a — Context Management and Saving Threads",
+    "section": "Packages to install",
+    "text": "Packages to install\nThe second notebook needs the SQLite and Postgres checkpointers:\nuv pip install langgraph-checkpoint-sqlite langgraph-checkpoint-postgres \"psycopg[binary,pool]\"",
     "crumbs": [
-      "Week 10 — Evaluation",
-      "Week 10b · Evaluation as an Experiment"
+      "Week 11 — Context and Memory",
+      "Week 11a · Context Management and Saving Threads"
     ]
   },
   {
-    "objectID": "week10b.html#the-packaged-project",
-    "href": "week10b.html#the-packaged-project",
-    "title": "Week 10b — Evaluation as an Experiment",
-    "section": "The packaged project",
-    "text": "The packaged project\nhusky_support/ is the same agent and the same evaluation as scripts instead of a notebook: the application customers use in app/, and the evaluation suite that tests it in evals/. Its README.md explains the layout and the three rules behind it. Run these from inside the folder, in a terminal with the .venv activated:\ncd W10b/husky_support\n\npython score_eval.py results/gpt-4.1-mini      # score the saved runs; no model calls\npython -m pytest tests                          # test the checks\n\npython run_app.py                               # the chat app, at http://localhost:7860\npython run_eval.py --model gpt-4.1-mini --condition policy --runs 1 --tasks t01,t16\npython judge_eval.py --judge gpt-4.1-mini --validate\nThe scripts read the keys from the .env in your course project folder, so there is nothing to copy. The first two commands need no key at all. The app uses the model in the MODEL variable, gpt-4.1-mini unless you set another one.\nFor research projects, your FP3 needs the same parts: your own agent in app/, and your own tasks, checks, and metrics in evals/.",
+    "objectID": "week11a.html#setting-up-supabase",
+    "href": "week11a.html#setting-up-supabase",
+    "title": "Week 11a — Context Management and Saving Threads",
+    "section": "Setting up Supabase",
+    "text": "Setting up Supabase\nSection 4 of the second notebook saves threads in a Supabase database. Setting it up takes about five minutes:\n\nCreate a free account at supabase.com and a new project. Write down the database password you choose.\nIn the project, click Connect at the top of the page. Under Session pooler, copy the connection string, and replace [YOUR-PASSWORD] with your password.\nAdd it to your .env:\nSUPABASE_DB_URL=postgresql://postgres.abcdefghijklmnop:your-password@aws-0-us-east-1.pooler.supabase.com:5432/postgres\n\nUse the session pooler, not the direct connection, which needs IPv6. If your password contains any of @ # / : ? %, the connection fails with password authentication failed. Reset the password to letters and digits in Project Settings → Database, or see step 2 in the notebook for how to encode those characters.",
     "crumbs": [
-      "Week 10 — Evaluation",
-      "Week 10b · Evaluation as an Experiment"
+      "Week 11 — Context and Memory",
+      "Week 11a · Context Management and Saving Threads"
     ]
   },
   {
-    "objectID": "week1.html",
-    "href": "week1.html",
-    "title": "Week 1 — Setup",
-    "section": "",
-    "text": "Welcome to Agentic AI. There is no ICA this week. Your job before next week is small: install one editor, and work through the Python primer if your Python is rusty or new. Everything else, including Python itself, will be installed next week in one step.",
+    "objectID": "week11a.html#choosing-the-model",
+    "href": "week11a.html#choosing-the-model",
+    "title": "Week 11a — Context Management and Saving Threads",
+    "section": "Choosing the model",
+    "text": "Choosing the model\nUse gpt-4.1-mini or Gemini for the first notebook. Claude’s replies carry an encrypted record of its reasoning, which the token counts include, so every count looks much larger. With Claude, set MAX_TOKENS = 1500 in the trimming section.\nOn the Gemini free tier, each eight-turn conversation makes about 16 model calls in under a minute, which is close to the limit of 15 a minute. If a cell stops with a 429 error, wait a minute and run it again.",
     "crumbs": [
-      "Week 1 · Setup"
-    ]
-  },
-  {
-    "objectID": "week1.html#install-vs-code",
-    "href": "week1.html#install-vs-code",
-    "title": "Week 1 — Setup",
-    "section": "1. Install VS Code",
-    "text": "1. Install VS Code\nVS Code is the editor we will use all semester for notebooks and code.\n\nDownload it from code.visualstudio.com and install it. On a Mac, drag the app into your Applications folder. On Windows, run the installer with the default options.\nOpen VS Code, click the Extensions icon in the left bar (four squares), and install two extensions, both published by Microsoft: Python and Jupyter.\n\nThat is the whole task. You do not need to configure anything else yet.",
-    "crumbs": [
-      "Week 1 · Setup"
-    ]
-  },
-  {
-    "objectID": "week1.html#python-primer",
-    "href": "week1.html#python-primer",
-    "title": "Week 1 — Setup",
-    "section": "2. Python primer",
-    "text": "2. Python primer\nIf you have not written much Python, or you have never seen things like TypedDict, list comprehensions, or decorators, work through the primer before Week 2. It assumes no prior Python and everything in it comes back later in the course.\nThe easiest way to run it is Google Colab, which runs the notebook in your browser with nothing to install. You will need a Google account.\nOpen the Python Primer in Colab\nIn Colab, run cells with Shift+Enter, top to bottom. Change things and rerun them. The primer ends with eight exercises. If those feel fine, you are ready for Week 2.\nIf you want to go deeper than the primer, the official Python tutorial is the best next stop. It is free, well written, and goes well beyond what we need. Chapters 3 through 5 line up with the primer if you want a second pass at the same ideas.",
-    "crumbs": [
-      "Week 1 · Setup"
-    ]
-  },
-  {
-    "objectID": "week1.html#do-i-need-to-install-python",
-    "href": "week1.html#do-i-need-to-install-python",
-    "title": "Week 1 — Setup",
-    "section": "Do I need to install Python?",
-    "text": "Do I need to install Python?\nNot yet. Next week we will set up the full course environment with a tool called uv, and it installs the right version of Python for you as part of one command. If you install Python on your own this week, you will not break anything, but you also will not need it, and having several Pythons on one machine is a common source of confusion. Wait for the Week 2 setup guide.",
-    "crumbs": [
-      "Week 1 · Setup"
-    ]
-  },
-  {
-    "objectID": "research.html",
-    "href": "research.html",
-    "title": "Final Project — Research Resources",
-    "section": "",
-    "text": "This page is a starting point for finding your final project idea. The areas and papers below are initial directions; the strongest projects usually come from a question you find yourself while reading. What follows first is the one rule that is not optional.",
-    "crumbs": [
-      "Final Project",
-      "Research Resources"
-    ]
-  },
-  {
-    "objectID": "research.html#the-rule",
-    "href": "research.html#the-rule",
-    "title": "Final Project — Research Resources",
-    "section": "The rule",
-    "text": "The rule\nAn application domain alone is not a research contribution. “We will build a travel-planning agent” is not a project. “We investigate whether explicit constraint tracking improves long-horizon planning agents under changing constraints” is. The domain is the testbed; the mechanism is the contribution. Every strong project fits this template:\n\nagentic mechanism → experimental manipulation → measured agent behavior\n\nFor example: memory policy → preference updates → stale-action rate. Or: tool descriptions → distractor similarity → tool-selection accuracy.",
-    "crumbs": [
-      "Final Project",
-      "Research Resources"
-    ]
-  },
-  {
-    "objectID": "research.html#what-fits-in-a-semester",
-    "href": "research.html#what-fits-in-a-semester",
-    "title": "Final Project — Research Resources",
-    "section": "What fits in a semester",
-    "text": "What fits in a semester\nFeasible: controlled experiments on existing or synthetic benchmarks · fine-tuning small open-weight models (LoRA on a 4–9B model is a weekend on some GPU) · trajectory analyses over logged runs · architectural comparisons under a fixed token budget.\nNot feasible: pretraining a model · large-scale RL training · months of human data collection",
-    "crumbs": [
-      "Final Project",
-      "Research Resources"
-    ]
-  },
-  {
-    "objectID": "research.html#where-to-look",
-    "href": "research.html#where-to-look",
-    "title": "Final Project — Research Resources",
-    "section": "Where to look",
-    "text": "Where to look\n\nNeurIPS proceedings — including the Datasets & Benchmarks track, where most agent benchmarks are published\nICLR on OpenReview — reviews are public; reading them teaches you how the field argues\nICML proceedings\nACL Anthology — ACL, EMNLP, NAACL; most tool-use and agent-NLP work lands here\nCOLM — the LLM-focused venue; young, high signal\nWorkshops are the goldmine for project-scale ideas. Each year NeurIPS, ICLR, and ICML host workshops on language agents, open-world agents, safe and trustworthy agents, and multi-agent systems. Workshop papers are shorter, newer, and closer to what a semester project can extend. Check the current workshop lists at neurips.cc, iclr.cc, and icml.cc, and search OpenReview for “agents” workshops.\nFor staying current: arXiv cs.CL and cs.AI, navigated with Semantic Scholar.",
-    "crumbs": [
-      "Final Project",
-      "Research Resources"
-    ]
-  },
-  {
-    "objectID": "research.html#starting-directions",
-    "href": "research.html#starting-directions",
-    "title": "Final Project — Research Resources",
-    "section": "Starting directions",
-    "text": "Starting directions\nIn what follows, we provide a few anchor papers per area. Read the anchors, then follow their citations forward on Semantic Scholar or Google Scholar to explore who cited this, and what they found wrong with it.\n\n1. Benchmarking and evaluation\nTask success alone poorly characterizes agents. Open questions: which trajectory features predict failure before a task ends, how many runs characterize reliability, how cost should enter benchmarks, and how reliable LLM-as-judge scoring really is.\n\nτ²-bench — conversational tool-agents with a simulated user\nSWE-bench — the coding-agent benchmark and its saturation story\nWhy Do Multi-Agent LLM Systems Fail? — a failure taxonomy worth extending\nA Survey on Evaluation of LLM-based Agents\nHolistic Agent Leaderboard — cost-aware evaluation\n\n\n\n2. Fine-tuning small models for agentic tasks\nCan a 4–9B open-weight model be made meaningfully better at tool calling, reflection, or planning with a modest fine-tune? This is squarely semester-sized: generate or collect traces, LoRA-tune, compare against prompting the same base model. (Pretraining is out of scope — see above.)\n\nFireAct — fine-tuning on agent trajectories\nAgentTuning — instruction-tuning for agent abilities\nToolLLM — training for large-scale API use\nxLAM — a family of function-calling models\nDeepSeek-R1 — see the distillation section: small models learning from reasoning traces\n\n\n\n3. Agentic AI safety and security\nAgent safety is not chatbot safety: the question is not “did the model say something harmful” but “what did the system actually do.” A strong architectural question from the idea doc: at which layer should prompt-injection defenses operate — model prompting, tool authorization, or execution monitoring?\n\nNot What You’ve Signed Up For — indirect prompt injection, the founding paper\nAgentDojo — an injection benchmark you can run\nAgentHarm — measuring harmful task completion\nDefeating Prompt Injections by Design (CaMeL)\nDesign Patterns for Securing LLM Agents\n\n\n\n4. Tool use and MCP\nTool use looks solved in demos and is not solved scientifically. Selection is fragile to description wording, tool-set size, and near-duplicate distractors — and MCP adds questions about poisoning, permissions, and provenance.\n\nTool Preferences in Agentic LLMs are Unreliable — small description changes shift tool usage by more than 10×; a perfect paper to extend\nWhat Are Tools Anyway? — the survey that maps the area\nGorilla — LLMs and massive API sets\nModel Context Protocol: Landscape and Security\n\nA clean experiment: give an agent 5, 20, 50, and 100 tools with progressively similar distractors, and measure selection accuracy, cost, and failure modes.\n\n\n5. Memory and context\nOlder memory benchmarks test whether an agent can retrieve a fact; the open question is whether it uses remembered information appropriately when acting — and what it should forget.\n\nMem2ActBench - benchmark for evaluating long-term memory; can be easily extended\nMemGPT — memory hierarchies\nGenerative Agents — memory in believable simulation\nMem0 and A-Mem — production memory systems\n\nA clean experiment from the idea doc: compare append-everything, overwrite, recency-weighted, and conflict-aware memory policies as user preferences change; measure task success, stale-memory errors, and token cost.",
-    "crumbs": [
-      "Final Project",
-      "Research Resources"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Agentic AI — Course Materials",
-    "section": "",
-    "text": "Welcome to Agentic AI. This site is where I post everything you need for each class session: setup instructions, the code we build together, links I’ll reference on screen, and anything you’ll want to copy and paste during lecture.\nProf. Yildirim",
-    "crumbs": [
-      "Home"
-    ]
-  },
-  {
-    "objectID": "index.html#schedule",
-    "href": "index.html#schedule",
-    "title": "Agentic AI — Course Materials",
-    "section": "Schedule",
-    "text": "Schedule\nThe schedule below provides links to readings and documentation for each day. The core reading for each session is shown in bold.\n\n\n\n\n\n\n\n\n\n\n\nWk\nDate\nTopic\nPapers\nFramework docs\n\n\n\n\n1\nF 9/11\nIntroduction to Agentic AI\nBuilding Effective AgentsRise and Potential of LLM Agents\nWorkflows and agents · Philosophy\n\n\n2\nT 9/15\nLLM Foundations\nAttention Is All You NeedImproving Language Understanding\n3Blue1Brown: LLMs visualized (recommended watch) · Karpathy: Let’s build GPT\n\n\n2\nF 9/18\nLLM Foundations\nInstructGPTChain-of-Thought\nModels · Messages\n\n\n3\nT 9/22\nSimple Agent Architecture\nToolformerMRKL\nTools · Agents\n\n\n3\nF 9/25\nTool-Calling\nReActWhat Are Tools Anyway?\nMemory · Structured output\n\n\n4\nT 9/29\nShort-term & Long-term Memory\nGenerative AgentsMemGPT\nThinking in LangGraph · Graph API · Persistence\n\n\n4\nF 10/2\nContext Management\nLost in the MiddleEffective Context Engineering\nContext engineering · Middleware\n\n\n5\nT 10/6\nRetrieval-Augmented Generation\nRAGRAG Survey (§2–3)\nRetrieval · Semantic search\n\n\n5\nF 10/9\nReflection & Self-critique\nReflexionSelf-RAG · Self-Refine\nGraph API loops · Unit testing\n\n\n6\nT 10/13\nPlanning & Task Decomposition\nVoyagerTree of Thoughts · HuggingGPT (skim)\nSubgraphs · Skills\n\n\n6\nF 10/16\nAgentic RAG\nCorrective RAGAdaptive-RAG\nCustom RAG agent · Multi-source routing\n\n\n7\nT 10/20\nMulti-Agent Orchestration I\nWhy Do Multi-Agent LLM Systems Fail?AutoGen · Anthropic research system\nCustomer support with handoffs · Handoffs · Router\n\n\n7\nF 10/23\nMulti-Agent Orchestration II\nMetaGPTCAMEL (skim)\nSubagents · Subagents tutorial · Custom workflow\n\n\n8\nT 10/27\nMulti-Agent Orchestration III\nWhy Multi-Agent LLM Systems Fail (§4–5, re-read)Agents Are Not Enough (optional)\nLangGraph runtime · Studio\n\n\n8\nF 10/30\nMidterm Exam\n—\n—\n\n\n9\nT 11/3\nDeep Agents I: The Agent Harness\nEffective Harnesses for Long-Running AgentsMeasuring AI Ability to Complete Long Tasks (skim)\nDeep Agents overview · Subagents · Deep Agents (blog post)\n\n\n9\nF 11/6\nDeep Agents II: Backends and Sandboxes\nMaking Claude Code Safer with SandboxingDesign Patterns for Securing LLM Agents against Prompt Injections (skim)\nBackends · Sandboxes\n\n\n10\nT 11/10\nAgentic AI Evaluation\nSWE-benchτ-bench · LLM-as-a-Judge · AgentBench (skim)\nEvaluation concepts · Evaluate intermediate steps · Complex agent · LLM-as-judge\n\n\n10\nF 11/13\nAgentic AI Optimization\nDSPyCost tracking\nCaching · Fallbacks · Spend policies · Insights\n\n\n11\nT 11/17\nContext Management & Saving Threads\nEffective Context EngineeringLost in the Middle\nContext engineering · Short-term memory · Built-in middleware · Persistence\n\n\n11\nF 11/20\nLong-term Memory\nMemGPTGenerative Agents\nLong-term memory · Stores · Persistence · Supabase: connecting to Postgres\n\n\n12\nT 11/24\nSelf-Improving Agents\nA Survey of Self-Evolving AgentsVoyager · Reflexion (revisit)\nStores · Manage prompts\n\n\n12\nF 11/27\nNo Class — Thanksgiving\n—\n—\n\n\n13\nT 12/1\nHuman-in-the-Loop\nIndirect Prompt InjectionAgentDojo\nInterrupts · HITL · Guardrails · Double texting\n\n\n13\nF 12/4\nUI & UX for Agentic AI\nGuidelines for Human-AI InteractionDoes the Whole Exceed its Parts? · Zamfirescu-Pereira et al., Why Johnny Can’t Prompt (CHI 2023)\nAgent Chat UI · Frontend · Generative UI · HITL frontend\n\n\n14\nT 12/8\nResponsible Agentic Development\nVisibility into AI AgentsNIST AI RMF · Governing Agentic AI\nGovernance · Audit logs · ABAC\n\n\n14\nF 12/11\nAgentic AI Safety\nAgentHarmConstitutional AI · Ethics of AI Assistants (selected sections)\nGuardrails · Remote sandboxes · Agent identity\n\n\n15\nT 12/15\nProject Presentations\n—\n—\n\n\n15\nF 12/18\nProject Presentations\n—\n—",
-    "crumbs": [
-      "Home"
+      "Week 11 — Context and Memory",
+      "Week 11a · Context Management and Saving Threads"
     ]
   },
   {
@@ -797,58 +682,217 @@
     ]
   },
   {
-    "objectID": "week11a.html",
-    "href": "week11a.html",
-    "title": "Week 11a — Context Management and Saving Threads",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Agentic AI — Course Materials",
     "section": "",
-    "text": "Today we work on what an agent remembers within a conversation. In the first notebook, the conversation gets long, and we try strategies to keep what the model reads under control: trimming, summarization, and offloading. In the second, we save the conversation in a database, first in a SQLite file and then in Postgres on Supabase, so that it survives a restart and a redeploy.",
+    "text": "Welcome to Agentic AI. This site is where I post everything you need for each class session: setup instructions, the code we build together, links I’ll reference on screen, and anything you’ll want to copy and paste during lecture.\nProf. Yildirim",
     "crumbs": [
-      "Week 11 — Context and Memory",
-      "Week 11a · Context Management and Saving Threads"
+      "Home"
     ]
   },
   {
-    "objectID": "week11a.html#get-todays-files",
-    "href": "week11a.html#get-todays-files",
-    "title": "Week 11a — Context Management and Saving Threads",
+    "objectID": "index.html#schedule",
+    "href": "index.html#schedule",
+    "title": "Agentic AI — Course Materials",
+    "section": "Schedule",
+    "text": "Schedule\nThe schedule below provides links to readings and documentation for each day. The core reading for each session is shown in bold.\n\n\n\n\n\n\n\n\n\n\n\nWk\nDate\nTopic\nPapers\nFramework docs\n\n\n\n\n1\nF 9/11\nIntroduction to Agentic AI\nBuilding Effective AgentsRise and Potential of LLM Agents\nWorkflows and agents · Philosophy\n\n\n2\nT 9/15\nLLM Foundations\nAttention Is All You NeedImproving Language Understanding\n3Blue1Brown: LLMs visualized (recommended watch) · Karpathy: Let’s build GPT\n\n\n2\nF 9/18\nLLM Foundations\nInstructGPTChain-of-Thought\nModels · Messages\n\n\n3\nT 9/22\nSimple Agent Architecture\nToolformerMRKL\nTools · Agents\n\n\n3\nF 9/25\nTool-Calling\nReActWhat Are Tools Anyway?\nMemory · Structured output\n\n\n4\nT 9/29\nShort-term & Long-term Memory\nGenerative AgentsMemGPT\nThinking in LangGraph · Graph API · Persistence\n\n\n4\nF 10/2\nContext Management\nLost in the MiddleEffective Context Engineering\nContext engineering · Middleware\n\n\n5\nT 10/6\nRetrieval-Augmented Generation\nRAGRAG Survey (§2–3)\nRetrieval · Semantic search\n\n\n5\nF 10/9\nReflection & Self-critique\nReflexionSelf-RAG · Self-Refine\nGraph API loops · Unit testing\n\n\n6\nT 10/13\nPlanning & Task Decomposition\nVoyagerTree of Thoughts · HuggingGPT (skim)\nSubgraphs · Skills\n\n\n6\nF 10/16\nAgentic RAG\nCorrective RAGAdaptive-RAG\nCustom RAG agent · Multi-source routing\n\n\n7\nT 10/20\nMulti-Agent Orchestration I\nWhy Do Multi-Agent LLM Systems Fail?AutoGen · Anthropic research system\nCustomer support with handoffs · Handoffs · Router\n\n\n7\nF 10/23\nMulti-Agent Orchestration II\nMetaGPTCAMEL (skim)\nSubagents · Subagents tutorial · Custom workflow\n\n\n8\nT 10/27\nMulti-Agent Orchestration III\nWhy Multi-Agent LLM Systems Fail (§4–5, re-read)Agents Are Not Enough (optional)\nLangGraph runtime · Studio\n\n\n8\nF 10/30\nMidterm Exam\n—\n—\n\n\n9\nT 11/3\nDeep Agents I: The Agent Harness\nEffective Harnesses for Long-Running AgentsMeasuring AI Ability to Complete Long Tasks (skim)\nDeep Agents overview · Subagents · Deep Agents (blog post)\n\n\n9\nF 11/6\nDeep Agents II: Backends and Sandboxes\nMaking Claude Code Safer with SandboxingDesign Patterns for Securing LLM Agents against Prompt Injections (skim)\nBackends · Sandboxes\n\n\n10\nT 11/10\nAgentic AI Evaluation\nSWE-benchτ-bench · LLM-as-a-Judge · AgentBench (skim)\nEvaluation concepts · Evaluate intermediate steps · Complex agent · LLM-as-judge\n\n\n10\nF 11/13\nAgentic AI Optimization\nDSPyCost tracking\nCaching · Fallbacks · Spend policies · Insights\n\n\n11\nT 11/17\nContext Management & Saving Threads\nEffective Context EngineeringLost in the Middle\nContext engineering · Short-term memory · Built-in middleware · Persistence\n\n\n11\nF 11/20\nLong-term Memory\nMemGPTGenerative Agents\nLong-term memory · Stores · Persistence · Supabase: connecting to Postgres\n\n\n12\nT 11/24\nMemory as a Tool\nA Survey of Self-Evolving AgentsVoyager · Reflexion (revisit)\nStores · Manage prompts\n\n\n12\nF 11/27\nNo Class — Thanksgiving\n—\n—\n\n\n13\nT 12/1\nHuman-in-the-Loop\nIndirect Prompt InjectionAgentDojo\nInterrupts · HITL · Guardrails · Double texting\n\n\n13\nF 12/4\nUI & UX for Agentic AI\nGuidelines for Human-AI InteractionDoes the Whole Exceed its Parts? · Zamfirescu-Pereira et al., Why Johnny Can’t Prompt (CHI 2023)\nAgent Chat UI · Frontend · Generative UI · HITL frontend\n\n\n14\nT 12/8\nResponsible Agentic Development\nVisibility into AI AgentsNIST AI RMF · Governing Agentic AI\nGovernance · Audit logs · ABAC\n\n\n14\nF 12/11\nAgentic AI Safety\nAgentHarmConstitutional AI · Ethics of AI Assistants (selected sections)\nGuardrails · Remote sandboxes · Agent identity\n\n\n15\nT 12/15\nProject Presentations\n—\n—\n\n\n15\nF 12/18\nProject Presentations\n—\n—",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "research.html",
+    "href": "research.html",
+    "title": "Final Project — Research Resources",
+    "section": "",
+    "text": "This page is a starting point for finding your final project idea. The areas and papers below are initial directions; the strongest projects usually come from a question you find yourself while reading. What follows first is the one rule that is not optional.",
+    "crumbs": [
+      "Final Project",
+      "Research Resources"
+    ]
+  },
+  {
+    "objectID": "research.html#the-rule",
+    "href": "research.html#the-rule",
+    "title": "Final Project — Research Resources",
+    "section": "The rule",
+    "text": "The rule\nAn application domain alone is not a research contribution. “We will build a travel-planning agent” is not a project. “We investigate whether explicit constraint tracking improves long-horizon planning agents under changing constraints” is. The domain is the testbed; the mechanism is the contribution. Every strong project fits this template:\n\nagentic mechanism → experimental manipulation → measured agent behavior\n\nFor example: memory policy → preference updates → stale-action rate. Or: tool descriptions → distractor similarity → tool-selection accuracy.",
+    "crumbs": [
+      "Final Project",
+      "Research Resources"
+    ]
+  },
+  {
+    "objectID": "research.html#what-fits-in-a-semester",
+    "href": "research.html#what-fits-in-a-semester",
+    "title": "Final Project — Research Resources",
+    "section": "What fits in a semester",
+    "text": "What fits in a semester\nFeasible: controlled experiments on existing or synthetic benchmarks · fine-tuning small open-weight models (LoRA on a 4–9B model is a weekend on some GPU) · trajectory analyses over logged runs · architectural comparisons under a fixed token budget.\nNot feasible: pretraining a model · large-scale RL training · months of human data collection",
+    "crumbs": [
+      "Final Project",
+      "Research Resources"
+    ]
+  },
+  {
+    "objectID": "research.html#where-to-look",
+    "href": "research.html#where-to-look",
+    "title": "Final Project — Research Resources",
+    "section": "Where to look",
+    "text": "Where to look\n\nNeurIPS proceedings — including the Datasets & Benchmarks track, where most agent benchmarks are published\nICLR on OpenReview — reviews are public; reading them teaches you how the field argues\nICML proceedings\nACL Anthology — ACL, EMNLP, NAACL; most tool-use and agent-NLP work lands here\nCOLM — the LLM-focused venue; young, high signal\nWorkshops are the goldmine for project-scale ideas. Each year NeurIPS, ICLR, and ICML host workshops on language agents, open-world agents, safe and trustworthy agents, and multi-agent systems. Workshop papers are shorter, newer, and closer to what a semester project can extend. Check the current workshop lists at neurips.cc, iclr.cc, and icml.cc, and search OpenReview for “agents” workshops.\nFor staying current: arXiv cs.CL and cs.AI, navigated with Semantic Scholar.",
+    "crumbs": [
+      "Final Project",
+      "Research Resources"
+    ]
+  },
+  {
+    "objectID": "research.html#starting-directions",
+    "href": "research.html#starting-directions",
+    "title": "Final Project — Research Resources",
+    "section": "Starting directions",
+    "text": "Starting directions\nIn what follows, we provide a few anchor papers per area. Read the anchors, then follow their citations forward on Semantic Scholar or Google Scholar to explore who cited this, and what they found wrong with it.\n\n1. Benchmarking and evaluation\nTask success alone poorly characterizes agents. Open questions: which trajectory features predict failure before a task ends, how many runs characterize reliability, how cost should enter benchmarks, and how reliable LLM-as-judge scoring really is.\n\nτ²-bench — conversational tool-agents with a simulated user\nSWE-bench — the coding-agent benchmark and its saturation story\nWhy Do Multi-Agent LLM Systems Fail? — a failure taxonomy worth extending\nA Survey on Evaluation of LLM-based Agents\nHolistic Agent Leaderboard — cost-aware evaluation\n\n\n\n2. Fine-tuning small models for agentic tasks\nCan a 4–9B open-weight model be made meaningfully better at tool calling, reflection, or planning with a modest fine-tune? This is squarely semester-sized: generate or collect traces, LoRA-tune, compare against prompting the same base model. (Pretraining is out of scope — see above.)\n\nFireAct — fine-tuning on agent trajectories\nAgentTuning — instruction-tuning for agent abilities\nToolLLM — training for large-scale API use\nxLAM — a family of function-calling models\nDeepSeek-R1 — see the distillation section: small models learning from reasoning traces\n\n\n\n3. Agentic AI safety and security\nAgent safety is not chatbot safety: the question is not “did the model say something harmful” but “what did the system actually do.” A strong architectural question from the idea doc: at which layer should prompt-injection defenses operate — model prompting, tool authorization, or execution monitoring?\n\nNot What You’ve Signed Up For — indirect prompt injection, the founding paper\nAgentDojo — an injection benchmark you can run\nAgentHarm — measuring harmful task completion\nDefeating Prompt Injections by Design (CaMeL)\nDesign Patterns for Securing LLM Agents\n\n\n\n4. Tool use and MCP\nTool use looks solved in demos and is not solved scientifically. Selection is fragile to description wording, tool-set size, and near-duplicate distractors — and MCP adds questions about poisoning, permissions, and provenance.\n\nTool Preferences in Agentic LLMs are Unreliable — small description changes shift tool usage by more than 10×; a perfect paper to extend\nWhat Are Tools Anyway? — the survey that maps the area\nGorilla — LLMs and massive API sets\nModel Context Protocol: Landscape and Security\n\nA clean experiment: give an agent 5, 20, 50, and 100 tools with progressively similar distractors, and measure selection accuracy, cost, and failure modes.\n\n\n5. Memory and context\nOlder memory benchmarks test whether an agent can retrieve a fact; the open question is whether it uses remembered information appropriately when acting — and what it should forget.\n\nMem2ActBench - benchmark for evaluating long-term memory; can be easily extended\nMemGPT — memory hierarchies\nGenerative Agents — memory in believable simulation\nMem0 and A-Mem — production memory systems\n\nA clean experiment from the idea doc: compare append-everything, overwrite, recency-weighted, and conflict-aware memory policies as user preferences change; measure task success, stale-memory errors, and token cost.",
+    "crumbs": [
+      "Final Project",
+      "Research Resources"
+    ]
+  },
+  {
+    "objectID": "week1.html",
+    "href": "week1.html",
+    "title": "Week 1 — Setup",
+    "section": "",
+    "text": "Welcome to Agentic AI. There is no ICA this week. Your job before next week is small: install one editor, and work through the Python primer if your Python is rusty or new. Everything else, including Python itself, will be installed next week in one step.",
+    "crumbs": [
+      "Week 1 · Setup"
+    ]
+  },
+  {
+    "objectID": "week1.html#install-vs-code",
+    "href": "week1.html#install-vs-code",
+    "title": "Week 1 — Setup",
+    "section": "1. Install VS Code",
+    "text": "1. Install VS Code\nVS Code is the editor we will use all semester for notebooks and code.\n\nDownload it from code.visualstudio.com and install it. On a Mac, drag the app into your Applications folder. On Windows, run the installer with the default options.\nOpen VS Code, click the Extensions icon in the left bar (four squares), and install two extensions, both published by Microsoft: Python and Jupyter.\n\nThat is the whole task. You do not need to configure anything else yet.",
+    "crumbs": [
+      "Week 1 · Setup"
+    ]
+  },
+  {
+    "objectID": "week1.html#python-primer",
+    "href": "week1.html#python-primer",
+    "title": "Week 1 — Setup",
+    "section": "2. Python primer",
+    "text": "2. Python primer\nIf you have not written much Python, or you have never seen things like TypedDict, list comprehensions, or decorators, work through the primer before Week 2. It assumes no prior Python and everything in it comes back later in the course.\nThe easiest way to run it is Google Colab, which runs the notebook in your browser with nothing to install. You will need a Google account.\nOpen the Python Primer in Colab\nIn Colab, run cells with Shift+Enter, top to bottom. Change things and rerun them. The primer ends with eight exercises. If those feel fine, you are ready for Week 2.\nIf you want to go deeper than the primer, the official Python tutorial is the best next stop. It is free, well written, and goes well beyond what we need. Chapters 3 through 5 line up with the primer if you want a second pass at the same ideas.",
+    "crumbs": [
+      "Week 1 · Setup"
+    ]
+  },
+  {
+    "objectID": "week1.html#do-i-need-to-install-python",
+    "href": "week1.html#do-i-need-to-install-python",
+    "title": "Week 1 — Setup",
+    "section": "Do I need to install Python?",
+    "text": "Do I need to install Python?\nNot yet. Next week we will set up the full course environment with a tool called uv, and it installs the right version of Python for you as part of one command. If you install Python on your own this week, you will not break anything, but you also will not need it, and having several Pythons on one machine is a common source of confusion. Wait for the Week 2 setup guide.",
+    "crumbs": [
+      "Week 1 · Setup"
+    ]
+  },
+  {
+    "objectID": "week10b.html",
+    "href": "week10b.html",
+    "title": "Week 10b — Evaluation as an Experiment",
+    "section": "",
+    "text": "On Tuesday we evaluated the Husky Tech support agent by running each task once. Today we will run the evaluation as an experiment. We will compare two system prompts on the same 16 tasks, with five runs of every task under each prompt, and report the success rate with a 95% interval, pass^k, the paired difference between the prompts, the cost, and the failures.",
+    "crumbs": [
+      "Week 10 — Evaluation",
+      "Week 10b · Evaluation as an Experiment"
+    ]
+  },
+  {
+    "objectID": "week10b.html#get-todays-files",
+    "href": "week10b.html#get-todays-files",
+    "title": "Week 10b — Evaluation as an Experiment",
     "section": "Get today’s files",
-    "text": "Get today’s files\nFrom your course project folder (agentic-ai-course), in the VS Code terminal:\n\nmacOSWindowsLinux\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W11a W11a\n\n\ncd lecture-files\ngit pull\ncd ..\nCopy-Item -Recurse lecture-files/W11a W11a\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W11a W11a\n\n\n\nThen open the notebooks from your W11a copy, not from lecture-files, and select the .venv kernel.",
+    "text": "Get today’s files\nFrom your course project folder (agentic-ai-course), in the VS Code terminal:\n\nmacOSWindowsLinux\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W10b W10b\n\n\ncd lecture-files\ngit pull\ncd ..\nCopy-Item -Recurse lecture-files/W10b W10b\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W10b W10b\n\n\n\nThen open the notebook from your W10b copy, not from lecture-files, and select the .venv kernel. The notebook needs nothing new. To run the tests in husky_support, install pytest:\nuv pip install pytest\nW10b also contains a copy of the W10a notebook. Its cohen_kappa function now shows each chance term on its own line and returns nan when kappa is undefined, that is, when both raters give every item the same label. The notebook has a worked example of the function on ten labeled replies.",
     "crumbs": [
-      "Week 11 — Context and Memory",
-      "Week 11a · Context Management and Saving Threads"
+      "Week 10 — Evaluation",
+      "Week 10b · Evaluation as an Experiment"
     ]
   },
   {
-    "objectID": "week11a.html#packages-to-install",
-    "href": "week11a.html#packages-to-install",
-    "title": "Week 11a — Context Management and Saving Threads",
-    "section": "Packages to install",
-    "text": "Packages to install\nThe second notebook needs the SQLite and Postgres checkpointers:\nuv pip install langgraph-checkpoint-sqlite langgraph-checkpoint-postgres \"psycopg[binary,pool]\"",
+    "objectID": "week10b.html#running-the-experiment",
+    "href": "week10b.html#running-the-experiment",
+    "title": "Week 10b — Evaluation as an Experiment",
+    "section": "Running the experiment",
+    "text": "Running the experiment\nThe notebook runs 16 tasks, 5 times each, under 2 prompts: 160 agent runs. You don’t have to run them. Our results with gpt-4.1-mini are saved in results/gpt-4.1-mini/, and with RUN = False, which is the default, sections 3 to 7 analyze those files without calling a model.\nTo run the experiment with your own model, set RUN = True. Your results go to a folder named after your model.\n\nWith gpt-4.1-mini, it took us about six minutes.\nOn the Gemini free tier, set pause=4 in the run_experiment call to stay under 15 requests per minute. The experiment then takes over half an hour.\nIf it stops partway, through a 429 error or a closed laptop, run the cell again. Every run is saved as soon as it finishes, and the runs already in the file are skipped.\n\nSection 8 sends a dataset and 32 agent runs to LangSmith, and runs only when USE_LANGSMITH = True. It needs LANGSMITH_API_KEY in your .env.",
     "crumbs": [
-      "Week 11 — Context and Memory",
-      "Week 11a · Context Management and Saving Threads"
+      "Week 10 — Evaluation",
+      "Week 10b · Evaluation as an Experiment"
     ]
   },
   {
-    "objectID": "week11a.html#setting-up-supabase",
-    "href": "week11a.html#setting-up-supabase",
-    "title": "Week 11a — Context Management and Saving Threads",
-    "section": "Setting up Supabase",
-    "text": "Setting up Supabase\nSection 4 of the second notebook saves threads in a Supabase database. Setting it up takes about five minutes:\n\nCreate a free account at supabase.com and a new project. Write down the database password you choose.\nIn the project, click Connect at the top of the page. Under Session pooler, copy the connection string, and replace [YOUR-PASSWORD] with your password.\nAdd it to your .env:\nSUPABASE_DB_URL=postgresql://postgres.abcdefghijklmnop:your-password@aws-0-us-east-1.pooler.supabase.com:5432/postgres\n\nUse the session pooler, not the direct connection, which needs IPv6. If your password contains any of @ # / : ? %, the connection fails with password authentication failed. Reset the password to letters and digits in Project Settings → Database, or see step 2 in the notebook for how to encode those characters.",
+    "objectID": "week10b.html#the-packaged-project",
+    "href": "week10b.html#the-packaged-project",
+    "title": "Week 10b — Evaluation as an Experiment",
+    "section": "The packaged project",
+    "text": "The packaged project\nhusky_support/ is the same agent and the same evaluation as scripts instead of a notebook: the application customers use in app/, and the evaluation suite that tests it in evals/. Its README.md explains the layout and the three rules behind it. Run these from inside the folder, in a terminal with the .venv activated:\ncd W10b/husky_support\n\npython score_eval.py results/gpt-4.1-mini      # score the saved runs; no model calls\npython -m pytest tests                          # test the checks\n\npython run_app.py                               # the chat app, at http://localhost:7860\npython run_eval.py --model gpt-4.1-mini --condition policy --runs 1 --tasks t01,t16\npython judge_eval.py --judge gpt-4.1-mini --validate\nThe scripts read the keys from the .env in your course project folder, so there is nothing to copy. The first two commands need no key at all. The app uses the model in the MODEL variable, gpt-4.1-mini unless you set another one.\nFor research projects, your FP3 needs the same parts: your own agent in app/, and your own tasks, checks, and metrics in evals/.",
     "crumbs": [
-      "Week 11 — Context and Memory",
-      "Week 11a · Context Management and Saving Threads"
+      "Week 10 — Evaluation",
+      "Week 10b · Evaluation as an Experiment"
     ]
   },
   {
-    "objectID": "week11a.html#choosing-the-model",
-    "href": "week11a.html#choosing-the-model",
-    "title": "Week 11a — Context Management and Saving Threads",
+    "objectID": "week11b.html",
+    "href": "week11b.html",
+    "title": "Week 11b — Long-Term Memory",
+    "section": "",
+    "text": "On Tuesday we saved conversations in a database, so a thread survives a restart. Today we give the Husky Tech support agent a memory that outlasts the thread. We start with LangGraph’s store, then build an agent that reads a customer’s profile from the store and updates it on every turn, and finally move the store to a SQLite file and to Supabase.",
+    "crumbs": [
+      "Week 11 — Context and Memory",
+      "Week 11b · Long-Term Memory"
+    ]
+  },
+  {
+    "objectID": "week11b.html#get-todays-files",
+    "href": "week11b.html#get-todays-files",
+    "title": "Week 11b — Long-Term Memory",
+    "section": "Get today’s files",
+    "text": "Get today’s files\nFrom your course project folder (agentic-ai-course), in the VS Code terminal:\n\nmacOSWindowsLinux\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W11b W11b\n\n\ncd lecture-files\ngit pull\ncd ..\nCopy-Item -Recurse lecture-files/W11b W11b\n\n\ncd lecture-files\ngit pull\ncd ..\ncp -r lecture-files/W11b W11b\n\n\n\nThen open the notebook from your W11b copy, not from lecture-files, and select the .venv kernel.",
+    "crumbs": [
+      "Week 11 — Context and Memory",
+      "Week 11b · Long-Term Memory"
+    ]
+  },
+  {
+    "objectID": "week11b.html#packages",
+    "href": "week11b.html#packages",
+    "title": "Week 11b — Long-Term Memory",
+    "section": "Packages",
+    "text": "Packages\nThere are no new packages today. The SQLite and Postgres stores come in the same packages as Tuesday’s checkpointers. If you missed Tuesday, install them now:\nuv pip install langgraph-checkpoint-sqlite langgraph-checkpoint-postgres \"psycopg[binary,pool]\"",
+    "crumbs": [
+      "Week 11 — Context and Memory",
+      "Week 11b · Long-Term Memory"
+    ]
+  },
+  {
+    "objectID": "week11b.html#supabase",
+    "href": "week11b.html#supabase",
+    "title": "Week 11b — Long-Term Memory",
+    "section": "Supabase",
+    "text": "Supabase\nSection 5 uses the SUPABASE_DB_URL you added to your .env on Tuesday. If you have not set it up yet, follow the steps on the Week 11a page.\nIf you change SUPABASE_DB_URL while the notebook is open, restart the kernel before you run section 5 again. A connection pool opened with the old URL keeps trying to reconnect in the background until the kernel stops.",
+    "crumbs": [
+      "Week 11 — Context and Memory",
+      "Week 11b · Long-Term Memory"
+    ]
+  },
+  {
+    "objectID": "week11b.html#choosing-the-model",
+    "href": "week11b.html#choosing-the-model",
+    "title": "Week 11b — Long-Term Memory",
     "section": "Choosing the model",
-    "text": "Choosing the model\nUse gpt-4.1-mini or Gemini for the first notebook. Claude’s replies carry an encrypted record of its reasoning, which the token counts include, so every count looks much larger. With Claude, set MAX_TOKENS = 1500 in the trimming section.\nOn the Gemini free tier, each eight-turn conversation makes about 16 model calls in under a minute, which is close to the limit of 15 a minute. If a cell stops with a 429 error, wait a minute and run it again.",
+    "text": "Choosing the model\nUse a hosted model: gpt-4.1-mini, Claude Haiku, or Gemini. The local qwen3.5:9b often saves the customer’s preference in the profile and then answers in English anyway.\nThe agent in section 3 calls the model at least twice per message, once to update the profile and once to answer. On the Gemini free tier, run the cells one at a time. If a cell stops with a 429 error, wait a minute and run it again.",
     "crumbs": [
       "Week 11 — Context and Memory",
-      "Week 11a · Context Management and Saving Threads"
+      "Week 11b · Long-Term Memory"
     ]
   },
   {
